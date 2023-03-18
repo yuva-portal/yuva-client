@@ -1,0 +1,32 @@
+body {
+  margin: 0;
+}
+
+.app-outer-div {
+  width: 80%;
+  margin: auto;
+}
+
+@media (max-width: 600px) {
+  .app-outer-div {
+    width: 92%;
+    margin: auto;
+  }
+}
+
+.navbar-nav .nav-link {
+  color: var(--dark-grey) !important;
+  color: black !important;
+  border-radius: 0.2rem;
+
+  padding: 0.25rem;
+  font-size: 0.9rem;
+  margin: 6px;
+  font-weight: 600;
+}
+
+.navbar-nav .nav-link:hover {
+  color: black !important;
+  background-color: var(--light-grey);
+  /* text-decoration: underline; */
+}

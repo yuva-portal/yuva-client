@@ -1,0 +1,75 @@
+.cardDiv {
+  height: fit-content;
+  padding-bottom: 2.4rem;
+  width: 100%;
+  text-align: center;
+  border-radius: 10px;
+  /* background-color: gray; */
+  /* box-shadow: 0 0 0.5rem 0 rgb(0, 0, 0, 0.6); */
+  border: 1px solid lightgray;
+}
+
+.cardDiv:hover {
+  box-shadow: 0 0 0.5rem 0 rgb(0, 0, 0, 1.9);
+  transition: 0.4s;
+}
+
+.cardImg {
+  width: 100%;
+  object-fit: cover;
+  height: 12rem;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+}
+
+.cardName {
+  font-family: var(--font-family-1);
+  font-size: 1.3rem;
+  font-weight: 600;
+  margin-top: 1.2rem;
+  margin-bottom: 0;
+  padding: 0 1rem 0 1rem;
+  line-height-step: 2;
+}
+
+.cardDesc {
+  font-family: var(--font-family-2);
+  padding: 0 1rem 0 1rem;
+}
+
+.cardCount {
+  font-family: var(--font-family-2);
+  color: gray;
+  font-size: 0.8rem;
+  text-decoration: underline;
+}
+
+.cardViewBtn,
+.cardDltBtn {
+  border-radius: 0.4rem;
+  border: none;
+  /* width: 55%; */
+  padding-left: 2.8rem;
+  padding-right: 2.8rem;
+  display: block;
+  height: 2.4rem;
+  /* font-weight: 500; */
+  color: white;
+  margin: auto;
+  margin-top: 1rem;
+  font-family: var(--font-family-2);
+}
+
+.cardViewBtn {
+  background-color: var(--yuva-blue);
+}
+
+.cardViewBtn:hover {
+  background-color: var(--yuva-dark-blue);
+}
+
+.cardDltBtn {
+  border: 1.5px solid var(--card-dlt-red);
+  margin-left: 0.4rem;
+  background-color: white;
+}

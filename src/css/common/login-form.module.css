@@ -1,0 +1,80 @@
+.outerDiv {
+  width: 70%;
+  margin-left: 30%;
+  padding: 3rem 3rem;
+  border-radius: 0.5rem;
+  box-shadow: var(--box-shadow-1);
+  text-align: center;
+  /* border: 2px solid red; */
+}
+
+.heading {
+  font-size: 2.5rem;
+  font-family: var(--font-family-1);
+  font-weight: 600;
+  margin: 0;
+  margin-bottom: 2rem;
+  color: var(--yuva-dark-blue);
+}
+
+.input {
+  border-radius: 0.4rem;
+  outline: none;
+  border: 0.08rem solid var(--grey);
+  width: 100%;
+  display: block;
+  margin: 0.7rem auto;
+  height: 2.75rem;
+  padding: 0.8rem;
+  font-family: var(--font-family-2);
+}
+
+.input:focus {
+  /* border: none; */
+  /* box-shadow: var(--box-shadow-2); */
+  border: 0.1rem solid var(--grey);
+}
+
+.btn {
+  border-radius: 0.4rem;
+  border: none;
+  width: 100%;
+  background-color: var(--yuva-blue);
+  display: block;
+  height: 2.75rem;
+  color: white;
+  margin-top: 2rem;
+  margin-bottom: 1.6rem;
+  font-family: var(--font-family-2);
+}
+
+.btn:hover {
+  background-color: var(--yuva-dark-blue);
+}
+
+.forgotPassText {
+  margin: auto;
+  font-family: var(--font-family-2);
+  color: var(--grey);
+  font-size: 0.9rem;
+}
+
+.forgotPassText:hover {
+  color: var(--grey);
+}
+
+@media (max-width: 992px) and (min-width: 576px) {
+  .outerDiv {
+    width: 85%;
+    margin-left: 15%;
+  }
+}
+
+@media (max-width: 576px) {
+  .outerDiv {
+    width: 100%;
+    margin: auto;
+    box-shadow: none;
+    padding: 2rem;
+  }
+}
