@@ -9,7 +9,7 @@ import ActivityInput from "../../components/admin/ActivityInput";
 import QuizInput from "../../components/admin/QuizInput";
 
 // My css
-import "../../css/admin/a-add-unit-page.css";
+import css from "../../css/admin/add-unit-page.module.css";
 
 import { SERVER_ORIGIN } from "../../utilities/constants";
 
@@ -32,7 +32,7 @@ function AddActivityBtn(props) {
   return (
     <div style={{ marginBottom: "2rem", textAlign: "center" }}>
       <button
-        className="a-add-unit-page-btn"
+        className={css.addBtn}
         type="button"
         onClick={() => props.handleAddActivity()}
       >
@@ -47,7 +47,7 @@ function AddQuizItemBtn(props) {
   return (
     <div style={{ marginBottom: "2rem", textAlign: "center" }}>
       <button
-        className="a-add-unit-page-btn"
+        className={css.addBtn}
         type="button"
         onClick={() => props.handleAddQuizItem()}
       >
@@ -207,13 +207,11 @@ const AdminAddUnit = () => {
   }
 
   return (
-    <div className="a-add-unit-page-outer-div">
+    <div className={css.outerDiv}>
       <div>
-        <h1 className="text-ff1 text-center my-5">
-          Adding a new unit for course
-        </h1>
+        <h1 className={css.headingText}>Adding a new unit for course</h1>
       </div>
-      <div className="a-add-unit-page-sec-div">
+      <div className={css.commonDiv}>
         <SecCard>
           <h2 className="text-ff1">Video</h2>
           <VideoInput
@@ -243,7 +241,7 @@ const AdminAddUnit = () => {
         </SecCard>
       </div>
 
-      <div className="a-add-unit-page-sec-div">
+      <div className={css.commonDiv}>
         <SecCard>
           <h2 className="text-ff1">Text</h2>
           <TextInput
@@ -257,7 +255,7 @@ const AdminAddUnit = () => {
         </SecCard>
       </div>
 
-      <div className="a-add-unit-page-sec-div">
+      <div className={css.commonDiv}>
         <SecCard>
           <h2 className="text-ff1">Activities</h2>
           <AddActivityBtn handleAddActivity={handleAddActivity} />
@@ -274,7 +272,7 @@ const AdminAddUnit = () => {
         </SecCard>
       </div>
 
-      <div className="a-add-unit-page-sec-div">
+      <div className={css.commonDiv}>
         <SecCard>
           <h2 className="text-ff1">Quiz</h2>
 
@@ -295,7 +293,7 @@ const AdminAddUnit = () => {
       <div style={{ margin: "2rem", textAlign: "center" }}>
         <button
           disabled={isAddUnitBtnDisabled}
-          className="a-add-unit-page-btn"
+          className={css.addBtn}
           onClick={handleAddUnit}
         >
           Add Unit

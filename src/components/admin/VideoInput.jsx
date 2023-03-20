@@ -1,6 +1,6 @@
 import React from "react";
 
-import "../../css/admin/a-add-unit-page.css";
+import css from "../../css/admin/add-unit-page.module.css";
 
 const VideoInput = (props) => {
   return (
@@ -8,7 +8,7 @@ const VideoInput = (props) => {
       <label htmlFor={props.id}>{props.label}</label>
       <div>
         <input
-          className="a-add-unit-page-input"
+          className={css.commonInput}
           type="text"
           id={props.id}
           name={props.name}

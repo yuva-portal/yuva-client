@@ -50,7 +50,7 @@ const LoginPage = () => {
         if ("token" in result) {
           const token = result.token;
           localStorage.setItem("token", token);
-          navigate("/admin/services");
+          navigate("/admin/");
         }
       } else {
         // for future

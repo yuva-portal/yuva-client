@@ -1,6 +1,9 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { Link, useNavigate } from "react-router-dom";
 import img from "../../assets/images/yi_logo.png";
+
+// My css
+import css from "../../css/user/navbar.module.css";
 
 const Navbar = () => {
   const navigate = useNavigate();
@@ -14,16 +17,16 @@ const Navbar = () => {
     navigate("/user/login");
   };
 
+  const handleRegisterClick = (e) => {
+    localStorage.removeItem("token");
+    navigate("/user/register");
+  };
+
+  const listItemStyle = { fontSize: "0.9rem", fontWeight: "400" };
+
   return (
-    <nav
-      style={{
-        backgroundColor: "white",
-        padding: "0.7% 3%",
-        boxShadow: "0 0.3rem 0.25rem -0.25rem rgb(0,0,0,0.2)",
-      }}
-      className="navbar navbar-expand-lg fixed-top"
-    >
-      <img src={img} alt="" style={{ width: "5.5%", marginRight: "2%" }} />
+    <nav className={`${css.outerNav} navbar navbar-expand-lg fixed-top`}>
+      <img src={img} alt="yi-logo" className={css.yiImg} />
       <button
         type="button"
         className="navbar-toggler"
@@ -34,16 +37,9 @@ const Navbar = () => {
       </button>
 
       <div className="collapse navbar-collapse" id="navbarCollapse">
-        <ul
-          className="navbar-nav mr-auto text-ff1"
-          style={{ fontWeight: "100" }}
-        >
+        <ul className="navbar-nav mr-auto text-ff1">
           <li className="nav-item active">
-            <Link
-              className="nav-link active"
-              to="/"
-              style={{ fontWeight: "400" }}
-            >
+            <Link className="nav-link active" to="/" style={listItemStyle}>
               Home
             </Link>
           </li>
@@ -51,7 +47,7 @@ const Navbar = () => {
             <Link
               className="nav-link active"
               to="/user/verticals/all"
-              style={{ fontWeight: "400" }}
+              style={listItemStyle}
             >
               Verticals
             </Link>
@@ -60,32 +56,37 @@ const Navbar = () => {
             <Link
               className="nav-link active"
               to="/user/about"
-              style={{ fontWeight: "400" }}
+              style={listItemStyle}
             >
               About
             </Link>
           </li>
         </ul>
+
         <ul className="navbar-nav ms-auto">
-          <button
-            className="text-ff1 navbar-right"
-            style={{
-              backgroundColor: "var(--light-grey)",
-              color: "black",
-              borderRadius: "0.3rem",
-              height: "2.2rem",
-              width: "fit-content",
-              padding: "0 1rem 0 1rem",
-              border: "none",
-            }}
-            onClick={
-              !localStorage.getItem("token")
-                ? handleLoginClick
-                : handleLogoutClick
-            }
-          >
-            {!localStorage.getItem("token") ? "Login" : "Logout"}
-          </button>
+          {localStorage.getItem("token") ? (
+            <button
+              className={`${css.navBtn} text-ff1 navbar-right`}
+              onClick={handleLogoutClick}
+            >
+              Logout
+            </button>
+          ) : (
+            <>
+              <button
+                className={`${css.navBtn} text-ff1 navbar-right`}
+                onClick={handleLoginClick}
+              >
+                Login
+              </button>
+              <button
+                className={`${css.navBtn} text-ff1 navbar-right`}
+                onClick={handleRegisterClick}
+              >
+                Register
+              </button>
+            </>
+          )}
         </ul>
       </div>
     </nav>

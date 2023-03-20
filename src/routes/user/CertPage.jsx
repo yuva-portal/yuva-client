@@ -11,7 +11,7 @@ import {
 
 // My components
 import Cert from "../../components/user/Cert";
-import SecCard from "../../components/user/SecCard";
+import SecCard from "../../components/common/SecCard";
 
 // My css
 import "../../css/user/u-cert-page.css";

@@ -5,7 +5,7 @@ import { toast } from "react-hot-toast";
 // My components
 import VideoPlayer from "../../components/user/VideoPlayer";
 import UnitText from "../../components/user/UnitText";
-import SecCard from "../../components/user/SecCard";
+import SecCard from "../../components/common/SecCard";
 import UnitActivity from "../../components/user/UnitActivity";
 import HeaderCard from "../../components/common/HeaderCard";
 import Loader from "../../components/common/Loader";

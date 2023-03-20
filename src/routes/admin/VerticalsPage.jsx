@@ -9,7 +9,7 @@ import { CardGrid } from "../../components/common/CardGrid";
 import Loader from "../../components/common/Loader";
 
 // My css
-import "../../css/admin/a-verticals-page.css";
+import css from "../../css/admin/verticals-page.module.css";
 
 import { SERVER_ORIGIN } from "../../utilities/constants";
 import { refreshScreen } from "../../utilities/helper_functions";
@@ -262,27 +262,19 @@ const VerticalsPage = () => {
   );
 
   return (
-    <div className="a-verticals-page-outer-div">
+    <div className={css.outerDiv}>
       <HeaderCard>
-        <h1>Verticals</h1>
+        <h1 className="headerTitle">Verticals</h1>
 
-        <div style={{ textAlign: "left", fontFamily: "var(--font-family-2)" }}>
-          <h4>
-            <i className="fa-solid fa-arrow-right"></i> Every verticals related
-            information is available on this page.
-          </h4>
-          <h4>
-            <i className="fa-solid fa-arrow-right"></i> You can View/Add/Delete
-            any vertical.
-          </h4>
-          <h5>
-            Note: Deleting a vertical is irreversible. Do it at your own risk.
-          </h5>
-        </div>
-        <button
-          onClick={openAddModal}
-          className="text-ff2 a-verticals-page-add-v-btn btn bt btn"
-        >
+        <hr />
+        <p className="headerSubtitle">
+          You can View/Add/Delete verticals from here
+        </p>
+        <p className="headerSubtitle">
+          Note: Deleting a vertical is irreversible. Do it at your own risk.
+        </p>
+
+        <button onClick={openAddModal} className={`${css.addBtn} commonBtn`}>
           Add a new vertical
         </button>
       </HeaderCard>

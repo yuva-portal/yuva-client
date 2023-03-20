@@ -1,6 +1,6 @@
 import React from "react";
 
-import "../../css/admin/a-add-unit-page.css";
+import css from "../../css/admin/add-unit-page.module.css";
 
 // ! use checked attr for checkbox, dont use value attr, it produces bugs
 
@@ -13,7 +13,7 @@ const QuizInput = (props) => {
       <div>
         <input
           type="text"
-          className="a-add-unit-page-input"
+          className={css.commonInput}
           id="question"
           placeholder="Question"
           name="question"
@@ -22,7 +22,7 @@ const QuizInput = (props) => {
         />
         <div style={{ textAlign: "right" }}>
           <button
-            className="a-add-unit-page-activity-remove-btn"
+            className={css.removeBtn}
             onClick={() =>
               props.handleDeleteQuizItem(props.quizItemIdx, -1, null)
             }
@@ -46,7 +46,7 @@ const QuizInput = (props) => {
                 }
               />
               <input
-                className="a-add-unit-page-opt-input text-ff2"
+                className={css.optInput}
                 type="text"
                 name="optText"
                 placeholder={`Option ${optIdx + 1}`}

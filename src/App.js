@@ -2,7 +2,8 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { Toaster } from "react-hot-toast";
 
 // My components
-import Navbar from "./components/common/Navbar";
+import UserNavbar from "./components/user/Navbar";
+import AdminNavbar from "./components/admin/Navbar";
 
 import UserHome from "./routes/user/HomePage";
 import UserLogin from "./routes/user/LoginPage";
@@ -17,7 +18,7 @@ import CertPage from "./routes/user/CertPage";
 import UserDashBoard from "./routes/user/Dashboard";
 
 import AdminLogin from "./routes/admin/LoginPage";
-import AdminServices from "./routes/admin/ServicesPage";
+import AdminHome from "./routes/admin/HomePage";
 import AdminVerticals from "./routes/admin/VerticalsPage";
 import AdminCourses from "./routes/admin/CoursesPage.jsx";
 import AdminUnits from "./routes/admin/UnitsPage";
@@ -63,9 +64,9 @@ function UserApp() {
 function AdminApp() {
   return (
     <Routes>
-      <Route exact path="/admin/courses" element={<AdminCourses />} />
+      <Route path="/admin/" element={<AdminHome />} />
+      <Route path="/admin/courses" element={<AdminCourses />} />
       <Route path="/admin/login" element={<AdminLogin />} />
-      <Route path="/admin/services" element={<AdminServices />} />
       <Route path="/admin/add-users" element={<AddUsersPage />} />
       <Route path="/admin/verticals/all" element={<AdminVerticals />} />
       <Route
@@ -88,11 +89,13 @@ function App() {
   return (
     <>
       <Router>
-        <Navbar />
+        <UserNavbar />
+
         <div className="app-outer-div">
           <UserApp />
           <AdminApp />
         </div>
+
         <Toaster
           toastOptions={{
             duration: 2500,

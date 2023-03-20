@@ -1,11 +1,11 @@
 import React from "react";
 
-import "../../css/admin/a-add-unit-page.css";
+import css from "../../css/admin/add-unit-page.module.css";
 
 const TextInput = (props) => {
   return (
     <textarea
-    className="a-add-unit-page-text-textarea"
+      className={css.textArea}
       name="text"
       id="text"
       label="Text"

@@ -1,12 +1,12 @@
 import React from "react";
 
-import "../../css/admin/a-add-unit-page.css";
+import css from "../../css/admin/add-unit-page.module.css";
 
 const ActivityInput = (props) => {
   return (
     <div style={{ marginBottom: "1.5rem" }} className="text-ff2">
       <input
-        className="a-add-unit-page-input text-ff2"
+        className={css.commonInput}
         type="text"
         id={props.id}
         placeholder="Enter activity"
@@ -16,7 +16,7 @@ const ActivityInput = (props) => {
 
       <div style={{ textAlign: "right" }}>
         <button
-          className="a-add-unit-page-activity-remove-btn"
+          className={css.removeBtn}
           onClick={() => props.handleDeleteActivity(props.index)}
         >
           Remove

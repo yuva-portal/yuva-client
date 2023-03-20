@@ -1,12 +1,18 @@
-.a-add-unit-page-outer-div {
+.outerDiv {
   margin-top: 6rem;
 }
 
-.a-add-unit-page-sec-div {
+.commonDiv {
   margin-bottom: 3rem;
 }
 
-.a-add-unit-page-text-textarea {
+.headingText {
+  font-family: var(--font-family-1);
+  margin-bottom: 3rem;
+  text-align: center;
+}
+
+.textArea {
   border-radius: 0.4rem;
   outline: none;
   border: 0.05rem solid var(--grey);
@@ -16,13 +22,13 @@
   font-family: var(--font-family-2);
 }
 
-.a-add-unit-page-text-textarea:focus {
+.textArea:focus {
   border: none;
   /* box-shadow: var(--box-shadow-1); */
   border: 0.1rem solid var(--grey);
 }
 
-.a-add-unit-page-input {
+.commonInput {
   border-radius: 0.4rem;
   outline: none;
   border: 0.05rem solid var(--grey);
@@ -32,22 +38,26 @@
   font-family: var(--font-family-2);
 }
 
-.a-add-unit-page-input:focus {
+.commonInput:focus {
   border: none;
   /* box-shadow: var(--box-shadow-1); */
   border: 0.1rem solid var(--grey);
 }
 
-.a-add-unit-page-activity-remove-btn {
+.removeBtn {
+  margin-top: 0.4rem;
   border: none;
   background-color: transparent;
-  color: var(--red);
+  color: white;
+  /* border: 1px solid red; */
+  background-color: red;
+  border-radius: 0.2rem;
 }
 
-.a-add-unit-page-btn {
+.addBtn {
   border-radius: 0.4rem;
   border: none;
-  background-color: var(--blue);
+  background-color: var(--yuva-blue);
   /* margin: auto; */
   /* margin-top: 1rem; */
   /* margin-bottom: 2rem; */
@@ -58,21 +68,36 @@
   font-family: var(--font-family-2);
 }
 
-.a-add-unit-page-btn:hover {
+.addBtn:hover {
   background-color: var(--yuva-dark-blue);
   color: white;
 }
 
-.a-add-unit-page-opt-input {
+.optInput {
   border-radius: 0.3rem;
   outline: none;
   padding: 0 0.5rem;
   height: 2rem;
   border: 0.05rem solid var(--grey);
+  font-family: var(--font-family-2);
+  /* width: 60%; */
 }
 
-.a-add-unit-page-opt-input:focus {
+.optInput:focus {
   border: none;
   /* box-shadow: var(--box-shadow-1); */
   border: 0.1rem solid var(--grey);
+}
+
+/**************************************** Mobile and Tab ********************************************/
+@media (max-width: 992px) and (min-width: 768px) {
+  .commonDiv {
+    margin-bottom: 2rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .commonDiv {
+    margin-bottom: 2rem;
+  }
 }

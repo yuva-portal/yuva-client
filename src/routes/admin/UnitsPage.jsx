@@ -8,7 +8,7 @@ import { CardGrid } from "../../components/common/CardGrid";
 import Loader from "../../components/common/Loader";
 
 // My css
-import "../../css/admin/a-units-page.css";
+import css from "../../css/admin/units-page.module.css";
 
 import { SERVER_ORIGIN } from "../../utilities/constants";
 import { getVideoThumbnail } from "../../utilities/helper_functions";
@@ -228,10 +228,10 @@ const UnitsPage = () => {
   );
 
   return (
-    <div className="a-units-page-outer-div">
+    <div className={css.outerDiv}>
       <div style={{ textAlign: "center" }}>
         <button
-          className="a-units-page-add-u-btn"
+          className={`${css.addBtn} commonBtn`}
           onClick={redirectToAddUnitPage}
         >
           Add a new Unit

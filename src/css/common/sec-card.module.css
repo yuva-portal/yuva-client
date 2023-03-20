@@ -4,8 +4,8 @@
   box-shadow: 0 0 0.5rem 0 rgb(0, 0, 0, 0.9);
 }
 
-@media (max-width: 600px) {
+@media (max-width: 576px) {
   .outerDiv {
-    padding: 2.4rem 1.6rem;
+    padding: 2rem 1.4rem;
   }
 }

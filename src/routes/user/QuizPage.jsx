@@ -4,7 +4,7 @@ import Countdown from "react-countdown";
 import { toast } from "react-hot-toast";
 
 // My components
-import SecCard from "../../components/user/SecCard";
+import SecCard from "../../components/common/SecCard";
 import Loader from "../../components/common/Loader";
 import Party from "../../components/user/Party";
 

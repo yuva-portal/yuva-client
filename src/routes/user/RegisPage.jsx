@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { toast } from "react-hot-toast";
 
 // My components
-import SecCard from "../../components/user/SecCard";
+import SecCard from "../../components/common/SecCard";
 
 // My css
 import regisCss from "../../css/user/regis-page.module.css";

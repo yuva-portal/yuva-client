@@ -54,6 +54,7 @@ body {
   /* font-weight: 560; */
 }
 
-.btn {
+.commonBtn {
   border-radius: 0.4rem;
+  border: none;
 }

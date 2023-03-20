@@ -8,7 +8,7 @@ import { CardGrid } from "../../components/common/CardGrid";
 import Loader from "../../components/common/Loader";
 
 // My css
-import "../../css/admin/a-courses-page.css";
+import css from "../../css/admin/courses-page.module.css";
 
 import { SERVER_ORIGIN } from "../../utilities/constants";
 import { refreshScreen } from "../../utilities/helper_functions";
@@ -269,9 +269,9 @@ const CoursesPage = () => {
   );
 
   return (
-    <div className="a-courses-page-outer-div">
+    <div className={css.outerDiv}>
       <div style={{ textAlign: "center" }}>
-        <button className="a-courses-page-add-c-btn" onClick={openModal}>
+        <button className={`${css.addBtn} commonBtn`} onClick={openModal}>
           Add a new Course
         </button>
       </div>
