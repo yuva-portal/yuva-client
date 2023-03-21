@@ -245,8 +245,8 @@ const UserQuiz = () => {
           <h2 className="u-quiz-page-sec-heading">Instructions</h2>
 
           <ul className="u-quiz-page-inst-list-text">
-            {vars.quizInstructions.map((instruction) => {
-              return <li>{instruction}</li>;
+            {vars.quizInstructions.map((instruction, index) => {
+              return <li key={index}>{instruction}</li>;
             })}
           </ul>
         </div>
@@ -309,7 +309,11 @@ const UserQuiz = () => {
                           // style={{ display: "block" }}
                         >
                           <input
-                            className="form-check-input mx-3"
+                            className="form-check-input"
+                            style={{
+                              marginLeft: "0.5rem",
+                              // marginRight: "0.7rem",
+                            }}
                             type="checkbox"
                             id={quizItemIdx * 11 + optIdx + 1}
                             // defaultChecked={response[quizItemIdx][optIdx]}
@@ -320,10 +324,23 @@ const UserQuiz = () => {
                               handleResponseChange(e, quizItemIdx, optIdx);
                             }}
                           />
-                          <label>{option.text}</label>
+                          {/* <label style={{ border: "2px solid red" }}>
+                            {option.text}
+                          </label> */}
+                          <p
+                            style={{
+                              border: "2px solid white",
+                              display: "inline",
+                              marginLeft: "0.7rem",
+                            }}
+                          >
+                            {option.text}
+                          </p>
                         </div>
                       );
                     })}
+
+                    {quizItemIdx === quiz.length - 1 ? null : <hr />}
                   </div>
                 );
               })}
