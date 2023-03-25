@@ -14,14 +14,8 @@ import Cert from "../../components/user/Cert";
 import SecCard from "../../components/common/SecCard";
 
 // My css
-import "../../css/user/u-cert-page.css";
+import css from "../../css/user/cert-page.module.css";
 
-// My assets
-import yi_logo from "../../assets/images/yi_logo.png";
-import yuva_logo from "../../assets/images/yuva_logo.png";
-import cii_logo from "../../assets/images/cii_logo.jpg";
-import trophy_logo from "../../assets/images/trophy_logo.jpg";
-import sign from "../../assets/images/sign.png";
 import { downloadCertificate } from "../../utilities/helper_functions";
 
 import { SERVER_ORIGIN } from "../../utilities/constants";
@@ -39,10 +33,14 @@ const CertPage = () => {
   const params = useParams();
   // console.log(params);
 
+  const certPagePublicURL = window.location.href;
+  // console.log(certPagePublicURL);
+
   useEffect(() => {
     const getCert = async () => {
       setIsLoading(true);
       const certId = params.certId;
+
       try {
         const response = await fetch(
           `${SERVER_ORIGIN}/api/public/certificate/${certId}`,
@@ -55,7 +53,7 @@ const CertPage = () => {
         );
 
         const result = await response.json();
-        console.log(result);
+        // console.log(result);
 
         if (response.status >= 400 && response.status < 600) {
           if (response.status === 404) {
@@ -81,76 +79,67 @@ const CertPage = () => {
 
   const handleCertPDFDownload = () => {
     // console.log("downloading");
-    const certFileName = `Yuva_Portal_${certInfo.holderName}_${certInfo.unitId}`;
+
+    const certFileName = `Yuva_${certInfo.holderName}_${certInfo.unitId}`;
 
     downloadCertificate({ ...certInfo, fileName: certFileName });
   };
 
-  const URL = "https://www.youtube.com/";
-
   return (
-    <div className="u-cert-page-outer-div">
+    <div className={css.outerDiv}>
       <div className="row">
         <div className="col-lg-8">
           <div>
             <Cert certInfo={certInfo} />
           </div>
-          <div style={{ marginTop: "2rem", marginBottom: "10rem" }}>
-            <SecCard>
-              <p className="text-ff2" style={{ margin: "0" }}>
+
+          <div className={css.certDescDiv}>
+            <div className={css.certInfoDiv}>
+              <p className="text-ff2">
                 This certificate above verifies that{" "}
                 <span className="text-underline">{certInfo.holderName}</span>{" "}
-                successfully completed the course{" "}
+                has successfully completed a unit which is a part of the course{" "}
                 <span className="text-underline">{certInfo.courseName}</span> on{" "}
                 <span className="text-underline">{certInfo.passingDate}</span>{" "}
-                on Yuva Portal. The certificate indicates the entire course was
-                completed as validated by the student.
+                on Yuva Portal.
               </p>
-            </SecCard>
+            </div>
           </div>
         </div>
-        <div className="col-lg-4">
-          <div className="u-cert-page-cert-info-div">
-            <p className="u-cert-page-holder-text">Certificate holder name:</p>
-            <h3 className="u-cert-page-holder-name">{certInfo.holderName}</h3>
 
-            <p className="u-cert-page-holder-text">Course name:</p>
-            <h3 className="u-cert-page-holder-name">{certInfo.courseName}</h3>
+        <div className="col-lg-4">
+          <div className={css.certInfoDiv}>
+            <p className={css.holderText}>Certificate holder name:</p>
+            <h3 className={css.holderName}>{certInfo.holderName}</h3>
+
+            <p className={css.holderText}>Course name:</p>
+            <h3 className={css.holderName}>{certInfo.courseName}</h3>
 
             <hr></hr>
 
-            <button
-              className="u-cert-page-cert-download-btn"
-              onClick={handleCertPDFDownload}
-            >
+            <button className={css.downloadBtn} onClick={handleCertPDFDownload}>
               Download PDF
             </button>
-            <p className="u-cert-page-share-text text-ff2 text-center">
-              Or share on
-            </p>
-            <div className="u-cert-page-share-btns-div">
-              <LinkedinShareButton url={URL}>
+            <p className={css.shareText}>Or share on</p>
+            <div className={css.shareBtnDiv}>
+              <LinkedinShareButton url={certPagePublicURL}>
                 <LinkedinIcon
-                  className="u-cert-page-share-icon"
+                  className={css.shareIcon}
                   size={55}
                   round={true}
                 />
               </LinkedinShareButton>
 
-              <FacebookShareButton url={URL}>
+              <FacebookShareButton url={certPagePublicURL}>
                 <FacebookIcon
-                  className="u-cert-page-share-icon"
+                  className={css.shareIcon}
                   size={55}
                   round={true}
                 />
               </FacebookShareButton>
 
-              <TwitterShareButton url={URL}>
-                <TwitterIcon
-                  className="u-cert-page-share-icon"
-                  size={55}
-                  round={true}
-                />
+              <TwitterShareButton url={certPagePublicURL}>
+                <TwitterIcon className={css.shareIcon} size={55} round={true} />
               </TwitterShareButton>
             </div>
           </div>

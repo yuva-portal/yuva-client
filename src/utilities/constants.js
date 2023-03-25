@@ -1,5 +1,5 @@
 const SERVER_ORIGIN = "http://localhost:5000";
-// const SERVER_ORIGIN = "https://yuva-backend.onrender.com";
+// const SERVER_ORIGIN = "https://yuva-backend-v2.onrender.com";
 
 const vars = {
   quizInstructions: [
@@ -14,27 +14,43 @@ const vars = {
 
   IMAGE_SIZE_LIMIT_IN_BYTES: 3 * 1000 * 1000, // 1MB = 10^3KB = 10^6 Bytes
   IMAGE_MIME_TYPES_WHITE_LIST: ["image/jpeg", "image/png"],
+};
 
-  regisForm: {
-    fName: { minLen: 1, maxLen: 50 },
-    mName: { minLen: 0, maxLen: 50 },
-    lName: { minLen: 1, maxLen: 50 },
-    pass: { minLen: 1, maxLen: 30 },
-    cnfrmPass: { minLen: 1, maxLen: 30 },
+const validation = {
+  authForm: {
+    fName: { minLen: 1, maxLen: 60 },
+    mName: { minLen: 0, maxLen: 60 },
+    lName: { minLen: 1, maxLen: 60 },
+    userId: { minLen: 1, maxLen: 30 },
+    password: { minLen: 1, maxLen: 30 },
+    cnfrmPassword: { minLen: 1, maxLen: 30 },
     collegeName: { minLen: 1, maxLen: 120 },
-    region: { minLen: 1, maxLen: 50 },
-    branch: { minLen: 1, maxLen: 50 },
-    phone: { minLen: 1, maxLen: 12 },
+    region: { minLen: 1, maxLen: 60 },
+    branch: { minLen: 1, maxLen: 60 },
+    phone: { minLen: 1, maxLen: 20 },
     addLine1: { minLen: 1, maxLen: 120 },
     addLine2: { minLen: 1, maxLen: 120 },
-    city: { minLen: 1, maxLen: 50 },
+    city: { minLen: 1, maxLen: 60 },
     pincode: { minLen: 1, maxLen: 10 },
-    country: { minLen: 1, maxLen: 50 },
-    userId: { minLen: 1, maxLen: 30 },
+    country: { minLen: 1, maxLen: 60 },
+  },
+  verticalModal: {
+    name: { minLen: 1, maxLen: 100 },
+    desc: { minLen: 1, maxLen: 5000 },
+  },
+  unit: {
+    video: {
+      title: { minLen: 1, maxLen: 120 },
+      desc: { minLen: 1, maxLen: 500 },
+    },
+    text: {
+      minLen: 1,
+      maxLen: 5000,
+    },
   },
 };
 
-export { SERVER_ORIGIN, vars };
+export { SERVER_ORIGIN, vars, validation };
 
 /*
 Reference:

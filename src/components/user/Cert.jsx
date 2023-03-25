@@ -7,91 +7,51 @@ https://stackoverflow.com/questions/72152690/react-pdf-renderer-not-working-on-r
 */
 
 // My css
-import "../../css/user/cert.css";
+import css from "../../css/user/cert.module.css";
 
 // My assets
-import yi_logo from "../../assets/images/yi_logo.png";
-import yuva_logo from "../../assets/images/yuva_logo.png";
-import cii_logo from "../../assets/images/cii_logo.jpg";
+
 import trophy_logo from "../../assets/images/trophy_logo.jpg";
 import sign from "../../assets/images/sign.png";
-import all_logo from "../../assets/images/all_logo_5.png";
+import orgLogo from "../../assets/images/2_org_logo.png";
 
 const Cert = (props) => {
   const { certInfo } = props;
   const certificate = (
-    <div id="cert" className="cert-page-cert-outer-div">
-      <div className="cert-page-cert-inner-div">
-        <img src={all_logo} style={{ width: "100%" }} alt="all-logo" />
+    <div className={css.outerDiv}>
+      <div className={css.innerDiv}>
+        <img src={orgLogo} className={css.orgLogo} alt="org-logo" />
 
-        <h2
-          style={{
-            // fontFamily: "var(--font-family-1)",
-            margin: "0",
-            letterSpacing: "0.00px",
-          }}
-        >
-          Certificate
-        </h2>
-        <h6
-          style={{
-            // fontFamily: "var(--font-family-1)",
-            fontSize: "0.8rem",
-            letterSpacing: "0.00px",
-          }}
-        >
-          OF COMPLETION
-        </h6>
-        <h2 className="cert-page-cert-name-text">{certInfo.holderName}</h2>
-        <p
-          style={{
-            // fontFamily: "var(--font-family-2)",
-            // fontSize: "0.8rem",
-            // letterSpacing: "0.001px",
-            marginTop: "0.4rem",
-            fontSize: "0.8rem",
-            // padding: "0 4rem 0 4rem",
-          }}
-        >
-          has successfully completed the course on {certInfo.courseName} (
-          {certInfo.unitId}) <br /> on {certInfo.passingDate}
+        <h2 className={css.completionText}>Certificate of Completion</h2>
+        <h2 className={css.holderName}>{certInfo.holderName}</h2>
+        <p className={css.achieveText}>
+          has successfully completed a unit which is a part of the course{" "}
+          {certInfo.courseName} <br /> on {certInfo.passingDate}
         </p>
-        <img
-          className="cert-page-trophy-img"
-          src={trophy_logo}
-          alt="trophy-logo"
-        />
+
+        <img className={css.trophyLogo} src={trophy_logo} alt="trophy-logo" />
 
         <div className="row">
-          <div className="col-lg-4 col-md-6">
-            <img className="cert-page-sign-img" src={sign} alt="yi-logo"></img>
-            <p
-              className="cert-page-cert-desig-text"
-              style={{ letterSpacing: "0.01px" }}
-            >
+          <div className="col-lg-4 col-md-4 col-4">
+            <img className={css.signImg} src={sign} alt="sign-img" />
+            <p className={css.desigText}>
               NATIONAL <br /> YUVA CHAIR
             </p>
-            <p className="cert-page-cert-ciyi-text">CIYI</p>
+            <p className={css.ciyiText}>CIYI</p>
           </div>
-          <div className="col-lg-4 col-md-6">
-            <img className="cert-page-sign-img" src={sign} alt="yi-logo"></img>
-            <p
-              className="cert-page-cert-desig-text"
-              style={{ letterSpacing: "0.01px" }}
-            >
+          <div className="col-lg-4 col-md-4 col-4">
+            <img className={css.signImg} src={sign} alt="sign-img" />
+            <p className={css.desigText}>
               NATIONAL <br /> YUVA CO-CHAIR
             </p>
-            <p className="cert-page-cert-ciyi-text">CIYI</p>
+            <p className={css.ciyiText}>CIYI</p>
           </div>
-          <div className="col-lg-4 col-md-6">
-            <img className="cert-page-sign-img" src={sign} alt="yi-logo"></img>
-            <p
-              className="cert-page-cert-desig-text"
-              style={{ letterSpacing: "0.01px" }}
-            >
+          <div className="col-lg-4 col-md-4 col-4">
+            <img className={css.signImg} src={sign} alt="sign-img" />
+            <p className={css.desigText}>
               CHAIR <br /> YUVA
             </p>
-            <p className="cert-page-cert-ciyi-text">CIYI</p>
+            <p className={css.ciyiText}>CIYI</p>
           </div>
         </div>
       </div>

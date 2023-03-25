@@ -3,7 +3,7 @@ import { jsPDF } from "jspdf";
 // My assets
 import trophy_logo from "../assets/images/trophy_logo.jpg";
 import sign from "../assets/images/all_signs.png";
-import all_logo from "../assets/images/all_logo_5.png";
+import all_logo from "../assets/images/2_org_logo.png";
 
 /////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -72,7 +72,7 @@ const downloadCertificate = (certInfo) => {
     // Title: Certificate of Completion
     .setFont("Helvetica", "normal", "normal")
     .setFontSize(30)
-    .text("Certificate of completion", pageWidth / 2, startYMargin, {
+    .text("Certificate of Completion", pageWidth / 2, startYMargin, {
       align: "center",
     })
 
@@ -87,7 +87,7 @@ const downloadCertificate = (certInfo) => {
     .setFont("Helvetica", "normal", "normal")
     .setFontSize(13)
     .text(
-      `has successfully completed the course on ${certInfo.courseName} (Id: ${certInfo.unitId})`,
+      `has successfully completed a unit which is a part of the course ${certInfo.courseName}`,
       pageWidth / 2,
       (startYMargin += 25),
       {

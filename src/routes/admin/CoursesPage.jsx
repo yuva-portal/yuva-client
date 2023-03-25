@@ -10,7 +10,7 @@ import Loader from "../../components/common/Loader";
 // My css
 import css from "../../css/admin/courses-page.module.css";
 
-import { SERVER_ORIGIN } from "../../utilities/constants";
+import { SERVER_ORIGIN, validation } from "../../utilities/constants";
 import { refreshScreen } from "../../utilities/helper_functions";
 
 const CoursesPage = () => {
@@ -40,13 +40,13 @@ const CoursesPage = () => {
         const result = await response.json();
         // console.log(result);
 
+        setIsLoading(false);
+
         if (response.status >= 400 && response.status < 600) {
           if (response.status === 401) {
-            if ("isLoggedIn" in result && !result.isLoggedIn) {
-              navigate("/admin/login");
-            } else if ("isAdmin" in result && !result.isAdmin) {
-              navigate("/admin/login");
-            }
+            navigate("/admin/login"); // login or role issue
+          } else if (response.status === 404) {
+            toast.error(result.statusText);
           } else if (response.status === 500) {
             toast.error(result.statusText);
           }
@@ -55,10 +55,8 @@ const CoursesPage = () => {
         } else {
           // for future
         }
-
-        setIsLoading(false);
-      } catch (error) {
-        console.log(error.message);
+      } catch (err) {
+        console.log(err.message);
         setIsLoading(false);
       }
     }
@@ -76,13 +74,13 @@ const CoursesPage = () => {
   }
 
   function onChange(e) {
-    setNewCourse({ ...newCourse, [e.target.name]: e.target.value });
-    // console.log(newCourse);
+    const updatedCourse = { ...newCourse, [e.target.name]: e.target.value };
+    setNewCourse(updatedCourse);
+
+    // console.log(updatedCourse);
   }
 
-  async function handleAddCourse(e) {
-    e.preventDefault();
-
+  async function handleAddCourse() {
     const { verticalId } = params;
 
     // todo: validate input
@@ -99,12 +97,28 @@ const CoursesPage = () => {
         }
       );
 
-      const data = await response.json();
-      console.log(data);
+      const result = await response.json();
+      // console.log(result);
+
+      setIsLoading(false);
+
+      if (response.status >= 400 && response.status < 600) {
+        if (response.status === 401) {
+          navigate("/admin/login"); // login or role issue
+        } else if (response.status === 404) {
+          toast.error(result.statusText);
+        } else if (response.status === 500) {
+          toast.error(result.statusText);
+        }
+      } else if (response.ok && response.status === 200) {
+        refreshScreen();
+      } else {
+        // for future
+      }
 
       refClose.current.click();
-    } catch (error) {
-      console.log(error.message);
+    } catch (err) {
+      console.log(err.message);
     }
   }
 
@@ -128,7 +142,7 @@ const CoursesPage = () => {
   async function handleDeleteCourse() {
     const { verticalId } = params;
     const courseId = toDeleteCourseId;
-    console.log(courseId);
+    // console.log(courseId);
 
     // todo: validate input
     try {
@@ -143,13 +157,28 @@ const CoursesPage = () => {
         }
       );
 
-      const { statusText } = await response.json();
-      console.log(statusText);
+      const result = await response.json();
+      // console.log(result);
+
+      setIsLoading(false);
+
+      if (response.status >= 400 && response.status < 600) {
+        if (response.status === 401) {
+          navigate("/admin/login"); // login or role issue
+        } else if (response.status === 404) {
+          toast.error(result.statusText);
+        } else if (response.status === 500) {
+          toast.error(result.statusText);
+        }
+      } else if (response.ok && response.status === 200) {
+        refreshScreen();
+      } else {
+        // for future
+      }
 
       refClose2.current.click();
-      // refreshScreen();
-    } catch (error) {
-      console.log(error.message);
+    } catch (err) {
+      console.log(err.message);
     }
   }
 
@@ -175,7 +204,7 @@ const CoursesPage = () => {
         <div className="modal-dialog">
           <div className="modal-content">
             <div className="modal-header">
-              <h5 className="modal-title" id="exampleModalLabel">
+              <h5 className="modal-title text-ff1" id="exampleModalLabel">
                 Delete course
               </h5>
               <button
@@ -183,35 +212,31 @@ const CoursesPage = () => {
                 className="btn-close"
                 data-bs-dismiss="modal"
                 aria-label="Close"
-              >
-                {/* <i className="fa-solid fa-xmark"></i> */}
-              </button>
+              />
             </div>
             <div className="modal-body">
-              {/* Form */}
-              <form className="my-3">
-                <div className="mb-3">
-                  <label htmlFor="name" className="form-label">
-                    Confirmation
-                  </label>
-                  <input
-                    type="text"
-                    className="form-control"
-                    id="confirm"
-                    name="confirm"
-                    minLength={3}
-                    required
-                    placeholder="Type 'Confirm' to delete"
-                    value={confirmText}
-                    onChange={onConfirmTextChange}
-                  />
-                </div>
-              </form>
+              <div style={{ marginBottom: "0.8rem" }}>
+                <label htmlFor="name" className="modalLabel">
+                  Confirmation
+                </label>
+                <input
+                  type="text"
+                  className="modalInput"
+                  id="confirm"
+                  name="confirm"
+                  minLength={3}
+                  required
+                  placeholder="Type 'Confirm' to delete"
+                  value={confirmText}
+                  onChange={onConfirmTextChange}
+                  autoComplete="off"
+                />
+              </div>
             </div>
             <div className="modal-footer">
               <button
                 type="button"
-                className="btn btn-secondary"
+                className="modalCloseBtn"
                 data-bs-dismiss="modal"
                 ref={refClose2}
               >
@@ -220,8 +245,8 @@ const CoursesPage = () => {
               <button
                 onClick={handleDeleteCourse}
                 type="button"
-                className="btn btn-danger"
-                disabled={confirmText === "Confirm" ? false : true}
+                className="modalDltBtn"
+                disabled={confirmText !== "Confirm"}
               >
                 Delete course
               </button>
@@ -249,8 +274,7 @@ const CoursesPage = () => {
         <CardGrid>
           {allCourses.map((course) => (
             <div
-              className="col-lg-4 col-md-6 col-sm-12"
-              style={{ padding: "10px" }}
+              className="col-lg-4 col-md-6 col-sm-12 cardOuterDiv"
               key={course._id}
             >
               <Card
@@ -263,7 +287,7 @@ const CoursesPage = () => {
           ))}
         </CardGrid>
       ) : (
-        <h1>EMPTY</h1>
+        <h1 className="nothingText">Sorry, we found nothing</h1>
       )}
     </section>
   );
@@ -297,7 +321,7 @@ const CoursesPage = () => {
         <div className="modal-dialog">
           <div className="modal-content">
             <div className="modal-header">
-              <h5 className="modal-title" id="exampleModalLabel">
+              <h5 className="modal-title text-ff1" id="exampleModalLabel">
                 Add a new course
               </h5>
               <button
@@ -305,45 +329,44 @@ const CoursesPage = () => {
                 className="btn-close"
                 data-bs-dismiss="modal"
                 aria-label="Close"
-              ></button>
+              />
             </div>
             <div className="modal-body">
-              {/* Form */}
-              <form className="my-3">
-                <div className="mb-3">
-                  <label htmlFor="name" className="form-label">
-                    Name
-                  </label>
-                  <input
-                    type="text"
-                    className="form-control"
-                    id="name"
-                    name="name"
-                    minLength={3}
-                    onChange={onChange}
-                    required
-                  />
-                </div>
-                <div className="mb-3">
-                  <label htmlFor="description" className="form-label">
-                    Description
-                  </label>
-                  <input
-                    type="text"
-                    className="form-control"
-                    id="desc"
-                    name="desc"
-                    onChange={onChange}
-                    minLength={5}
-                    required
-                  />
-                </div>
-              </form>
+              <div style={{ marginBottom: "0.8rem" }}>
+                <label htmlFor="name" className="modalLabel">
+                  Name *
+                </label>
+                <input
+                  type="text"
+                  className="modalInput"
+                  id="name"
+                  name="name"
+                  maxLength={validation.verticalModal.name.maxLen}
+                  onChange={onChange}
+                  value={newCourse.name}
+                  autoComplete="off"
+                />
+              </div>
+              <div style={{ marginBottom: "0.8rem" }}>
+                <label htmlFor="description" className="modalLabel">
+                  Description *
+                </label>
+                <input
+                  type="text"
+                  className="modalInput"
+                  id="desc"
+                  name="desc"
+                  onChange={onChange}
+                  maxLength={validation.verticalModal.desc.maxLen}
+                  value={newCourse.desc}
+                  autoComplete="off"
+                />
+              </div>
             </div>
             <div className="modal-footer">
               <button
                 type="button"
-                className="btn btn-secondary"
+                className="modalCloseBtn"
                 data-bs-dismiss="modal"
                 ref={refClose}
               >
@@ -352,7 +375,7 @@ const CoursesPage = () => {
               <button
                 onClick={handleAddCourse}
                 type="button"
-                className="btn btn-primary"
+                className="modalAddBtn"
               >
                 Add course
               </button>

@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { toast } from "react-hot-toast";
 
 // My components
@@ -7,7 +8,7 @@ import SecCard from "../../components/common/SecCard";
 // My css
 import regisCss from "../../css/user/regis-page.module.css";
 
-import { SERVER_ORIGIN, vars } from "../../utilities/constants";
+import { SERVER_ORIGIN, vars, validation } from "../../utilities/constants";
 import { validateRegisForm } from "../../utilities/helper_functions";
 
 const GreenMsg = (props) => {
@@ -33,28 +34,28 @@ const RedMsg = (props) => {
 };
 
 const UserRegis = (props) => {
-  const [regisDetails, setRegisDetails] = useState({
-    email: "a",
-    userId: "a",
-    password: "a",
-    cnfrmPassword: "a",
-
-    fName: "aa",
-    // mName: "a",
-    lName: "a",
-
-    collegeName: "a",
-    region: "a",
-    branch: "a",
-
-    phone: "a",
-    addLine1: "a",
-    addLine2: "a",
-    city: "a",
-    pincode: "a",
-    country: "a",
+  const [regisForm, setRegisForm] = useState({
+    email: "",
+    userId: "",
+    password: "",
+    cnfrmPassword: "",
+    fName: "",
+    mName: "",
+    lName: "",
+    collegeName: "",
+    region: "",
+    branch: "",
+    phone: "",
+    addLine1: "",
+    addLine2: "",
+    city: "",
+    pincode: "",
+    country: "",
   });
 
+  const navigate = useNavigate();
+
+  const [isRegistering, setIsRegistering] = useState(false);
   const [isBtnDisabled, setIsBtnDisabled] = useState(false);
 
   const [isUserIdAvailable, setIsUserIdAvailable] = useState(false);
@@ -65,7 +66,7 @@ const UserRegis = (props) => {
 
   const checkUserIdAvailability = async () => {
     // console.log("checking user id availability");
-    if (regisDetails.userId === "") {
+    if (regisForm.userId === "") {
       return;
     }
 
@@ -77,16 +78,16 @@ const UserRegis = (props) => {
           headers: {
             "Content-Type": "application/json",
           },
-          body: JSON.stringify({ userId: regisDetails.userId }),
+          body: JSON.stringify({ userId: regisForm.userId }),
         }
       );
       const result = await response.json();
       // console.log(response);
-      console.log(result);
+      // console.log(result);
 
       if (response.status >= 400 && response.status < 600) {
         if (response.status === 500) {
-          alert("Internal server error"); // todo: toast notify
+          toast.error(result.statusText); // todo: toast notify
         }
       } else if (response.ok && response.status === 200) {
         setWasUserIdAvailabilityChecked(true);
@@ -95,59 +96,61 @@ const UserRegis = (props) => {
         // for future
       }
     } catch (err) {
-      console.log(err.message);
+      // console.log(err.message);
     }
   };
 
   const handleRegisterClick = async () => {
-    console.log("regis clicked");
-
-    // todo: trim fields
-    // const { isValid, desc } = validateRegisForm(regisDetails);
+    // todo: trim fields, validate
+    // const { isValid, desc } = validateRegisForm(regisForm);
     // if (!isValid) {
     //   // show toast
     //   return;
     // }
 
     try {
-      // setIsBtnDisabled(true);
+      setIsRegistering(true);
+      setIsBtnDisabled(true);
 
       const response = await fetch(`${SERVER_ORIGIN}/api/user/auth/register`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(regisDetails),
+        body: JSON.stringify(regisForm),
       });
 
       const result = await response.json();
       // console.log(response);
-      console.log(result);
+      // console.log(result);
+
+      setIsRegistering(false);
 
       if (response.status >= 400 && response.status < 600) {
         if (response.status === 500) {
-          toast.error("Internal server error"); // todo: toast notify
+          toast.error(result.statusText); // todo: toast notify
           setIsBtnDisabled(false); // can reclick on register btn
         }
       } else if (response.ok && response.status === 200) {
-        toast.success(result.statusText); // regis btn remains disabled
+        toast.success(result.statusText); // registered therefore regis btn remains disabled
       } else {
         // for future
       }
-    } catch (error) {
-      console.log(error.message);
+    } catch (err) {
+      // console.log(err.message);
+      setIsBtnDisabled(false); // can reclick on register btn
     }
   };
 
   const onChange = (e) => {
-    setRegisDetails((prevRegisDetails) => {
-      const newRegisDetails = {
-        ...prevRegisDetails,
+    setRegisForm((prevregisForm) => {
+      const newregisForm = {
+        ...prevregisForm,
         [e.target.name]: e.target.value,
       };
-      // console.log(newregisDetails);
+      // console.log(newregisForm);
 
-      return newRegisDetails;
+      return newregisForm;
     });
   };
 
@@ -178,8 +181,8 @@ const UserRegis = (props) => {
               name="userId"
               placeholder="xyz@*123$"
               autoComplete="off"
-              maxLength={vars.regisForm.userId.maxLen}
-              value={regisDetails.userId}
+              maxLength={validation.authForm.userId.maxLen}
+              value={regisForm.userId}
               onChange={onChange}
               onKeyDown={() => {
                 clearTimeout(userIdAvailabilityCheckTimer);
@@ -196,7 +199,7 @@ const UserRegis = (props) => {
           </div>
 
           <div style={{ marginBottom: "0.8rem" }}>
-            <label className={regisCss.regisLabel} htmlFor="pass">
+            <label className={regisCss.regisLabel} htmlFor="password">
               Password
             </label>
             <input
@@ -206,14 +209,14 @@ const UserRegis = (props) => {
               name="password"
               placeholder="@ddx*12fqa3$"
               autoComplete="off"
-              maxLength={vars.regisForm.pass.maxLen}
-              value={regisDetails.pass}
+              maxLength={validation.authForm.password.maxLen}
+              value={regisForm.password}
               onChange={onChange}
             />
           </div>
 
           <div style={{ marginBottom: "0.8rem" }}>
-            <label className={regisCss.regisLabel} htmlFor="cnfrmPass">
+            <label className={regisCss.regisLabel} htmlFor="cnfrmPassword">
               Confirm Password
             </label>
             <input
@@ -223,8 +226,8 @@ const UserRegis = (props) => {
               name="cnfrmPassword"
               placeholder="@ddx*12fqa3$"
               autoComplete="off"
-              maxLength={vars.regisForm.cnfrmPass.maxLen}
-              value={regisDetails.cnfrmPass}
+              maxLength={validation.authForm.cnfrmPassword.maxLen}
+              value={regisForm.cnfrmPassword}
               onChange={onChange}
             />
           </div>
@@ -239,7 +242,7 @@ const UserRegis = (props) => {
               id="email"
               name="email"
               placeholder="xyz@gmail.com"
-              value={regisDetails.email}
+              value={regisForm.email}
               onChange={onChange}
             />
           </div>
@@ -255,8 +258,8 @@ const UserRegis = (props) => {
               name="fName"
               placeholder="Apoorv"
               autoComplete="off"
-              maxLength={vars.regisForm.fName.maxLen}
-              value={regisDetails.fName}
+              maxLength={validation.authForm.fName.maxLen}
+              value={regisForm.fName}
               onChange={onChange}
             />
           </div>
@@ -272,8 +275,8 @@ const UserRegis = (props) => {
               name="mName"
               placeholder="Jain"
               autoComplete="off"
-              maxLength={vars.regisForm.mName.maxLen}
-              value={regisDetails.mName}
+              maxLength={validation.authForm.mName.maxLen}
+              value={regisForm.mName}
               onChange={onChange}
             />
           </div>
@@ -289,8 +292,8 @@ const UserRegis = (props) => {
               name="lName"
               placeholder="Jain"
               autoComplete="off"
-              maxLength={vars.regisForm.lName.maxLen}
-              value={regisDetails.lName}
+              maxLength={validation.authForm.lName.maxLen}
+              value={regisForm.lName}
               onChange={onChange}
             />
           </div>
@@ -306,8 +309,8 @@ const UserRegis = (props) => {
               name="collegeName"
               placeholder="Lakshmi Narain College of Technology"
               autoComplete="off"
-              maxLength={vars.regisForm.collegeName.maxLen}
-              value={regisDetails.collegeName}
+              maxLength={validation.authForm.collegeName.maxLen}
+              value={regisForm.collegeName}
               onChange={onChange}
             />
           </div>
@@ -323,8 +326,8 @@ const UserRegis = (props) => {
               name="region"
               placeholder="Region"
               autoComplete="off"
-              maxLength={vars.regisForm.region.maxLen}
-              value={regisDetails.region}
+              maxLength={validation.authForm.region.maxLen}
+              value={regisForm.region}
               onChange={onChange}
             />
           </div>
@@ -340,8 +343,8 @@ const UserRegis = (props) => {
               name="branch"
               placeholder="Computer Science and Engineering"
               autoComplete="off"
-              maxLength={vars.regisForm.branch.maxLen}
-              value={regisDetails.branch}
+              maxLength={validation.authForm.branch.maxLen}
+              value={regisForm.branch}
               onChange={onChange}
             />
           </div>
@@ -357,9 +360,9 @@ const UserRegis = (props) => {
               name="phone"
               placeholder="9998887776"
               autoComplete="off"
-              maxLength={vars.regisForm.phone.maxLen}
+              maxLength={validation.authForm.phone.maxLen}
               pattern="[0-9]{3} [0-9]{3} [0-9]{4}"
-              value={regisDetails.phone}
+              value={regisForm.phone}
               onChange={onChange}
             />
           </div>
@@ -375,9 +378,9 @@ const UserRegis = (props) => {
               name="addLine1"
               placeholder="Address line 1"
               autoComplete="off"
-              maxLength={vars.regisForm.addLine1.maxLen}
+              maxLength={validation.authForm.addLine1.maxLen}
               pattern="[0-9]{3} [0-9]{3} [0-9]{4}"
-              value={regisDetails.addLine1}
+              value={regisForm.addLine1}
               onChange={onChange}
             />
           </div>
@@ -393,8 +396,8 @@ const UserRegis = (props) => {
               name="addLine2"
               placeholder="Address line 2"
               autoComplete="off"
-              maxLength={vars.regisForm.addLine2.maxLen}
-              value={regisDetails.addLine2}
+              maxLength={validation.authForm.addLine2.maxLen}
+              value={regisForm.addLine2}
               onChange={onChange}
             />
           </div>
@@ -410,8 +413,8 @@ const UserRegis = (props) => {
               name="city"
               placeholder="Vidisha"
               autoComplete="off"
-              maxLength={vars.regisForm.city.maxLen}
-              value={regisDetails.city}
+              maxLength={validation.authForm.city.maxLen}
+              value={regisForm.city}
               onChange={onChange}
             />
           </div>
@@ -427,8 +430,8 @@ const UserRegis = (props) => {
               name="pincode"
               placeholder="464001"
               autoComplete="off"
-              maxLength={vars.regisForm.pincode.maxLen}
-              value={regisDetails.pincode}
+              maxLength={validation.authForm.pincode.maxLen}
+              value={regisForm.pincode}
               onChange={onChange}
             />
           </div>
@@ -444,8 +447,8 @@ const UserRegis = (props) => {
               name="country"
               placeholder="India"
               autoComplete="off"
-              maxLength={vars.regisForm.country.maxLen}
-              value={regisDetails.country}
+              maxLength={validation.authForm.country.maxLen}
+              value={regisForm.country}
               onChange={onChange}
             />
           </div>
@@ -455,7 +458,7 @@ const UserRegis = (props) => {
               className={regisCss.regisBtn}
               disabled={isBtnDisabled}
             >
-              Register
+              {isRegistering ? "Registering ..." : "Register"}
             </button>
           </div>
         </div>

@@ -26,7 +26,9 @@ const Navbar = () => {
 
   return (
     <nav className={`${css.outerNav} navbar navbar-expand-lg fixed-top`}>
-      <img src={img} alt="yi-logo" className={css.yiImg} />
+      <Link to="/" style={{ marginRight: "1rem" }}>
+        <img src={img} alt="yi-logo" className={css.yiImg} />
+      </Link>
       <button
         type="button"
         className="navbar-toggler"

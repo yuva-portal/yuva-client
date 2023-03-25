@@ -20,8 +20,9 @@ const LoginPage = () => {
   const navigate = useNavigate();
 
   const handleSubmit = async () => {
+    setIsLoading(true);
+
     try {
-      setIsLoading(true);
       const response = await fetch(`${SERVER_ORIGIN}/api/admin/auth/login`, {
         method: "POST",
         headers: {
@@ -31,7 +32,7 @@ const LoginPage = () => {
       });
 
       const result = await response.json();
-      console.log(response);
+      // console.log(response);
 
       setIsLoading(false);
 
@@ -50,7 +51,7 @@ const LoginPage = () => {
         if ("token" in result) {
           const token = result.token;
           localStorage.setItem("token", token);
-          navigate("/admin/");
+          navigate("/admin/services");
         }
       } else {
         // for future
@@ -59,14 +60,6 @@ const LoginPage = () => {
       console.log(error.message);
     }
   };
-
-  // const onChange = (e) => {
-  //   setCreds((prevCreds) => {
-  //     return { ...prevCreds, [e.target.name]: e.target.value };
-  //   });
-
-  //   console.log(creds);
-  // };
 
   const updateCreds = (e) => {
     setCreds((prevCreds) => {
@@ -87,6 +80,7 @@ const LoginPage = () => {
         password={creds.password}
         onChange={updateCreds}
         onClick={handleSubmit}
+        isBtnDisabled={isLoading}
       />
     </div>
   );

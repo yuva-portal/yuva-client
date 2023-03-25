@@ -11,7 +11,6 @@ const TextInput = (props) => {
       label="Text"
       placeholder="Text"
       rows={10}
-      // cols={100}
       width={100}
       value={props.value}
       onChange={(e) => {

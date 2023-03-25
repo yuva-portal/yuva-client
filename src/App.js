@@ -4,6 +4,7 @@ import { Toaster } from "react-hot-toast";
 // My components
 import UserNavbar from "./components/user/Navbar";
 import AdminNavbar from "./components/admin/Navbar";
+import Footer from "./components/common/Footer";
 
 import UserHome from "./routes/user/HomePage";
 import UserLogin from "./routes/user/LoginPage";
@@ -23,7 +24,6 @@ import AdminVerticals from "./routes/admin/VerticalsPage";
 import AdminCourses from "./routes/admin/CoursesPage.jsx";
 import AdminUnits from "./routes/admin/UnitsPage";
 import AdminAddUnit from "./routes/admin/AddUnitPage";
-import AddUsersPage from "./routes/admin/AddUsersPage";
 
 import "./App.css";
 
@@ -64,10 +64,9 @@ function UserApp() {
 function AdminApp() {
   return (
     <Routes>
-      <Route path="/admin/" element={<AdminHome />} />
+      <Route path="/admin/services" element={<AdminHome />} />
       <Route path="/admin/courses" element={<AdminCourses />} />
       <Route path="/admin/login" element={<AdminLogin />} />
-      <Route path="/admin/add-users" element={<AddUsersPage />} />
       <Route path="/admin/verticals/all" element={<AdminVerticals />} />
       <Route
         path="/admin/verticals/:verticalId/courses/all"
@@ -95,6 +94,8 @@ function App() {
           <UserApp />
           <AdminApp />
         </div>
+
+        <Footer />
 
         <Toaster
           toastOptions={{

@@ -1,10 +1,18 @@
 import React from "react";
 import SyncLoader from "react-spinners/SyncLoader";
 
+/*
+Reference: 
+Center align a div:
+https://stackoverflow.com/questions/5012111/how-to-position-a-div-in-the-middle-of-the-screen-when-the-page-is-bigger-than-t
+*/
+
 const override = {
-  margin: "auto",
-  width: "fit-content",
-  marginTop: "25%",
+  position: "fixed",
+  top: "50%",
+  left: "50%",
+  width: "200px",
+  marginLeft: "-100px",
   textAlign: "center",
 };
 

@@ -20,8 +20,9 @@ const LoginPage = () => {
   const navigate = useNavigate();
 
   const handleSubmit = async () => {
+    setIsLoading(true);
+
     try {
-      setIsLoading(true);
       const response = await fetch(`${SERVER_ORIGIN}/api/user/auth/login`, {
         method: "POST",
         headers: {
@@ -31,16 +32,13 @@ const LoginPage = () => {
       });
 
       const result = await response.json();
-      console.log(response);
+      // console.log(response);
 
       setIsLoading(false);
 
       if (response.status >= 400 && response.status < 600) {
         if (response.status === 401) {
-          if (
-            !("areCredsInvalid" in result) ||
-            result.areCredsInvalid === true
-          ) {
+          if (!("areCredsInvalid" in result) || result.areCredsInvalid) {
             toast.error(result.statusText);
           }
         } else {
@@ -55,8 +53,8 @@ const LoginPage = () => {
       } else {
         // for future
       }
-    } catch (error) {
-      console.log(error.message);
+    } catch (err) {
+      console.log(err.message);
     }
   };
 

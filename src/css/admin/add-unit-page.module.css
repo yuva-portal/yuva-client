@@ -70,7 +70,10 @@
 
 .addBtn:hover {
   background-color: var(--yuva-dark-blue);
-  color: white;
+}
+
+.addBtn:disabled {
+  /* background-color: yellow; */
 }
 
 .optInput {

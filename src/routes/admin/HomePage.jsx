@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
 // My components
@@ -9,8 +9,43 @@ import SecCard from "../../components/common/SecCard";
 // My css
 import css from "../../css/admin/home-page.module.css";
 
+import { SERVER_ORIGIN } from "../../utilities/constants";
+
 const HomePage = () => {
   const navigate = useNavigate();
+
+  useEffect(() => {
+    async function canVisitPage() {
+      try {
+        const response = await fetch(
+          `${SERVER_ORIGIN}/api/admin/auth/verify-token`,
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              "auth-token": localStorage.getItem("token"),
+            },
+          }
+        );
+
+        const result = await response.json();
+        // console.log(result);
+
+        if (response.status >= 400 && response.status < 600) {
+          if (response.status === 401) {
+            navigate("/admin/login");
+          }
+        } else if (response.ok && response.status === 200) {
+        } else {
+          // for future
+        }
+      } catch (err) {
+        // console.log(err.message);
+      }
+    }
+
+    canVisitPage();
+  }, []);
 
   function handleServiceClick() {
     navigate("/admin/verticals/all");

@@ -11,7 +11,10 @@ import Loader from "../../components/common/Loader";
 import css from "../../css/admin/units-page.module.css";
 
 import { SERVER_ORIGIN } from "../../utilities/constants";
-import { getVideoThumbnail } from "../../utilities/helper_functions";
+import {
+  getVideoThumbnail,
+  refreshScreen,
+} from "../../utilities/helper_functions";
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -41,13 +44,13 @@ const UnitsPage = () => {
         const result = await response.json();
         // console.log(result);
 
+        setIsLoading(false);
+
         if (response.status >= 400 && response.status < 600) {
           if (response.status === 401) {
-            if ("isLoggedIn" in result && !result.isLoggedIn) {
-              navigate("/admin/login");
-            } else if ("isAdmin" in result && !result.isAdmin) {
-              navigate("/admin/login");
-            }
+            navigate("/admin/login"); // login or role issue
+          } else if (response.status === 404) {
+            toast.error(result.statusText);
           } else if (response.status === 500) {
             toast.error(result.statusText);
           }
@@ -56,10 +59,8 @@ const UnitsPage = () => {
         } else {
           // for future
         }
-
-        setIsLoading(false);
-      } catch (error) {
-        console.log(error.message);
+      } catch (err) {
+        console.log(err.message);
         setIsLoading(false);
       }
     }
@@ -111,14 +112,29 @@ const UnitsPage = () => {
         }
       );
 
-      const { statusText } = await response.json();
-      console.log(statusText);
+      const result = await response.json();
+      // console.log(result);
 
-      refClose.current.click();
-      // refreshScreen();
-    } catch (error) {
-      console.log(error.message);
+      setIsLoading(false);
+
+      if (response.status >= 400 && response.status < 600) {
+        if (response.status === 401) {
+          navigate("/admin/login"); // login or role issue
+        } else if (response.status === 404) {
+          toast.error(result.statusText);
+        } else if (response.status === 500) {
+          toast.error(result.statusText);
+        }
+      } else if (response.ok && response.status === 200) {
+        refreshScreen();
+      } else {
+        // for future
+      }
+    } catch (err) {
+      console.log(err.message);
     }
+
+    refClose.current.click();
   }
 
   const deleteModal = (
@@ -143,7 +159,7 @@ const UnitsPage = () => {
         <div className="modal-dialog">
           <div className="modal-content">
             <div className="modal-header">
-              <h5 className="modal-title" id="exampleModalLabel">
+              <h5 className="modal-title text-ff1" id="exampleModalLabel">
                 Delete Unit
               </h5>
               <button
@@ -151,35 +167,31 @@ const UnitsPage = () => {
                 className="btn-close"
                 data-bs-dismiss="modal"
                 aria-label="Close"
-              >
-                {/* <i className="fa-solid fa-xmark"></i> */}
-              </button>
+              />
             </div>
             <div className="modal-body">
-              {/* Form */}
-              <form className="my-3">
-                <div className="mb-3">
-                  <label htmlFor="name" className="form-label">
-                    Confirmation
-                  </label>
-                  <input
-                    type="text"
-                    className="form-control"
-                    id="confirm"
-                    name="confirm"
-                    minLength={3}
-                    required
-                    placeholder="Type 'Confirm' to delete"
-                    value={confirmText}
-                    onChange={onConfirmTextChange}
-                  />
-                </div>
-              </form>
+              <div style={{ marginBottom: "0.8rem" }}>
+                <label htmlFor="name" className="modalLabel">
+                  Confirmation
+                </label>
+                <input
+                  type="text"
+                  className="modalInput"
+                  id="confirm"
+                  name="confirm"
+                  minLength={3}
+                  required
+                  placeholder="Type 'Confirm' to delete"
+                  value={confirmText}
+                  onChange={onConfirmTextChange}
+                  autoComplete="off"
+                />
+              </div>
             </div>
             <div className="modal-footer">
               <button
                 type="button"
-                className="btn btn-secondary"
+                className="modalCloseBtn"
                 data-bs-dismiss="modal"
                 ref={refClose}
               >
@@ -188,8 +200,8 @@ const UnitsPage = () => {
               <button
                 onClick={handleDeleteUnit}
                 type="button"
-                className="btn btn-danger"
-                disabled={confirmText === "Confirm" ? false : true}
+                className="modalDltBtn"
+                disabled={confirmText !== "Confirm"}
               >
                 Delete unit
               </button>
@@ -212,8 +224,7 @@ const UnitsPage = () => {
 
             return (
               <div
-                className="col-lg-4 col-md-6 col-sm-12"
-                style={{ padding: "10px" }}
+                className="col-lg-4 col-md-6 col-sm-12 cardOuterDiv"
                 key={unit._id}
               >
                 <Card data={unit} type="unit" onDeleteClick={openDeleteModal} />
@@ -222,7 +233,7 @@ const UnitsPage = () => {
           })}
         </CardGrid>
       ) : (
-        <h1>EMPTY</h1>
+        <h1 className="nothingText">Sorry, we found nothing</h1>
       )}
     </section>
   );

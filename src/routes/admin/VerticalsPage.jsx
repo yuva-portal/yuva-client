@@ -11,7 +11,7 @@ import Loader from "../../components/common/Loader";
 // My css
 import css from "../../css/admin/verticals-page.module.css";
 
-import { SERVER_ORIGIN } from "../../utilities/constants";
+import { SERVER_ORIGIN, validation } from "../../utilities/constants";
 import { refreshScreen } from "../../utilities/helper_functions";
 
 //////////////////////////////////////////////////////////////////////////////////////////////
@@ -19,12 +19,18 @@ import { refreshScreen } from "../../utilities/helper_functions";
 const VerticalsPage = () => {
   const [allVerticals, setAllVerticals] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
-  const [newVertical, setNewVertical] = useState({ name: "", desc: "" });
+  const [newVertical, setNewVertical] = useState({
+    name: "",
+    desc: "",
+    imgSrc: "",
+  });
+
   const navigate = useNavigate();
 
   useEffect(() => {
-    setIsLoading(true);
     async function getAllVerticals() {
+      setIsLoading(true);
+
       try {
         const response = await fetch(
           `${SERVER_ORIGIN}/api/admin/auth/verticals/all`,
@@ -40,13 +46,11 @@ const VerticalsPage = () => {
         const result = await response.json();
         // console.log(result);
 
+        setIsLoading(false);
+
         if (response.status >= 400 && response.status < 600) {
           if (response.status === 401) {
-            if ("isLoggedIn" in result && !result.isLoggedIn) {
-              navigate("/admin/login");
-            } else if ("isAdmin" in result && !result.isAdmin) {
-              navigate("/admin/login");
-            }
+            navigate("/admin/login");
           } else if (response.status === 500) {
             toast.error(result.statusText);
           }
@@ -55,10 +59,8 @@ const VerticalsPage = () => {
         } else {
           // for future
         }
-
-        setIsLoading(false);
-      } catch (error) {
-        console.log(error.message);
+      } catch (err) {
+        // console.log(err.message);
         setIsLoading(false);
       }
     }
@@ -76,13 +78,13 @@ const VerticalsPage = () => {
   }
 
   function onAddChange(e) {
-    setNewVertical({ ...newVertical, [e.target.name]: e.target.value });
-    console.log(newVertical);
+    const updatedVertical = { ...newVertical, [e.target.name]: e.target.value };
+    setNewVertical(updatedVertical);
+
+    // console.log(updatedVertical);
   }
 
-  async function handleAddVertical(e) {
-    e.preventDefault();
-
+  async function handleAddVertical() {
     // todo: validate input
     try {
       const response = await fetch(
@@ -97,13 +99,25 @@ const VerticalsPage = () => {
         }
       );
 
-      const data = await response.json();
-      // console.log(data);
+      const result = await response.json();
+      console.log(result);
+
+      if (response.status >= 400 && response.status < 600) {
+        if (response.status === 401) {
+          navigate("/admin/login"); // login or role issue
+        } else if (response.status === 500) {
+          toast.error(result.statusText);
+        }
+      } else if (response.ok && response.status === 200) {
+        refreshScreen();
+        // set fields in modal to empty if not refreshing scrn
+      } else {
+        // for future
+      }
 
       refClose.current.click();
-      // refreshScreen();
-    } catch (error) {
-      console.log(error.message);
+    } catch (err) {
+      console.log(err.message);
     }
   }
 
@@ -145,11 +159,25 @@ const VerticalsPage = () => {
         }
       );
 
-      const { statusText } = await response.json();
-      console.log(statusText);
+      const result = await response.json();
+      console.log(result);
+
+      if (response.status >= 400 && response.status < 600) {
+        if (response.status === 401) {
+          navigate("/admin/login"); // login or role issue
+        } else if (response.status === 404) {
+          toast.error(result.statusText);
+        } else if (response.status === 500) {
+          toast.error(result.statusText);
+        }
+      } else if (response.ok && response.status === 200) {
+        refreshScreen();
+        // set fields in modal to empty if not refreshing scrn
+      } else {
+        // for future
+      }
 
       refClose2.current.click();
-      // refreshScreen();
     } catch (error) {
       console.log(error.message);
     }
@@ -177,7 +205,7 @@ const VerticalsPage = () => {
         <div className="modal-dialog">
           <div className="modal-content">
             <div className="modal-header">
-              <h5 className="modal-title" id="exampleModalLabel">
+              <h5 className="modal-title text-ff1" id="exampleModalLabel">
                 Delete vertical
               </h5>
               <button
@@ -185,35 +213,29 @@ const VerticalsPage = () => {
                 className="btn-close"
                 data-bs-dismiss="modal"
                 aria-label="Close"
-              >
-                {/* <i className="fa-solid fa-xmark"></i> */}
-              </button>
+              />
             </div>
             <div className="modal-body">
-              {/* Form */}
-              <form className="my-3">
-                <div className="mb-3">
-                  <label htmlFor="name" className="form-label">
-                    Confirmation
-                  </label>
-                  <input
-                    type="text"
-                    className="form-control"
-                    id="confirm"
-                    name="confirm"
-                    minLength={3}
-                    required
-                    placeholder="Type 'Confirm' to delete"
-                    value={confirmText}
-                    onChange={onConfirmTextChange}
-                  />
-                </div>
-              </form>
+              <div style={{ marginBottom: "1rem" }}>
+                <label htmlFor="confirm" className="modalLabel">
+                  Confirmation
+                </label>
+                <input
+                  type="text"
+                  className="modalInput"
+                  id="confirm"
+                  autoComplete="off"
+                  name="confirm"
+                  placeholder="Type 'Confirm' to delete"
+                  value={confirmText}
+                  onChange={onConfirmTextChange}
+                />
+              </div>
             </div>
             <div className="modal-footer">
               <button
                 type="button"
-                className="btn btn-secondary"
+                className="modalCloseBtn"
                 data-bs-dismiss="modal"
                 ref={refClose2}
               >
@@ -222,8 +244,8 @@ const VerticalsPage = () => {
               <button
                 onClick={handleDeleteVertical}
                 type="button"
-                className="btn btn-danger"
-                disabled={confirmText === "Confirm" ? false : true}
+                className="modalDltBtn"
+                disabled={confirmText !== "Confirm"}
               >
                 Delete Vertical
               </button>
@@ -242,8 +264,7 @@ const VerticalsPage = () => {
         <CardGrid>
           {allVerticals.map((vertical) => (
             <div
-              className="col-lg-4 col-md-6 col-sm-12"
-              style={{ padding: "10px" }}
+              className="col-lg-4 col-md-6 col-sm-12 cardOuterDiv"
               key={vertical._id}
             >
               <Card
@@ -256,7 +277,7 @@ const VerticalsPage = () => {
           ))}
         </CardGrid>
       ) : (
-        <h1>EMPTY</h1>
+        <h1 className="nothingText">Sorry, we found nothing</h1>
       )}
     </section>
   );
@@ -301,7 +322,7 @@ const VerticalsPage = () => {
         <div className="modal-dialog">
           <div className="modal-content">
             <div className="modal-header">
-              <h5 className="modal-title" id="exampleModalLabel">
+              <h5 className="modal-title text-ff1" id="exampleModalLabel">
                 Add a new vertical
               </h5>
               <button
@@ -309,61 +330,59 @@ const VerticalsPage = () => {
                 className="btn-close"
                 data-bs-dismiss="modal"
                 aria-label="Close"
-              >
-                {/* <i className="fa-solid fa-xmark"></i> */}
-              </button>
+              />
             </div>
             <div className="modal-body">
-              {/* Form */}
-              <form className="my-3">
-                <div className="mb-3">
-                  <label htmlFor="name" className="form-label">
-                    Name
-                  </label>
-                  <input
-                    type="text"
-                    className="form-control"
-                    id="name"
-                    name="name"
-                    minLength={3}
-                    onChange={onAddChange}
-                    required
-                  />
-                </div>
-                <div className="mb-3">
-                  <label htmlFor="description" className="form-label">
-                    Description
-                  </label>
-                  <input
-                    type="text"
-                    className="form-control"
-                    id="desc"
-                    name="desc"
-                    onChange={onAddChange}
-                    minLength={5}
-                    required
-                  />
-                </div>
-                <div className="mb-3">
-                  <label htmlFor="imgSrc" className="form-label">
-                    Image Source
-                  </label>
-                  <input
-                    type="text"
-                    className="form-control"
-                    id="imgSrc"
-                    name="imgSrc"
-                    onChange={onAddChange}
-                    minLength={5}
-                    required
-                  />
-                </div>
-              </form>
+              <div style={{ marginBottom: "0.8rem" }}>
+                <label htmlFor="name" className="modalLabel">
+                  Name *
+                </label>
+                <input
+                  type="text"
+                  className="modalInput"
+                  id="name"
+                  name="name"
+                  minLength={1}
+                  maxLength={validation.verticalModal.name.maxLen}
+                  onChange={onAddChange}
+                  value={newVertical.name}
+                  autoComplete="off"
+                />
+              </div>
+              <div className="mb-3">
+                <label htmlFor="description" className="modalLabel">
+                  Description *
+                </label>
+                <input
+                  type="text"
+                  className="modalInput"
+                  id="desc"
+                  name="desc"
+                  onChange={onAddChange}
+                  maxLength={validation.verticalModal.desc.maxLen}
+                  value={newVertical.desc}
+                  autoComplete="off"
+                />
+              </div>
+              <div className="mb-3">
+                <label htmlFor="imgSrc" className="modalLabel">
+                  Image Source *
+                </label>
+                <input
+                  type="text"
+                  className="modalInput"
+                  id="imgSrc"
+                  name="imgSrc"
+                  onChange={onAddChange}
+                  value={newVertical.imgSrc}
+                  autoComplete="off"
+                />
+              </div>
             </div>
             <div className="modal-footer">
               <button
                 type="button"
-                className="btn btn-secondary"
+                className="modalCloseBtn"
                 data-bs-dismiss="modal"
                 ref={refClose}
               >
@@ -372,7 +391,7 @@ const VerticalsPage = () => {
               <button
                 onClick={handleAddVertical}
                 type="button"
-                className="btn btn-primary"
+                className="modalAddBtn"
               >
                 Add Vertical
               </button>

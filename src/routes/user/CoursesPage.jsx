@@ -103,8 +103,7 @@ const CoursesPage = () => {
         <CardGrid>
           {allCourses.map((course) => (
             <div
-              className={`col-lg-4 col-md-6 col-sm-12 ${css.cardOuterDiv}`}
-              style={{ padding: "10px" }}
+              className="col-lg-4 col-md-6 col-sm-12 cardOuterDiv"
               key={course._id}
             >
               <Card data={course} type="course" onClick={handleViewUnits} />
@@ -112,7 +111,7 @@ const CoursesPage = () => {
           ))}
         </CardGrid>
       ) : (
-        <h1>EMPTY</h1>
+        <h1 className="nothingText">Sorry, we found nothing</h1>
       )}
     </div>
   );

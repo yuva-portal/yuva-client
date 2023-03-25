@@ -16,16 +16,6 @@ import { SERVER_ORIGIN } from "../../utilities/constants";
 // TODO: VALIDATION
 // ! check response codes
 
-const DEFAULT_QUIZ_ITEM_OBJ = {
-  question: "",
-  options: [
-    { text: "", isChecked: false },
-    { text: "", isChecked: false },
-    { text: "", isChecked: false },
-    { text: "", isChecked: false },
-  ],
-};
-
 ////////////////////////////////////////////////////////////////////////////////////////////////
 
 function AddActivityBtn(props) {
@@ -83,7 +73,8 @@ const AdminAddUnit = () => {
   ///////////////////////////////////////////////////////////////////////////////
 
   function onTextChange(e) {
-    console.log(e.target.value);
+    // console.log(e.target.value);
+
     setText(e.target.value);
   }
 
@@ -172,9 +163,9 @@ const AdminAddUnit = () => {
   ///////////////////////////////////////////////////////////////////////////////////////////
 
   async function handleAddUnit() {
-    // setIsAddUnitBtnDisabled(true);
+    setIsAddUnitBtnDisabled(true);
     const { verticalId, courseId } = params;
-    console.log(params);
+    // console.log(params);
 
     try {
       const unit = {
@@ -196,21 +187,35 @@ const AdminAddUnit = () => {
         }
       );
 
-      const data = await response.json();
-      console.log(data);
       setIsAddUnitBtnDisabled(false);
 
+      const result = await response.json();
+      // console.log(result);
+
+      if (response.status >= 400 && response.status < 600) {
+        if (response.status === 401) {
+          navigate("/admin/login"); // login or role issue
+        } else if (response.status === 404) {
+          toast.error(result.statusText);
+        } else if (response.status === 500) {
+          toast.error(result.statusText);
+        }
+      } else if (response.ok && response.status === 200) {
+        toast.success(result.statusText);
+      } else {
+        // for future
+      }
+
       // navigate(`/admin/verticals/${verticalId}/courses/${courseId}/units/all`);
-    } catch (error) {
-      console.log(error.message);
+    } catch (err) {
+      console.log(err.message);
     }
   }
 
   return (
     <div className={css.outerDiv}>
-      <div>
-        <h1 className={css.headingText}>Adding a new unit for course</h1>
-      </div>
+      <h1 className={css.headingText}>Adding a new unit for course</h1>
+
       <div className={css.commonDiv}>
         <SecCard>
           <h2 className="text-ff1">Video</h2>
@@ -244,14 +249,7 @@ const AdminAddUnit = () => {
       <div className={css.commonDiv}>
         <SecCard>
           <h2 className="text-ff1">Text</h2>
-          <TextInput
-            name="text"
-            id="text"
-            label="Text"
-            placeholder="..."
-            value={text}
-            onChange={onTextChange}
-          />
+          <TextInput value={text} onChange={onTextChange} />
         </SecCard>
       </div>
 

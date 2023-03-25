@@ -25,6 +25,7 @@ const VerticalsPage = () => {
   useEffect(() => {
     async function getAllVerticals() {
       setIsLoading(true);
+
       try {
         const response = await fetch(
           `${SERVER_ORIGIN}/api/user/auth/verticals/all`,
@@ -79,7 +80,7 @@ const VerticalsPage = () => {
           <CardGrid>
             {allVerticals.map((vertical) => (
               <div
-                className={`col-lg-4 col-md-6 col-sm-12 ${css.cardOuterDiv}`}
+                className="col-lg-4 col-md-6 col-sm-12 cardOuterDiv"
                 key={vertical._id}
               >
                 <Card
@@ -91,7 +92,7 @@ const VerticalsPage = () => {
             ))}
           </CardGrid>
         ) : (
-          <h1>EMPTY</h1>
+          <h1 className="nothingText">Sorry, we found nothing</h1>
         )}
       </section>
     </div>

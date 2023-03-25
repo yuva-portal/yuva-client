@@ -48,8 +48,16 @@
   font-family: var(--font-family-2);
 }
 
-.btn:hover {
-  background-color: var(--yuva-dark-blue);
+@media (hover) {
+  .btn:hover {
+    background-color: var(--yuva-dark-blue);
+  }
+}
+
+@media (hover: none) {
+  .btn:active {
+    background-color: var(--yuva-dark-blue);
+  }
 }
 
 .forgotPassText {

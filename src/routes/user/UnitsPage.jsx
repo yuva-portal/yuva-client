@@ -104,8 +104,7 @@ const UserUnits = () => {
 
           return (
             <div
-              className={`col-lg-4 col-md-6 col-sm-12 ${css.cardOuterDiv}`}
-              style={{ padding: "10px" }}
+              className="col-lg-4 col-md-6 col-sm-12 cardOuterDiv"
               key={unit._id}
             >
               <Card data={unit} type="unit" onClick={handleViewUnit} />
