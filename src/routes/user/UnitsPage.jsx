@@ -42,9 +42,7 @@ const UserUnits = () => {
 
         // console.log(response);
         const result = await response.json();
-        // console.log(response);
-        console.log("From units/all:", result);
-        setCourseInfo(result.courseDoc);
+        console.log(result);
 
         if (response.status >= 400 && response.status < 600) {
           if (response.status === 401) {
@@ -61,6 +59,7 @@ const UserUnits = () => {
             alert("Internal server error"); // todo: toast notify
           }
         } else if (response.ok && response.status === 200) {
+          setCourseInfo(result.courseInfo);
           setAllUnits(result.allUnits);
         } else {
           // for future

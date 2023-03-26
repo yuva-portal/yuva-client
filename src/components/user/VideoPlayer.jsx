@@ -57,10 +57,11 @@ const VideoPlayer = (props) => {
 
   async function updateVdoProgress() {
     const { verticalId, courseId, unitId } = params;
-    console.log(params);
+    // console.log(params);
+
     let watchTimeInPercent = (watchTimeInSec * 100) / totalDurationInSec;
     watchTimeInPercent = roundOffDecimalPlaces(watchTimeInPercent, 2);
-    console.log(watchTimeInPercent);
+    // console.log(watchTimeInPercent);
 
     try {
       const response = await fetch(
@@ -76,23 +77,23 @@ const VideoPlayer = (props) => {
       );
 
       const result = await response.json();
-      console.log("Watch response: ", result);
+      // console.log("Watch response: ", result);
 
       if (response.status >= 400 && response.status < 600) {
         if (response.status === 401) {
           if (!("isLoggedIn" in result) || result.isLoggedIn === false) {
-            console.log("go to login");
+            // console.log("go to login");
           }
         } else {
           alert("Internal server error"); // todo: toast notify
         }
       } else if (response.ok && response.status === 200) {
-        console.log(result);
+        // console.log(result);
       } else {
         // for future
       }
     } catch (error) {
-      console.log(error.message);
+      // console.log(error.message);
     }
   }
 

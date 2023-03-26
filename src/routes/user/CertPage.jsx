@@ -12,6 +12,7 @@ import {
 // My components
 import Cert from "../../components/user/Cert";
 import SecCard from "../../components/common/SecCard";
+import Loader from "../../components/common/Loader";
 
 // My css
 import css from "../../css/user/cert-page.module.css";
@@ -86,66 +87,85 @@ const CertPage = () => {
   };
 
   return (
-    <div className={css.outerDiv}>
-      <div className="row">
-        <div className="col-lg-8">
-          <div>
-            <Cert certInfo={certInfo} />
-          </div>
+    <>
+      {isLoading ? (
+        <Loader />
+      ) : (
+        <div className={css.outerDiv}>
+          <div className="row">
+            <div className="col-lg-8">
+              <Cert certInfo={certInfo} />
 
-          <div className={css.certDescDiv}>
-            <div className={css.certInfoDiv}>
-              <p className="text-ff2">
-                This certificate above verifies that{" "}
-                <span className="text-underline">{certInfo.holderName}</span>{" "}
-                has successfully completed a unit which is a part of the course{" "}
-                <span className="text-underline">{certInfo.courseName}</span> on{" "}
-                <span className="text-underline">{certInfo.passingDate}</span>{" "}
-                on Yuva Portal.
-              </p>
+              <div className={css.certDescDiv}>
+                <div className={css.certInfoDiv}>
+                  <p className="text-ff2">
+                    This certificate above verifies that{" "}
+                    <span className="text-underline">
+                      {certInfo.holderName}
+                    </span>{" "}
+                    has successfully completed a unit which is a part of the
+                    course{" "}
+                    <span className="text-underline">
+                      {certInfo.courseName}
+                    </span>{" "}
+                    on{" "}
+                    <span className="text-underline">
+                      {certInfo.passingDate}
+                    </span>{" "}
+                    on Yuva Portal.
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <div className="col-lg-4">
+              <div className={css.certInfoDiv}>
+                <p className={css.holderText}>Certificate holder name:</p>
+                <h3 className={css.holderName}>{certInfo.holderName}</h3>
+
+                <p className={css.holderText}>Course name:</p>
+                <h3 className={css.holderName}>{certInfo.courseName}</h3>
+
+                <hr></hr>
+
+                <button
+                  className={css.downloadBtn}
+                  onClick={handleCertPDFDownload}
+                >
+                  Download PDF
+                </button>
+                <p className={css.shareText}>Or share on</p>
+                <div className={css.shareBtnDiv}>
+                  <LinkedinShareButton url={certPagePublicURL}>
+                    <LinkedinIcon
+                      className={css.shareIcon}
+                      size={55}
+                      round={true}
+                    />
+                  </LinkedinShareButton>
+
+                  <FacebookShareButton url={certPagePublicURL}>
+                    <FacebookIcon
+                      className={css.shareIcon}
+                      size={55}
+                      round={true}
+                    />
+                  </FacebookShareButton>
+
+                  <TwitterShareButton url={certPagePublicURL}>
+                    <TwitterIcon
+                      className={css.shareIcon}
+                      size={55}
+                      round={true}
+                    />
+                  </TwitterShareButton>
+                </div>
+              </div>
             </div>
           </div>
         </div>
-
-        <div className="col-lg-4">
-          <div className={css.certInfoDiv}>
-            <p className={css.holderText}>Certificate holder name:</p>
-            <h3 className={css.holderName}>{certInfo.holderName}</h3>
-
-            <p className={css.holderText}>Course name:</p>
-            <h3 className={css.holderName}>{certInfo.courseName}</h3>
-
-            <hr></hr>
-
-            <button className={css.downloadBtn} onClick={handleCertPDFDownload}>
-              Download PDF
-            </button>
-            <p className={css.shareText}>Or share on</p>
-            <div className={css.shareBtnDiv}>
-              <LinkedinShareButton url={certPagePublicURL}>
-                <LinkedinIcon
-                  className={css.shareIcon}
-                  size={55}
-                  round={true}
-                />
-              </LinkedinShareButton>
-
-              <FacebookShareButton url={certPagePublicURL}>
-                <FacebookIcon
-                  className={css.shareIcon}
-                  size={55}
-                  round={true}
-                />
-              </FacebookShareButton>
-
-              <TwitterShareButton url={certPagePublicURL}>
-                <TwitterIcon className={css.shareIcon} size={55} round={true} />
-              </TwitterShareButton>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
+      )}
+    </>
   );
 };
 

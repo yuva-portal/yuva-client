@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import toast from "react-hot-toast";
+import { toast } from "react-hot-toast";
 
 // My components
 import Card from "../../components/user/Card";
@@ -23,9 +23,10 @@ const HomePage = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
+    setIsLoading(true);
+
     async function getAllVerticals() {
       try {
-        setIsLoading(true);
         const response = await fetch(
           `${SERVER_ORIGIN}/api/user/auth/verticals/all`,
           {
@@ -48,12 +49,11 @@ const HomePage = () => {
         } else {
           // for future
         }
-
-        setIsLoading(false);
       } catch (error) {
         console.log(error.message);
-        setIsLoading(false);
       }
+
+      setIsLoading(false);
     }
 
     getAllVerticals();
@@ -75,8 +75,7 @@ const HomePage = () => {
           <CardGrid>
             {allVerticals.map((vertical) => (
               <div
-                className="col-lg-4 col-md-6 col-sm-12"
-                style={{ padding: "10px" }}
+                className="col-lg-4 col-md-6 col-sm-12 cardOuterDiv"
                 key={vertical._id}
               >
                 <Card
@@ -88,7 +87,7 @@ const HomePage = () => {
             ))}
           </CardGrid>
         ) : (
-          <h1>EMPTY</h1>
+          <h1 className="nothingText">Sorry, we found nothing</h1>
         )}
       </section>
     </>
@@ -110,8 +109,17 @@ const HomePage = () => {
             in cross functional teams with a broad objective of enhancing their
             leadership skills and giving back to the nation.
           </p>
-          <button className={homeCss.aboutBtn}>More about Yuva</button>
-          <button className={homeCss.exploreBtn}>Explore Verticals</button>
+          <button
+            className={homeCss.aboutBtn}
+            onClick={() => {
+              navigate("/about");
+            }}
+          >
+            More about Yuva
+          </button>
+          <a href="#verticals" style={{ textDecoration: "none" }}>
+            <button className={homeCss.exploreBtn}>Explore Verticals</button>
+          </a>
         </div>
         <div
           style={{ textAlign: "right" }}
@@ -121,7 +129,7 @@ const HomePage = () => {
         </div>
       </div>
 
-      {isLoading ? Loader : element}
+      {isLoading ? <Loader /> : element}
     </>
   );
 };
