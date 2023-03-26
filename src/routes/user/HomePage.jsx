@@ -49,8 +49,8 @@ const HomePage = () => {
         } else {
           // for future
         }
-      } catch (error) {
-        console.log(error.message);
+      } catch (err) {
+        console.log(err.message);
       }
 
       setIsLoading(false);
@@ -70,8 +70,9 @@ const HomePage = () => {
       <HeaderCard>
         <p className={vCss.headerText}>Here's what we have got for you !</p>
       </HeaderCard>
-      <section id="verticals">
-        {allVerticals.length > 0 ? (
+
+      {allVerticals.length > 0 ? (
+        <section id="verticals">
           <CardGrid>
             {allVerticals.map((vertical) => (
               <div
@@ -86,10 +87,10 @@ const HomePage = () => {
               </div>
             ))}
           </CardGrid>
-        ) : (
-          <h1 className="nothingText">Sorry, we found nothing</h1>
-        )}
-      </section>
+        </section>
+      ) : (
+        <h1 className="nothingText">Sorry, we found nothing</h1>
+      )}
     </>
   );
 

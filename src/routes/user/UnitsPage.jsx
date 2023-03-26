@@ -1,5 +1,6 @@
-import React, { useEffect, useState, useRef } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
+import { toast } from "react-hot-toast";
 
 import { SERVER_ORIGIN } from "../../utilities/constants";
 import { getVideoThumbnail } from "../../utilities/helper_functions";
@@ -42,21 +43,15 @@ const UserUnits = () => {
 
         // console.log(response);
         const result = await response.json();
-        console.log(result);
+        // console.log(result);
 
         if (response.status >= 400 && response.status < 600) {
           if (response.status === 401) {
-            if (!("isLoggedIn" in result) || result.isLoggedIn === false) {
-              console.log("go to login");
-            }
-          } else if (response.status === 403) {
-            if (result.userDoc.isPassReset === false) {
-              console.log("go to reset password");
-            } else if (result.userDoc.isRegistered === false) {
-              console.log("go to registration page");
-            }
+            navigate("/user/login"); // login or role issue
+          } else if (response.status === 404) {
+            navigate("/user/resource-not-found");
           } else {
-            alert("Internal server error"); // todo: toast notify
+            toast.error(result.statusText);
           }
         } else if (response.ok && response.status === 200) {
           setCourseInfo(result.courseInfo);
@@ -64,12 +59,10 @@ const UserUnits = () => {
         } else {
           // for future
         }
-
-        setIsLoading(false);
-      } catch (error) {
-        console.log(error.message);
-        setIsLoading(false);
+      } catch (err) {
+        console.log(err.message);
       }
+      setIsLoading(false);
     }
 
     getAllUnits();
@@ -97,19 +90,23 @@ const UserUnits = () => {
       </HeaderCard>
 
       <CardGrid>
-        {allUnits.map((unit) => {
-          const vdoThumbnail = getVideoThumbnail(unit.video.vdoSrc);
-          unit.vdoThumbnail = vdoThumbnail;
+        {allUnits.length > 0 ? (
+          allUnits.map((unit) => {
+            const vdoThumbnail = getVideoThumbnail(unit.video.vdoSrc);
+            unit.vdoThumbnail = vdoThumbnail;
 
-          return (
-            <div
-              className="col-lg-4 col-md-6 col-sm-12 cardOuterDiv"
-              key={unit._id}
-            >
-              <Card data={unit} type="unit" onClick={handleViewUnit} />
-            </div>
-          );
-        })}
+            return (
+              <div
+                className="col-lg-4 col-md-6 col-sm-12 cardOuterDiv"
+                key={unit._id}
+              >
+                <Card data={unit} type="unit" onClick={handleViewUnit} />
+              </div>
+            );
+          })
+        ) : (
+          <h1 className="nothingText">Sorry, we found nothing</h1>
+        )}
       </CardGrid>
     </div>
   );

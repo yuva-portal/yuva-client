@@ -1,4 +1,5 @@
 const SERVER_ORIGIN = "http://localhost:5000";
+// const SERVER_ORIGIN = "http://192.168.29.75:5000";
 // const SERVER_ORIGIN = "https://yuva-backend-v2.onrender.com";
 
 // const SERVER_ORIGIN = "https://yuvaportal.onrender.com";

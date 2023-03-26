@@ -11,6 +11,7 @@ import { CardGrid } from "../../components/common/CardGrid";
 
 // My css
 import css from "../../css/user/courses-page.module.css";
+import { toast } from "react-hot-toast";
 
 //! If allVerticals is empty, then it will throw an error when using map function on an empty array because the accessed fields like vertical.name/vertical.desc will not be present, so make a check
 //! make handleAddView Courses/Verticals/Units functions non async
@@ -47,25 +48,15 @@ const CoursesPage = () => {
 
         if (response.status >= 400 && response.status < 600) {
           if (response.status === 401) {
-            if ("isLoggedIn" in result && !result.isLoggedIn) {
-              navigate("/user/login");
-            } else if ("isUser" in result && !result.isUser) {
-              navigate("/user/login");
-            }
-          } else if (response.status === 403) {
-            if (result.userDoc.isPassReset === false) {
-              console.log("go to reset password");
-            } else if (result.userDoc.isRegistered === false) {
-              console.log("go to registration page");
-            }
+            navigate("/user/login"); // login or role issue
+          } else if (response.status === 404) {
+            navigate("/user/resource-not-found");
           } else {
-            alert("Internal server error"); // todo: toast notify
+            toast.error(result.statusText);
           }
         } else if (response.ok && response.status === 200) {
           setAllCourses(result.allCourses);
           setVerticalInfo(result.verticalDoc);
-          // we also have userDoc here
-          // console.log("UserDoc from all courses", result.userDoc);
         } else {
           // for future
         }

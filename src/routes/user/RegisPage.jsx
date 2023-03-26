@@ -133,6 +133,7 @@ const UserRegis = (props) => {
         }
       } else if (response.ok && response.status === 200) {
         toast.success(result.statusText); // registered therefore regis btn remains disabled
+        navigate("/user/login");
       } else {
         // for future
       }

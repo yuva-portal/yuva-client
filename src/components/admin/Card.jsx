@@ -27,12 +27,12 @@ function Card(props) {
 
       <p className={css.cardCount}>
         {props.type === "vertical"
-          ? props.data.courseIds.length + " Courses"
+          ? props.data.courseCount + " Courses"
           : props.type === "course"
-          ? props.data.unitArr.length + " Units"
-          : props.data.activities.length +
+          ? props.data.unitCount + " Units"
+          : props.data.activityCount +
             " Activities • " +
-            props.data.quiz.length +
+            props.data.quizCount +
             " Questions"}
       </p>
 
@@ -67,8 +67,6 @@ function Card(props) {
         }}
         id={props.data._id}
         onClick={(e) => {
-          // console.log(e);
-          // console.log(e.target.id + "kjjnjnjf");
           props.onDeleteClick(e);
         }}
       >
