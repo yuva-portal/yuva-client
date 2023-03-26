@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 // My components
@@ -10,12 +10,17 @@ import SecCard from "../../components/common/SecCard";
 import css from "../../css/admin/home-page.module.css";
 
 import { SERVER_ORIGIN } from "../../utilities/constants";
+import Loader from "../../components/common/Loader";
 
 const HomePage = () => {
+  const [isLoading, setIsLoading] = useState(false);
+
   const navigate = useNavigate();
 
   useEffect(() => {
     async function canVisitPage() {
+      setIsLoading(true);
+
       try {
         const response = await fetch(
           `${SERVER_ORIGIN}/api/admin/auth/verify-token`,
@@ -42,6 +47,8 @@ const HomePage = () => {
       } catch (err) {
         // console.log(err.message);
       }
+
+      setIsLoading(false);
     }
 
     canVisitPage();
@@ -51,7 +58,9 @@ const HomePage = () => {
     navigate("/admin/verticals/all");
   }
 
-  return (
+  return isLoading ? (
+    <Loader />
+  ) : (
     <div className={css.outerDiv}>
       <HeaderCard>
         <h1 className="headerTitle">Welcome to the platform analysis</h1>

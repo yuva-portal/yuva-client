@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 
 //my modules
 import css from "../../css/common/card.module.css";
@@ -28,12 +28,12 @@ function Card(props) {
 
       <p className={css.cardCount}>
         {props.type === "vertical"
-          ? props.data.courseIds.length + " Courses"
+          ? props.data.courseCount + " Courses"
           : props.type === "course"
-          ? props.data.unitArr.length + " Units"
-          : props.data.activities.length +
+          ? props.data.unitCount + " Units"
+          : props.data.activityCount +
             " Activities • " +
-            props.data.quiz.length +
+            props.data.quizCount +
             " Questions"}
       </p>
 

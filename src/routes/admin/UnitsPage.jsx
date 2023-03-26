@@ -42,7 +42,7 @@ const UnitsPage = () => {
         );
 
         const result = await response.json();
-        // console.log(result);
+        console.log(result);
 
         setIsLoading(false);
 

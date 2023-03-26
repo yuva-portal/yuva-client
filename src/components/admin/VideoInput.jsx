@@ -17,6 +17,7 @@ const VideoInput = (props) => {
           onChange={(e) => {
             props.onChange(e);
           }}
+          autoComplete="off"
         />
       </div>
     </div>

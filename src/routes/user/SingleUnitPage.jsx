@@ -40,8 +40,6 @@ const UserSingleUnit = () => {
     async function getUnit() {
       setIsLoading(true);
       const { verticalId, courseId, unitId } = params;
-      console.log(params);
-      setIsLoading(true);
 
       try {
         const response = await fetch(
@@ -56,24 +54,15 @@ const UserSingleUnit = () => {
         );
 
         const result = await response.json();
-        // console.log(result);
+        console.log(result);
 
         setIsLoading(false);
 
         if (response.status >= 400 && response.status < 600) {
           if (response.status === 401) {
-            if (!("isLoggedIn" in result) || result.isLoggedIn === false) {
-              navigate("/user/login");
-            }
-          } else if (response.status === 403) {
-            if (result.userDoc) {
-              if (result.userDoc.isPassReset === false) {
-                toast.error("go to reset password");
-              } else if (result.userDoc.isRegistered === false) {
-                toast.error("go to registration page");
-              }
-            } else {
-            }
+            navigate("/user/login"); // login or role issue
+          } else if (response.status === 404) {
+            navigate("/user/resource-not-found");
           } else {
             toast.error(result.statusText);
           }
@@ -94,8 +83,8 @@ const UserSingleUnit = () => {
         } else {
           // for future
         }
-      } catch (error) {
-        console.log(error.message);
+      } catch (err) {
+        // console.log(err.message);
         setIsLoading(false);
       }
     }
@@ -123,22 +112,32 @@ const UserSingleUnit = () => {
     <div className={css.outerDiv}>
       {unit.video !== null ? <VideoPlayer video={unit.video} /> : null}
 
-      <div className={css.common}>
-        <HeaderCard>
-          <h1 className={css.vdoTitle}>{videoInfo.title}</h1>
-          <p className={css.vdoDesc}>What you'll learn: {videoInfo.desc}</p>
-        </HeaderCard>
-      </div>
+      {unit.video ? (
+        <div className={css.common}>
+          <HeaderCard>
+            {unit.video.title && unit.video.title.length > 0 ? (
+              <h1 className={css.vdoTitle}>{unit.video.title}</h1>
+            ) : null}
+            {unit.video.desc && unit.video.desc.length > 0 ? (
+              <p className={css.vdoDesc}>
+                What you'll learn: {unit.video.desc}
+              </p>
+            ) : null}
+          </HeaderCard>
+        </div>
+      ) : null}
 
-      <div className={css.common}>
-        <SecCard>
-          <h2 className={css.secHeading}>Text to read</h2>
-          <UnitText text={unit.text} />
-        </SecCard>
-      </div>
+      {unit.text && unit.text.length > 0 ? (
+        <div className={css.common}>
+          <SecCard>
+            <h2 className={css.secHeading}>Text to read</h2>
+            <UnitText text={unit.text} />
+          </SecCard>
+        </div>
+      ) : null}
 
-      <div className={css.common}>
-        {unit.activities !== null ? (
+      {unit.activities && unit.activities.length > 0 ? (
+        <div className={css.common}>
           <SecCard>
             <h2 className={css.secHeading}>Activities</h2>
 
@@ -150,49 +149,51 @@ const UserSingleUnit = () => {
               );
             })}
           </SecCard>
-        ) : null}
-      </div>
-
-      <div className="row">
-        <div className={`${css.quizDiv} ${css.common} col-lg-6 col-md-6`}>
-          <SecCard>
-            <h2 className={css.secHeading}>Quiz</h2>
-
-            <p className={css.secText}>
-              {isQuizBtnDisabled
-                ? "Note: You need to watch atleast 50% of the video to unlock the quiz. (Kindly refresh the page after watching video to unlock the quiz.)"
-                : "Quiz has been unlocked, click the button below to take quiz."}
-            </p>
-
-            <button
-              className={css.secBtn}
-              onClick={handleOpenQuizClick}
-              disabled={isQuizBtnDisabled}
-            >
-              {isQuizBtnDisabled ? "Quiz Locked" : "Open Quiz"}
-            </button>
-          </SecCard>
         </div>
+      ) : null}
 
-        <div className={`${css.certDiv} ${css.common} col-lg-6 col-md-6`}>
-          <SecCard>
-            <h2 className={css.secHeading}>Certificate</h2>
+      {unit.quiz && unit.quiz.length > 0 ? (
+        <div className="row">
+          <div className={`${css.quizDiv} ${css.common} col-lg-6 col-md-6`}>
+            <SecCard>
+              <h2 className={css.secHeading}>Quiz</h2>
 
-            <p className={css.secText}>
-              {isCertBtnDisabled
-                ? "Note: To get the certificate you have to score atleast 65% in the quiz."
-                : "Congratulations! Your certificate has been generated. Click on the button below to download your certificate."}
-            </p>
-            <button
-              className={css.secBtn}
-              onClick={handleGetCertificate}
-              disabled={isCertBtnDisabled}
-            >
-              {isCertBtnDisabled ? "Certificate Locked" : "Get Certificate"}
-            </button>
-          </SecCard>
+              <p className={css.secText}>
+                {isQuizBtnDisabled
+                  ? "Note: You need to watch atleast 50% of the video to unlock the quiz. (Kindly refresh the page after watching video to unlock the quiz.)"
+                  : "Quiz has been unlocked, click the button below to take quiz."}
+              </p>
+
+              <button
+                className={css.secBtn}
+                onClick={handleOpenQuizClick}
+                disabled={isQuizBtnDisabled}
+              >
+                {isQuizBtnDisabled ? "Quiz Locked" : "Open Quiz"}
+              </button>
+            </SecCard>
+          </div>
+
+          <div className={`${css.certDiv} ${css.common} col-lg-6 col-md-6`}>
+            <SecCard>
+              <h2 className={css.secHeading}>Certificate</h2>
+
+              <p className={css.secText}>
+                {isCertBtnDisabled
+                  ? "Note: To get the certificate you have to score atleast 65% in the quiz."
+                  : "Congratulations! Your certificate has been generated. Click on the button below to download your certificate."}
+              </p>
+              <button
+                className={css.secBtn}
+                onClick={handleGetCertificate}
+                disabled={isCertBtnDisabled}
+              >
+                {isCertBtnDisabled ? "Certificate Locked" : "Get Certificate"}
+              </button>
+            </SecCard>
+          </div>
         </div>
-      </div>
+      ) : null}
     </div>
   );
 

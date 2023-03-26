@@ -33,6 +33,7 @@ const UserQuiz = () => {
 
   const [isLoading, setIsLoading] = useState(false);
 
+  const navigate = useNavigate();
   const params = useParams();
   const TEST_DURATION_IN_MINUTES = 10;
 
@@ -75,22 +76,21 @@ const UserQuiz = () => {
 
         if (response.status >= 400 && response.status < 600) {
           if (response.status === 401) {
-            if (!("isLoggedIn" in result) || !result.isLoggedIn) {
-              console.log("go to login");
-            }
+            navigate("/user/login"); // login or role issue
           } else if (response.status === 403) {
             if (!result.isEligibleToTakeQuiz) {
               setIsEligibleToTakeQuiz(false);
-            } else if (!result.userDoc.isPassReset) {
-              toast.error("go to reset password");
-            } else if (!result.userDoc.isRegistered) {
-              toast.error("go to registration page");
             }
-            // isPassReset and isRegistered 'if' statement wont ever hit because isEligibleToTakeQuiz is true only if video watch time is greater than a certain minimum and a user can watch vdo only if isPrerequisitesSatisfied
+          } else if (response.status === 404) {
+            navigate("/user/resource-not-found");
           } else {
-            toast.error("Internal server error");
+            toast.error(result.statusText);
           }
         } else if (response.ok && response.status === 200) {
+          if (!result.quiz || result.quiz.length === 0) {
+            navigate("/user/resource-not-found");
+          }
+
           setQuiz(result.quiz);
           setStoredQuizScore(result.quizScoreInPercent);
           setIsEligibleToTakeQuiz(result.isEligibleToTakeQuiz);
@@ -108,9 +108,9 @@ const UserQuiz = () => {
         }
 
         setIsLoading(false);
-      } catch (error) {
+      } catch (err) {
         setIsLoading(false);
-        console.log(error.message);
+        console.log(err.message);
       }
     }
 
@@ -188,7 +188,7 @@ const UserQuiz = () => {
       setIsLoading(false);
     } catch (error) {
       setIsLoading(false);
-      console.log(error.message);
+      // console.log(error.message);
     }
   }
 

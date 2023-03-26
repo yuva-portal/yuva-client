@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-hot-toast";
+
 // My components
 import SecCard from "../../components/common/SecCard";
 import VideoInput from "../../components/admin/VideoInput";
@@ -65,7 +66,7 @@ const AdminAddUnit = () => {
   function onVideoChange(e) {
     setVideo((prevVideo) => {
       const newVideo = { ...prevVideo, [e.target.name]: e.target.value };
-      console.log(newVideo);
+      // console.log(newVideo);
       return newVideo;
     });
   }
@@ -84,7 +85,7 @@ const AdminAddUnit = () => {
     setActivities((prevActivities) => {
       let newActivities = [...prevActivities];
       newActivities[i] = e.target.value;
-      console.log(newActivities);
+      // console.log(newActivities);
 
       return newActivities;
     });
@@ -93,7 +94,7 @@ const AdminAddUnit = () => {
   function handleAddActivity() {
     setActivities((prevActivities) => {
       const newActivities = [...prevActivities, ""];
-      console.log(newActivities);
+      // console.log(newActivities);
 
       return newActivities;
     });
@@ -103,7 +104,7 @@ const AdminAddUnit = () => {
     setActivities((prevActivities) => {
       let newActivities = [...prevActivities];
       newActivities.splice(i, 1);
-      console.log(newActivities);
+      // console.log(newActivities);
 
       return newActivities;
     });
@@ -123,7 +124,7 @@ const AdminAddUnit = () => {
         newQuiz[quizItemIdx].options[optIdx].isChecked = e.target.checked;
       }
 
-      console.log(newQuiz);
+      // console.log(newQuiz);
 
       return newQuiz;
     });
@@ -154,7 +155,7 @@ const AdminAddUnit = () => {
       let newQuiz = [...prevQuiz];
       newQuiz.splice(quizItemIdx, 1);
 
-      console.log(newQuiz);
+      // console.log(newQuiz);
 
       return newQuiz;
     });
@@ -190,7 +191,7 @@ const AdminAddUnit = () => {
       setIsAddUnitBtnDisabled(false);
 
       const result = await response.json();
-      // console.log(result);
+      console.log(result);
 
       if (response.status >= 400 && response.status < 600) {
         if (response.status === 401) {
@@ -202,6 +203,7 @@ const AdminAddUnit = () => {
         }
       } else if (response.ok && response.status === 200) {
         toast.success(result.statusText);
+        navigate(-1); // go back to all units page
       } else {
         // for future
       }

@@ -75,26 +75,24 @@ const VerticalsPage = () => {
         <p className={css.headerText}>Here's what we have got for you !</p>
       </HeaderCard>
 
-      <section id="verticals">
-        {allVerticals.length > 0 ? (
-          <CardGrid>
-            {allVerticals.map((vertical) => (
-              <div
-                className="col-lg-4 col-md-6 col-sm-12 cardOuterDiv"
-                key={vertical._id}
-              >
-                <Card
-                  data={vertical}
-                  type="vertical"
-                  onClick={handleViewCourses}
-                />
-              </div>
-            ))}
-          </CardGrid>
-        ) : (
-          <h1 className="nothingText">Sorry, we found nothing</h1>
-        )}
-      </section>
+      {allVerticals.length > 0 ? (
+        <CardGrid>
+          {allVerticals.map((vertical) => (
+            <div
+              className="col-lg-4 col-md-6 col-sm-12 cardOuterDiv"
+              key={vertical._id}
+            >
+              <Card
+                data={vertical}
+                type="vertical"
+                onClick={handleViewCourses}
+              />
+            </div>
+          ))}
+        </CardGrid>
+      ) : (
+        <h1 className="nothingText">Sorry, we found nothing</h1>
+      )}
     </div>
   );
 
