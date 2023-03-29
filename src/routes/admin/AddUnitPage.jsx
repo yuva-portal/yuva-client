@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-hot-toast";
 
@@ -8,6 +8,7 @@ import VideoInput from "../../components/admin/VideoInput";
 import TextInput from "../../components/admin/TextInput";
 import ActivityInput from "../../components/admin/ActivityInput";
 import QuizInput from "../../components/admin/QuizInput";
+import Loader from "../../components/common/Loader";
 
 // My css
 import css from "../../css/admin/add-unit-page.module.css";
@@ -55,11 +56,50 @@ const AdminAddUnit = () => {
   const [text, setText] = useState("");
   const [activities, setActivities] = useState([]);
   const [quiz, setQuiz] = useState([]);
-
+  const [isLoading, setIsLoading] = useState(false);
   const [isAddUnitBtnDisabled, setIsAddUnitBtnDisabled] = useState(false);
 
   const navigate = useNavigate();
   const params = useParams();
+
+  useEffect(() => {
+    async function canVisitPage() {
+      setIsLoading(true);
+
+      const { verticalId, courseId, unitId } = params;
+
+      try {
+        const response = await fetch(
+          `${SERVER_ORIGIN}/api/admin/auth/verify-token`,
+          {
+            method: "POST",
+            headers: {
+              // "Content-Type": "application/json",
+              "auth-token": localStorage.getItem("token"),
+            },
+          }
+        );
+
+        const result = await response.json();
+        // console.log(result);
+
+        setIsLoading(false);
+
+        if (response.status >= 400 && response.status < 600) {
+          if (response.status === 401) {
+            navigate("/user/login"); // login or role issue
+          } else {
+            toast.error(result.statusText);
+          }
+        } else if (response.ok && response.status === 200) {
+        }
+      } catch (err) {
+        // console.log(err.message);
+      }
+    }
+
+    canVisitPage();
+  }, []);
 
   //////////////////////////////////////////////////////////////////////////////
 
@@ -215,91 +255,97 @@ const AdminAddUnit = () => {
   }
 
   return (
-    <div className={css.outerDiv}>
-      <h1 className={css.headingText}>Adding a new unit for course</h1>
+    <>
+      {isLoading ? (
+        <Loader />
+      ) : (
+        <div className={css.outerDiv}>
+          <h1 className={css.headingText}>Adding a new unit for course</h1>
 
-      <div className={css.commonDiv}>
-        <SecCard>
-          <h2 className="text-ff1">Video</h2>
-          <VideoInput
-            name="title"
-            id="title"
-            label="Title"
-            placeholder="Title"
-            value={video.title}
-            onChange={onVideoChange}
-          />
-          <VideoInput
-            name="desc"
-            id="desc"
-            label="Description"
-            placeholder="Description"
-            value={video.desc}
-            onChange={onVideoChange}
-          />
-          <VideoInput
-            name="vdoSrc"
-            id="video-src"
-            label="Source"
-            placeholder="https://youtube.com...."
-            value={video.vdoSrc}
-            onChange={onVideoChange}
-          />
-        </SecCard>
-      </div>
+          <div className={css.commonDiv}>
+            <SecCard>
+              <h2 className="text-ff1">Video</h2>
+              <VideoInput
+                name="title"
+                id="title"
+                label="Title"
+                placeholder="Title"
+                value={video.title}
+                onChange={onVideoChange}
+              />
+              <VideoInput
+                name="desc"
+                id="desc"
+                label="Description"
+                placeholder="Description"
+                value={video.desc}
+                onChange={onVideoChange}
+              />
+              <VideoInput
+                name="vdoSrc"
+                id="video-src"
+                label="Source"
+                placeholder="https://youtube.com...."
+                value={video.vdoSrc}
+                onChange={onVideoChange}
+              />
+            </SecCard>
+          </div>
 
-      <div className={css.commonDiv}>
-        <SecCard>
-          <h2 className="text-ff1">Text</h2>
-          <TextInput value={text} onChange={onTextChange} />
-        </SecCard>
-      </div>
+          <div className={css.commonDiv}>
+            <SecCard>
+              <h2 className="text-ff1">Text</h2>
+              <TextInput value={text} onChange={onTextChange} />
+            </SecCard>
+          </div>
 
-      <div className={css.commonDiv}>
-        <SecCard>
-          <h2 className="text-ff1">Activities</h2>
-          <AddActivityBtn handleAddActivity={handleAddActivity} />
+          <div className={css.commonDiv}>
+            <SecCard>
+              <h2 className="text-ff1">Activities</h2>
+              <AddActivityBtn handleAddActivity={handleAddActivity} />
 
-          {activities.map((activity, index) => (
-            <ActivityInput
-              key={index}
-              index={index}
-              handleActivityChange={handleActivityChange}
-              handleDeleteActivity={handleDeleteActivity}
-              value={activity}
-            />
-          ))}
-        </SecCard>
-      </div>
+              {activities.map((activity, index) => (
+                <ActivityInput
+                  key={index}
+                  index={index}
+                  handleActivityChange={handleActivityChange}
+                  handleDeleteActivity={handleDeleteActivity}
+                  value={activity}
+                />
+              ))}
+            </SecCard>
+          </div>
 
-      <div className={css.commonDiv}>
-        <SecCard>
-          <h2 className="text-ff1">Quiz</h2>
+          <div className={css.commonDiv}>
+            <SecCard>
+              <h2 className="text-ff1">Quiz</h2>
 
-          <AddQuizItemBtn handleAddQuizItem={handleAddQuizItem} />
+              <AddQuizItemBtn handleAddQuizItem={handleAddQuizItem} />
 
-          {quiz.map((quizItem, quizItemIdx) => (
-            <QuizInput
-              key={quizItemIdx}
-              quizItemIdx={quizItemIdx}
-              handleQuizItemChange={handleQuizItemChange}
-              handleDeleteQuizItem={handleDeleteQuizItem}
-              quizItem={quizItem}
-            />
-          ))}
-        </SecCard>
-      </div>
+              {quiz.map((quizItem, quizItemIdx) => (
+                <QuizInput
+                  key={quizItemIdx}
+                  quizItemIdx={quizItemIdx}
+                  handleQuizItemChange={handleQuizItemChange}
+                  handleDeleteQuizItem={handleDeleteQuizItem}
+                  quizItem={quizItem}
+                />
+              ))}
+            </SecCard>
+          </div>
 
-      <div style={{ margin: "2rem", textAlign: "center" }}>
-        <button
-          disabled={isAddUnitBtnDisabled}
-          className={css.addBtn}
-          onClick={handleAddUnit}
-        >
-          Add Unit
-        </button>
-      </div>
-    </div>
+          <div style={{ margin: "2rem", textAlign: "center" }}>
+            <button
+              disabled={isAddUnitBtnDisabled}
+              className={css.addBtn}
+              onClick={handleAddUnit}
+            >
+              Add Unit
+            </button>
+          </div>
+        </div>
+      )}
+    </>
   );
 };
 

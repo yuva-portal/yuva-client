@@ -9,12 +9,13 @@ import Loader from "../../components/common/Loader";
 import Party from "../../components/user/Party";
 
 // My css
-import "../../css/user/u-quiz-page.css";
+import css from "../../css/user/quiz-page.module.css";
 
 import { SERVER_ORIGIN, vars } from "../../utilities/constants";
 import {
   roundOffDecimalPlaces,
   refreshScreen,
+  generateQuizInstructions,
 } from "../../utilities/helper_functions";
 
 // todo: a user must not be able to leave any question unanswered in the quiz
@@ -35,7 +36,6 @@ const UserQuiz = () => {
 
   const navigate = useNavigate();
   const params = useParams();
-  const TEST_DURATION_IN_MINUTES = 10;
 
   //FOR COUNTDOWN COMPONENT
   const renderer = ({ hours, minutes, seconds, completed }) => {
@@ -74,13 +74,13 @@ const UserQuiz = () => {
         const result = await response.json();
         // console.log(result);
 
+        setIsLoading(false);
+
         if (response.status >= 400 && response.status < 600) {
           if (response.status === 401) {
             navigate("/user/login"); // login or role issue
           } else if (response.status === 403) {
-            if (!result.isEligibleToTakeQuiz) {
-              setIsEligibleToTakeQuiz(false);
-            }
+            setIsEligibleToTakeQuiz(false);
           } else if (response.status === 404) {
             navigate("/user/resource-not-found");
           } else {
@@ -106,10 +106,7 @@ const UserQuiz = () => {
         } else {
           // for future
         }
-
-        setIsLoading(false);
       } catch (err) {
-        setIsLoading(false);
         console.log(err.message);
       }
     }
@@ -134,9 +131,7 @@ const UserQuiz = () => {
             response[quizItemIdx][optIdx];
       }
 
-      if (isRespCorrect) {
-        correctRespCnt++;
-      }
+      correctRespCnt += isRespCorrect === true;
     }
 
     // console.log(correctRespCnt);
@@ -144,7 +139,7 @@ const UserQuiz = () => {
     let calculatedCurrQuizScore = (correctRespCnt * 100) / quiz.length;
 
     calculatedCurrQuizScore = roundOffDecimalPlaces(calculatedCurrQuizScore, 2); // round off to two decimal places
-    console.log(calculatedCurrQuizScore);
+    // console.log(calculatedCurrQuizScore);
 
     // submitting result to server
     setIsLoading(true);
@@ -165,15 +160,17 @@ const UserQuiz = () => {
       );
 
       const result = await response.json();
-      console.log(result);
+      // console.log(result);
 
       if (response.status >= 400 && response.status < 600) {
         if (response.status === 401) {
-          if (!("isLoggedIn" in result) || result.isLoggedIn === false) {
-            console.log("go to login");
-          }
+          navigate("/user/login"); // login or role issue
+        } else if (response.status === 403) {
+          navigate(-1);
+        } else if (response.status === 404) {
+          navigate("/user/resource-not-found");
         } else {
-          console.log("Internal server error"); // todo: toast notify, dont redirect, allow user to re-press submit button
+          toast.error(result.statusText); // todo: toast notify, dont redirect, allow user to re-press submit button
         }
       } else if (response.ok && response.status === 200) {
         setCurrQuizScore(calculatedCurrQuizScore);
@@ -198,7 +195,7 @@ const UserQuiz = () => {
       const isChecked = e.target.checked;
       newResponse[quizItemIdx][optIdx] = isChecked;
       // console.log(newResponse);
-      console.log(isChecked, quizItemIdx, optIdx);
+      // console.log(isChecked, quizItemIdx, optIdx);
 
       return newResponse;
     });
@@ -208,44 +205,18 @@ const UserQuiz = () => {
     setShowQuiz(true);
   }
 
-  const resultElement = (
-    <div style={{ textAlign: "center", marginTop: "10%" }}>
-      <SecCard>
-        <h1 className="u-quiz-page-result-text">
-          Your score: {currQuizScore}%
-        </h1>
-        <h5 className="u-quiz-page-result-text">
-          {hasPassedQuiz
-            ? hasPassedQuizFirstTime
-              ? "Congratulations! your certificate has been unlocked"
-              : "Certificate has already been unlocked"
-            : `Note: You need to score atleast 65% to pass the test`}
-        </h5>
-
-        <button
-          className="u-quiz-page-btn btn btn-primary"
-          onClick={refreshScreen}
-        >
-          Retake Quiz
-        </button>
-      </SecCard>
-
-      {hasPassedQuizFirstTime ? <Party /> : null}
-    </div>
-  );
-
   const instructionsElement = (
-    <div className="u-quiz-page-inst-outer-div">
+    <div className={css.instOuterDiv}>
       <SecCard>
         <div>
-          <p className="u-quiz-page-inst-time-text">
-            Total duration: {TEST_DURATION_IN_MINUTES} minutes
+          <p className={css.instTimeText}>
+            Total duration: {quiz.length * 2} minutes
           </p>
 
-          <h2 className="u-quiz-page-sec-heading">Instructions</h2>
+          <h2 className={css.secHeading}>Instructions</h2>
 
-          <ul className="u-quiz-page-inst-list-text">
-            {vars.quizInstructions.map((instruction, index) => {
+          <ul className={css.instListText}>
+            {generateQuizInstructions(quiz.length).map((instruction, index) => {
               return <li key={index}>{instruction}</li>;
             })}
           </ul>
@@ -253,14 +224,15 @@ const UserQuiz = () => {
 
         <div style={{ textAlign: "center" }}>
           <button
-            className="u-quiz-page-inst-start-btn btn btn-primary"
+            className={css.btn}
+            style={{ marginBottom: "1rem" }}
             onClick={handleStartQuizClick}
             disabled={!isEligibleToTakeQuiz ? true : false}
           >
             {isEligibleToTakeQuiz ? "Start Quiz" : "Quiz Locked"}
           </button>
 
-          <p className="u-quiz-page-inst-score-text">
+          <p className={css.instScoreText}>
             {storedQuizScore === -1
               ? "You never took this quiz before"
               : `Your latest quiz score is ${storedQuizScore}%`}
@@ -270,34 +242,78 @@ const UserQuiz = () => {
     </div>
   );
 
+  const resultElement = (
+    <div className={css.resultOuterDiv}>
+      <SecCard>
+        <h1 className={css.resultText}>Your score: {currQuizScore}%</h1>
+        <h5 className={css.resultText}>
+          {hasPassedQuiz
+            ? hasPassedQuizFirstTime
+              ? "Congratulations! your certificate has been unlocked"
+              : "Your certificate has already been unlocked"
+            : `Note: You need to score atleast ${vars.quiz.CUT_OFF_IN_PERCENT}% to pass the quiz`}
+        </h5>
+
+        <div style={{ textAlign: "center", marginTop: "2rem" }}>
+          <button className={css.btn} onClick={refreshScreen}>
+            Retake Quiz
+          </button>
+          <button
+            className={css.btn}
+            onClick={() => {
+              // reference: https://stackoverflow.com/questions/65948671/how-to-go-back-to-previous-route-in-react-router-dom-v6
+              if (window.history.state && window.history.state.idx > 0) {
+                navigate(-1); // there's a page behind this
+              } else {
+                navigate("/", { replace: true }); // the current entry in the history stack will be replaced with the new one with { replace: true }
+              }
+            }}
+          >
+            Go back to Unit
+          </button>
+        </div>
+      </SecCard>
+
+      {hasPassedQuizFirstTime ? <Party /> : null}
+    </div>
+  );
+
   const quizElement = (
-    <div className="u-quiz-page-quiz-outer-div">
+    <div className={css.quizOuterDiv}>
       {quiz.length === 0 ? (
-        <p>There are currently no questions in this quiz.</p>
+        <h1 className="nothingText">
+          There are currently no questions in this quiz.
+        </h1>
       ) : (
         <>
-          <div className="u-quiz-page-timer-div">
+          <div className={css.quizTimerDiv}>
             <SecCard>
-              <h4>
+              <h4
+                style={{
+                  fontFamily: "var(--font-family-1)",
+                }}
+              >
                 All the best! Quiz has been started. Tick the correct answers
                 before the timer runs out.
               </h4>
-              <div style={{ textAlign: "right", fontSize: "2.4rem" }}>
-                <i className="fa-regular fa-clock"></i>
-                {/* 10 minute = 10000*6*10 miliseconds */}{" "}
+              <div style={{ textAlign: "right", fontSize: "3rem" }}>
+                <i className="fa-regular fa-clock"></i>{" "}
                 <Countdown
-                  date={Date.now() + 10000 * 6 * 10}
+                  date={
+                    Date.now() +
+                    quiz.length * vars.quiz.TIME_PER_QUE_IN_MIN * 60 * 1000
+                  }
                   renderer={renderer}
                 />
               </div>
             </SecCard>
           </div>
 
-          <div className="u-quiz-page-quiz-div">
+          <div className={css.quizDiv}>
             <SecCard>
               {quiz.map((quizItem, quizItemIdx) => {
                 return (
-                  <div key={quizItemIdx} style={{ margin: "10px" }}>
+                  <div key={quizItemIdx} className={css.quizItemDiv}>
                     <p>
                       {quizItemIdx + 1}. {quizItem.question}
                     </p>
@@ -312,7 +328,6 @@ const UserQuiz = () => {
                             className="form-check-input"
                             style={{
                               marginLeft: "0.5rem",
-                              // marginRight: "0.7rem",
                             }}
                             type="checkbox"
                             id={quizItemIdx * 11 + optIdx + 1}
@@ -340,17 +355,13 @@ const UserQuiz = () => {
                       );
                     })}
 
-                    {quizItemIdx === quiz.length - 1 ? null : <hr />}
+                    <hr />
                   </div>
                 );
               })}
 
-              <div style={{ textAlign: "center" }}>
-                <button
-                  id="quiz-submit-btn"
-                  className="u-quiz-page-submit-btn btn btn-primary"
-                  onClick={handleSubmitQuiz}
-                >
+              <div style={{ textAlign: "center", marginTop: "1rem" }}>
+                <button className={css.btn} onClick={handleSubmitQuiz}>
                   Submit Quiz
                 </button>
               </div>

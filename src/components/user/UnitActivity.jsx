@@ -24,7 +24,7 @@ const UnitActivity = (props) => {
     // console.log(file);
 
     // validate file size
-    console.log(vars.IMAGE_SIZE_LIMIT_IN_BYTES);
+    // console.log(vars.IMAGE_SIZE_LIMIT_IN_BYTES);
     const sizeInBytes = file.size;
     if (sizeInBytes > vars.IMAGE_SIZE_LIMIT_IN_BYTES) {
       document.getElementById(`activity-file-input-${props.index}`).value =
@@ -35,7 +35,7 @@ const UnitActivity = (props) => {
       toast.error(
         `Image size should not exceed ${convertBytesToMegaBytes(
           vars.IMAGE_SIZE_LIMIT_IN_BYTES
-        )} MBs`
+        )} MB`
       );
 
       return;
@@ -66,15 +66,15 @@ const UnitActivity = (props) => {
     try {
       const isImageValid = await validateImage(file, { throw: true });
       // console.log("Image content valid: ", isImageValid); // expected: true, if catch is not hit
-    } catch (error) {
-      console.log(error);
+    } catch (err) {
+      // console.log(err.message);
       toast.error("Please choose a valid image file");
     }
 
     const form = new FormData();
     form.append("activityIndex", props.index);
     form.append("activityImg", file);
-    console.log(form);
+    // console.log(form);
 
     document.getElementById(`activity-file-input-${props.index}`).value = null;
 
@@ -116,7 +116,7 @@ const UnitActivity = (props) => {
         // for future
       }
     } catch (err) {
-      console.log(err.message);
+      // console.log(err.message);
     }
   };
 

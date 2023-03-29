@@ -1,4 +1,9 @@
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  Navigate,
+} from "react-router-dom";
 import { Toaster } from "react-hot-toast";
 
 // My components
@@ -21,7 +26,7 @@ import UserDashBoard from "./routes/user/Dashboard";
 
 // Admin Pages
 import AdminLogin from "./routes/admin/LoginPage";
-import AdminHome from "./routes/admin/HomePage";
+import AdminServices from "./routes/admin/ServicesPage";
 import AdminVerticals from "./routes/admin/VerticalsPage";
 import AdminCourses from "./routes/admin/CoursesPage.jsx";
 import AdminUnits from "./routes/admin/UnitsPage";
@@ -153,7 +158,7 @@ function App() {
             element={
               <>
                 <AdminNavbar />
-                <AdminHome />
+                <AdminServices />
               </>
             }
           />
@@ -241,6 +246,8 @@ function App() {
               </>
             }
           />
+
+          <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
       </div>
 

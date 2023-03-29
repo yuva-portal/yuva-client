@@ -1,18 +1,17 @@
-.u-quiz-page-inst-outer-div {
-  margin-top: 8rem;
-  margin-bottom: 8rem;
+.instOuterDiv {
+  margin-top: 6rem;
 }
 
-.u-quiz-page-inst-time-text {
+.instTimeText {
   text-align: right;
   font-family: var(--font-family-2);
 }
 
-.u-quiz-page-inst-list-text {
+.instListText {
   font-family: var(--font-family-2);
 }
 
-.u-quiz-page-inst-start-btn {
+.startBtn {
   background-color: var(--yuva-green);
   border-radius: 0.4rem;
   height: 2.2rem;
@@ -24,34 +23,41 @@
   margin-bottom: 1rem;
 }
 
-.u-quiz-page-sec-heading {
+.startBtn:hover {
+  background-color: var(--yuva-dark-green);
+}
+
+.secHeading {
   font-family: var(--font-family-1);
   font-weight: 900;
 }
 
-.u-quiz-page-inst-score-text {
+.instScoreText {
   font-size: 0.9rem;
   font-family: var(--font-family-2);
   color: var(--grey);
   text-decoration: underline;
 }
 
-.u-quiz-page-quiz-outer-div {
-  margin-top: 8rem;
-  margin-bottom: 8rem;
+.quizOuterDiv {
+  margin-top: 6rem;
 }
 
-.u-quiz-page-timer-div {
+.quizTimerDiv {
   font-family: var(--font-family-2);
 }
 
-.u-quiz-page-quiz-div {
-  margin-top: 3rem;
+.quizDiv {
+  margin-top: 2rem;
   font-family: var(--font-family-2);
+}
+
+.quizItemDiv {
+  margin-bottom: 2rem;
   font-size: 1.2rem;
 }
 
-.u-quiz-page-btn {
+.btn {
   background-color: var(--yuva-green);
   border-radius: 0.4rem;
   height: 2.2rem;
@@ -59,16 +65,22 @@
   color: white;
   padding: 0 1rem 0 1rem;
   font-family: var(--font-family-2);
-  margin: auto;
-  margin-top: 3rem;
+  /* font-size: 1rem; */
+  margin: 0.5rem;
 }
 
-.u-quiz-page-btn:hover,
-.u-quiz-page-btn:active {
+.btn:hover,
+.btn:active {
   background-color: var(--yuva-dark-green);
 }
 
-.u-quiz-page-result-text {
+.resultOuterDiv {
+  margin-top: 6rem;
+}
+
+.resultText {
+  text-align: center;
   font-family: var(--font-family-2);
-  margin-top: 3rem;
+  font-weight: 400;
+  /* margin-top: 3rem; */
 }

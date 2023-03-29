@@ -20,6 +20,7 @@ const LoginPage = () => {
   const navigate = useNavigate();
 
   const handleSubmit = async () => {
+    // as of now there's no login form validation
     setIsLoading(true);
 
     try {
@@ -38,9 +39,7 @@ const LoginPage = () => {
 
       if (response.status >= 400 && response.status < 600) {
         if (response.status === 401) {
-          if (!("areCredsInvalid" in result) || result.areCredsInvalid) {
-            toast.error(result.statusText);
-          }
+          toast.error(result.statusText);
         } else {
           toast.error(result.statusText);
         }

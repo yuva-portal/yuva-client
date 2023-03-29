@@ -60,15 +60,26 @@
   }
 }
 
-.forgotPassText {
-  margin: auto;
+.forgotPassText,
+.registerText {
+  margin: 0;
   font-family: var(--font-family-2);
   color: var(--grey);
-  font-size: 0.9rem;
+  font-size: 0.85rem;
+  text-align: center;
+  padding: 0;
 }
 
-.forgotPassText:hover {
-  color: var(--grey);
+.registerText {
+  font-size: 1rem;
+  font-weight: 450;
+  color: var(--yuva-blue);
+  text-decoration: none;
+}
+
+.registerText:hover {
+  color: var(--yuva-blue);
+  text-decoration: underline;
 }
 
 @media (max-width: 992px) and (min-width: 576px) {

@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 
 // My css
-import loginCss from "../../css/common/login-form.module.css";
+import css from "../../css/common/login-form.module.css";
 // ! Disable login button when loading by creating isLoading state, so user cannot press it again and again
 
 import { validation } from "../../utilities/constants";
@@ -17,10 +17,11 @@ export const LoginForm = (props) => {
   };
 
   return (
-    <div className={loginCss.outerDiv}>
-      <p className={loginCss.heading}>Login</p>
+    <div className={css.outerDiv}>
+      <p className={css.heading}>Login</p>
+
       <input
-        className={loginCss.input}
+        className={css.input}
         type="text"
         placeholder={props.role === "user" ? "User Id" : "Admin Id"}
         name={props.role === "user" ? "userId" : "adminId"}
@@ -29,8 +30,9 @@ export const LoginForm = (props) => {
         maxLength={validation.authForm.userId.maxLen}
         autoComplete="off"
       />
+
       <input
-        className={loginCss.input}
+        className={css.input}
         type="password"
         placeholder="Password"
         name="password"
@@ -40,7 +42,7 @@ export const LoginForm = (props) => {
         autoComplete="off"
       />
       <button
-        className={loginCss.btn}
+        className={css.btn}
         onClick={handleLogInClick}
         disabled={props.isBtnDisabled}
       >
@@ -48,8 +50,8 @@ export const LoginForm = (props) => {
       </button>
       {props.role === "user" ? (
         <>
-          <p className={loginCss.forgotPassText}>Don't have an account ?</p>
-          <Link className={loginCss.forgotPassText} to="/user/register">
+          <p className={css.forgotPassText}>Don't have an account ?</p>
+          <Link className={css.registerText} to="/user/register">
             Register
           </Link>
         </>

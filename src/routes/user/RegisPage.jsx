@@ -9,7 +9,7 @@ import SecCard from "../../components/common/SecCard";
 import regisCss from "../../css/user/regis-page.module.css";
 
 import { SERVER_ORIGIN, vars, validation } from "../../utilities/constants";
-import { validateRegisForm } from "../../utilities/helper_functions";
+import { isRegisFormValid } from "../../utilities/helper_functions";
 
 const GreenMsg = (props) => {
   return (
@@ -35,10 +35,10 @@ const RedMsg = (props) => {
 
 const UserRegis = (props) => {
   const [regisForm, setRegisForm] = useState({
-    email: "",
     userId: "",
     password: "",
     cnfrmPassword: "",
+    email: "",
     fName: "",
     mName: "",
     lName: "",
@@ -82,7 +82,6 @@ const UserRegis = (props) => {
         }
       );
       const result = await response.json();
-      // console.log(response);
       // console.log(result);
 
       if (response.status >= 400 && response.status < 600) {
@@ -102,11 +101,11 @@ const UserRegis = (props) => {
 
   const handleRegisterClick = async () => {
     // todo: trim fields, validate
-    // const { isValid, desc } = validateRegisForm(regisForm);
-    // if (!isValid) {
-    //   // show toast
-    //   return;
-    // }
+    const { isValid, desc } = isRegisFormValid(regisForm);
+    if (!isValid) {
+      toast.error(desc);
+      return;
+    }
 
     try {
       setIsRegistering(true);
@@ -173,7 +172,7 @@ const UserRegis = (props) => {
         <div className="text-ff2" autoComplete="off">
           <div style={{ marginBottom: "0.8rem" }}>
             <label className={regisCss.regisLabel} htmlFor="userId">
-              User ID <UserIdAvailabilityMsg />
+              User ID * <UserIdAvailabilityMsg />
             </label>
             <input
               className={regisCss.regisInput}
@@ -201,7 +200,17 @@ const UserRegis = (props) => {
 
           <div style={{ marginBottom: "0.8rem" }}>
             <label className={regisCss.regisLabel} htmlFor="password">
-              Password
+              Password * |{" "}
+              <span
+                className={regisCss.passPolicy}
+                onClick={() => {
+                  toast(`${validation.authForm.password.policy}`, {
+                    duration: 5000,
+                  });
+                }}
+              >
+                View password policy
+              </span>
             </label>
             <input
               className={regisCss.regisInput}
@@ -218,7 +227,7 @@ const UserRegis = (props) => {
 
           <div style={{ marginBottom: "0.8rem" }}>
             <label className={regisCss.regisLabel} htmlFor="cnfrmPassword">
-              Confirm Password
+              Confirm Password *
             </label>
             <input
               className={regisCss.regisInput}
@@ -235,7 +244,7 @@ const UserRegis = (props) => {
 
           <div style={{ marginBottom: "0.8rem" }}>
             <label className={regisCss.regisLabel} htmlFor="email">
-              Email
+              Email *
             </label>
             <input
               className={regisCss.regisInput}
@@ -245,12 +254,13 @@ const UserRegis = (props) => {
               placeholder="xyz@gmail.com"
               value={regisForm.email}
               onChange={onChange}
+              autoComplete="off"
             />
           </div>
 
           <div style={{ marginBottom: "0.8rem" }}>
             <label className={regisCss.regisLabel} htmlFor="fName">
-              First name
+              First name *
             </label>
             <input
               className={regisCss.regisInput}
@@ -267,7 +277,7 @@ const UserRegis = (props) => {
 
           <div style={{ marginBottom: "0.8rem" }}>
             <label className={regisCss.regisLabel} htmlFor="mName">
-              Middle name (Optional)
+              Middle name
             </label>
             <input
               className={regisCss.regisInput}
@@ -284,7 +294,7 @@ const UserRegis = (props) => {
 
           <div style={{ marginBottom: "0.8rem" }}>
             <label className={regisCss.regisLabel} htmlFor="lName">
-              Last name
+              Last name *
             </label>
             <input
               className={regisCss.regisInput}
@@ -301,7 +311,7 @@ const UserRegis = (props) => {
 
           <div style={{ marginBottom: "0.8rem" }}>
             <label className={regisCss.regisLabel} htmlFor="collegeName">
-              College name
+              College name *
             </label>
             <input
               className={regisCss.regisInput}
@@ -318,7 +328,7 @@ const UserRegis = (props) => {
 
           <div style={{ marginBottom: "0.8rem" }}>
             <label className={regisCss.regisLabel} htmlFor="region">
-              Region
+              Region *
             </label>
             <input
               className={regisCss.regisInput}
@@ -335,7 +345,7 @@ const UserRegis = (props) => {
 
           <div style={{ marginBottom: "0.8rem" }}>
             <label className={regisCss.regisLabel} htmlFor="branch">
-              Branch
+              Branch *
             </label>
             <input
               className={regisCss.regisInput}
@@ -352,7 +362,7 @@ const UserRegis = (props) => {
 
           <div style={{ marginBottom: "0.8rem" }}>
             <label className={regisCss.regisLabel} htmlFor="phone">
-              Phone
+              Phone *
             </label>
             <input
               className={regisCss.regisInput}
@@ -362,7 +372,6 @@ const UserRegis = (props) => {
               placeholder="9998887776"
               autoComplete="off"
               maxLength={validation.authForm.phone.maxLen}
-              pattern="[0-9]{3} [0-9]{3} [0-9]{4}"
               value={regisForm.phone}
               onChange={onChange}
             />
@@ -370,7 +379,7 @@ const UserRegis = (props) => {
 
           <div style={{ marginBottom: "0.8rem" }}>
             <label className={regisCss.regisLabel} htmlFor="addLine1">
-              Address line 1
+              Address line 1 *
             </label>
             <input
               className={regisCss.regisInput}
@@ -388,7 +397,7 @@ const UserRegis = (props) => {
 
           <div style={{ marginBottom: "0.8rem" }}>
             <label className={regisCss.regisLabel} htmlFor="addLine2">
-              Address line 2
+              Address line 2 *
             </label>
             <input
               className={regisCss.regisInput}
@@ -405,7 +414,7 @@ const UserRegis = (props) => {
 
           <div style={{ marginBottom: "0.8rem" }}>
             <label className={regisCss.regisLabel} htmlFor="city">
-              City
+              City *
             </label>
             <input
               className={regisCss.regisInput}
@@ -422,7 +431,7 @@ const UserRegis = (props) => {
 
           <div style={{ marginBottom: "0.8rem" }}>
             <label className={regisCss.regisLabel} htmlFor="pincode">
-              Pincode
+              Pincode *
             </label>
             <input
               className={regisCss.regisInput}
@@ -439,7 +448,7 @@ const UserRegis = (props) => {
 
           <div style={{ marginBottom: "0.8rem" }}>
             <label className={regisCss.regisLabel} htmlFor="country">
-              Country
+              Country *
             </label>
             <input
               className={regisCss.regisInput}

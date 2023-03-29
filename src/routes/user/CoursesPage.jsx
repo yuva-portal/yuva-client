@@ -43,8 +43,7 @@ const CoursesPage = () => {
         );
 
         const result = await response.json();
-        // console.log(response);
-        console.log(result);
+        // console.log(result);
 
         if (response.status >= 400 && response.status < 600) {
           if (response.status === 401) {

@@ -14,7 +14,7 @@ import Loader from "../../components/common/Loader";
 import "../../css/user/u-single-unit-page.css";
 import css from "../../css/user/single-unit-page.module.css";
 
-import { SERVER_ORIGIN } from "../../utilities/constants";
+import { SERVER_ORIGIN, vars } from "../../utilities/constants";
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -54,7 +54,7 @@ const UserSingleUnit = () => {
         );
 
         const result = await response.json();
-        console.log(result);
+        // console.log(result);
 
         setIsLoading(false);
 
@@ -160,7 +160,7 @@ const UserSingleUnit = () => {
 
               <p className={css.secText}>
                 {isQuizBtnDisabled
-                  ? "Note: You need to watch atleast 50% of the video to unlock the quiz. (Kindly refresh the page after watching video to unlock the quiz.)"
+                  ? `Note: You need to watch atleast ${vars.video.MIN_WATCH_TIME_IN_PERCENT}% of the video to unlock the quiz. (Kindly refresh the page after watching video to unlock the quiz.)`
                   : "Quiz has been unlocked, click the button below to take quiz."}
               </p>
 
@@ -180,7 +180,7 @@ const UserSingleUnit = () => {
 
               <p className={css.secText}>
                 {isCertBtnDisabled
-                  ? "Note: To get the certificate you have to score atleast 65% in the quiz."
+                  ? `Note: To get the certificate you have to score atleast ${vars.quiz.CUT_OFF_IN_PERCENT}% in the quiz.`
                   : "Congratulations! Your certificate has been generated. Click on the button below to download your certificate."}
               </p>
               <button

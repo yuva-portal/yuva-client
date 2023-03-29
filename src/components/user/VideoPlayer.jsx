@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import ReactPlayer from "react-player/youtube";
-import { useNavigate, useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
+import { toast } from "react-hot-toast";
 
 import { SERVER_ORIGIN } from "../../utilities/constants";
 import "../../css/user/react-player.css";
@@ -9,6 +10,7 @@ import { roundOffDecimalPlaces } from "../../utilities/helper_functions";
 
 const VideoPlayer = (props) => {
   const params = useParams();
+  const navigate = useNavigate();
 
   let watchTimeInSec = 0;
   let seekPointInSec = 0;
@@ -77,15 +79,16 @@ const VideoPlayer = (props) => {
       );
 
       const result = await response.json();
-      // console.log("Watch response: ", result);
 
       if (response.status >= 400 && response.status < 600) {
         if (response.status === 401) {
-          if (!("isLoggedIn" in result) || result.isLoggedIn === false) {
-            // console.log("go to login");
-          }
+          toast.error(
+            `${result.statusText}, Please try to login in a new tab, or you might loose your progress`
+          );
+        } else if (response.status === 404) {
+          toast.error(result.statusText);
         } else {
-          alert("Internal server error"); // todo: toast notify
+          toast.error(result.statusText);
         }
       } else if (response.ok && response.status === 200) {
         // console.log(result);

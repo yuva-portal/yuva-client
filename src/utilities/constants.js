@@ -1,8 +1,8 @@
-// const SERVER_ORIGIN = "http://localhost:5000";
+const SERVER_ORIGIN = "http://localhost:5000";
 // const SERVER_ORIGIN = "http://192.168.29.75:5000";
 // const SERVER_ORIGIN = "https://yuva-backend-v2.onrender.com";
 
-const SERVER_ORIGIN = "https://yuvaportal.onrender.com";
+// const SERVER_ORIGIN = "https://yuvaportal.onrender.com";
 
 const vars = {
   quizInstructions: [
@@ -15,6 +15,14 @@ const vars = {
     "If you are not able to pass the quiz watch the content again and retake the quiz.",
   ],
 
+  quiz: {
+    TIME_PER_QUE_IN_MIN: 2,
+    CUT_OFF_IN_PERCENT: 60,
+  },
+  video: {
+    MIN_WATCH_TIME_IN_PERCENT: 50,
+  },
+
   IMAGE_SIZE_LIMIT_IN_BYTES: 3 * 1000 * 1000, // 1MB = 10^3KB = 10^6 Bytes
   IMAGE_MIME_TYPES_WHITE_LIST: ["image/jpeg", "image/png"],
 };
@@ -25,8 +33,13 @@ const validation = {
     mName: { minLen: 0, maxLen: 60 },
     lName: { minLen: 1, maxLen: 60 },
     userId: { minLen: 1, maxLen: 30 },
-    password: { minLen: 1, maxLen: 30 },
-    cnfrmPassword: { minLen: 1, maxLen: 30 },
+    password: {
+      minLen: 6,
+      maxLen: 30,
+      policy:
+        "Password should contain atleast one special character and atleast one number",
+    },
+    cnfrmPassword: { minLen: 6, maxLen: 30 },
     collegeName: { minLen: 1, maxLen: 120 },
     region: { minLen: 1, maxLen: 60 },
     branch: { minLen: 1, maxLen: 60 },

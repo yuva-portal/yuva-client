@@ -27,6 +27,10 @@
   border: 0.1rem solid var(--grey);
 }
 
+.passPolicy {
+  cursor: pointer;
+}
+
 .regisBtn {
   border-radius: 0.4rem;
   border: none;

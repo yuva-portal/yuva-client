@@ -6,11 +6,11 @@ function Footer() {
   return (
     <footer>
       <div className="footer container-fluid">
-        <p className="footer-heading">Important links</p>
-
-        <Link to="/" className="footer-tab">
-          Interview Experiences
-        </Link>
+        {/* <p className="footer-heading">Important links</p> */}
+        {/* 
+        <Link to="/user/verticals/all" className="footer-tab">
+          Verticals
+        </Link> */}
         <p className="copyright-tab">YUVA © {new Date().getFullYear()}</p>
       </div>
     </footer>
