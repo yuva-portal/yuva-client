@@ -2,9 +2,18 @@
   margin-top: 6.5rem;
 }
 
+.vInfoDiv {
+  border: 1px solid lightgray;
+  /* text-align: center; */
+  margin-bottom: 2rem;
+  padding: 1rem;
+  border-radius: 10px;
+}
+
+.editBtn,
 .addBtn {
   background-color: var(--blue);
-  margin-bottom: 1.6rem;
+  margin-bottom: 1rem;
   height: 2.75rem;
   padding-left: 2rem;
   padding-right: 2rem;
@@ -12,6 +21,7 @@
   font-family: var(--font-family-2);
 }
 
+.editBtn:hover,
 .addBtn:hover {
   background-color: var(--yuva-dark-blue);
 }

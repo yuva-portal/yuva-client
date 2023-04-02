@@ -5,6 +5,8 @@
 .unitText {
   font-size: 1.2rem;
   margin-top: 0.6rem;
+  white-space: pre-wrap;
+  /* to break word in p/pre tag */
 }
 
 /********************************************* Mobile and Tab *********************************************/

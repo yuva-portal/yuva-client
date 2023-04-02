@@ -14,6 +14,8 @@ import { SERVER_ORIGIN, validation } from "../../utilities/constants";
 import { refreshScreen } from "../../utilities/helper_functions";
 
 const CoursesPage = () => {
+  const [verticalInfo, setverticalInfo] = useState({ name: "", desc: "" });
+  const [isSaveBtnDisabled, setIsSaveBtnDisabled] = useState(false);
   const [allCourses, setAllCourses] = useState([]);
   const [newCourse, setNewCourse] = useState({ name: "", desc: "" });
   const [isLoading, setIsLoading] = useState(false);
@@ -51,6 +53,7 @@ const CoursesPage = () => {
             toast.error(result.statusText);
           }
         } else if (response.ok && response.status === 200) {
+          setverticalInfo(result.verticalInfo);
           setAllCourses(result.allCourses);
         } else {
           // for future
@@ -63,6 +66,45 @@ const CoursesPage = () => {
 
     getAllCourses();
   }, []);
+
+  // const saveVInfoChanges = async () => {
+  //   setIsSaveBtnDisabled(true);
+
+  //   try {
+  //     const { verticalId } = params;
+  //     const response = await fetch(
+  //       `${SERVER_ORIGIN}/api/admin/auth/verticals/${verticalId}/edit`,
+  //       {
+  //         method: "PATCH",
+  //         headers: {
+  //           "Content-Type": "application/json",
+  //           "auth-token": localStorage.getItem("token"),
+  //         },
+  //       }
+  //     );
+
+  //     const result = await response.json();
+  //     // console.log(result);
+
+  //     setIsSaveBtnDisabled(false);
+
+  //     if (response.status >= 400 && response.status < 600) {
+  //       if (response.status === 401) {
+  //         navigate("/admin/login"); // login or role issue
+  //       } else if (response.status === 404) {
+  //         toast.error(result.statusText);
+  //       } else if (response.status === 500) {
+  //         toast.error(result.statusText);
+  //       }
+  //     } else if (response.ok && response.status === 200) {
+  //       refreshScreen();
+  //     } else {
+  //       // for future
+  //     }
+  //   } catch (err) {
+  //     console.log(err.message);
+  //   }
+  // };
 
   ////////////////////////////////////////////// Add Course Modal ///////////////////////////////////////////////////
 
@@ -294,6 +336,39 @@ const CoursesPage = () => {
 
   return (
     <div className={css.outerDiv}>
+      {/* <div className={css.vInfoDiv}>
+        <p
+          style={{
+            marginBottom: "1rem",
+          }}
+          className="editNote"
+        >
+          You can edit the vertical name and description fields by clicking upon
+          them
+        </p>
+        <div style={{ marginBottom: "0.8rem" }} className="text-ff2">
+          <label>Vertical name</label>
+          <p className="headerSubtitle" contentEditable="true">
+            {verticalInfo.name}
+          </p>
+        </div>
+        <div style={{ marginBottom: "0.8rem" }} className="text-ff2">
+          <label>Description</label>
+          <p className="headerSubtitle" contentEditable="true">
+            {verticalInfo.desc}
+          </p>
+        </div>
+        <div style={{ textAlign: "center" }}>
+          <button
+            className={`${css.editBtn} commonBtn`}
+            onClick={saveVInfoChanges}
+            disabled={isSaveBtnDisabled}
+          >
+            Save changes
+          </button>
+        </div>
+      </div> */}
+
       <div style={{ textAlign: "center" }}>
         <button className={`${css.addBtn} commonBtn`} onClick={openModal}>
           Add a new Course

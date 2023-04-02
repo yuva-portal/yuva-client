@@ -38,16 +38,17 @@ body {
 }
 
 .headerTitle {
-  font-size: 4rem;
+  font-size: 2.4rem;
   font-family: var(--font-family-1);
   font-weight: 800;
   margin: 0;
 }
 
 .headerSubtitle {
-  font-size: 1.5rem;
+  font-size: 1.3rem;
   font-family: var(--font-family-2);
   margin-top: 1rem;
+  margin: 0;
 }
 
 .nothingText {
@@ -120,6 +121,12 @@ body {
 
 .modalDltBtn:hover {
   background-color: red;
+}
+
+.editNote {
+  font-family: var(--font-family-1);
+  text-decoration: underline;
+  text-align: center;
 }
 
 /****************************************** Mobile and Tab *******************************************/

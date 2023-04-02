@@ -16,6 +16,7 @@ const UnitText = (props) => {
         </span>
       </div>
       <p className={css.unitText}>{props.text}</p>
+      {/* <pre className={css.unitText}>{props.text}</pre> */}
     </div>
   );
 };
