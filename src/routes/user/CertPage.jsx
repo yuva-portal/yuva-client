@@ -44,7 +44,7 @@ const CertPage = () => {
 
       try {
         const response = await fetch(
-          `${SERVER_ORIGIN}/api/public/certificate/${certId}`,
+          `${SERVER_ORIGIN}/public/certificate/${certId}`,
           {
             method: "GET",
             headers: {

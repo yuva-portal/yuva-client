@@ -61,7 +61,7 @@ const UserQuiz = () => {
 
       try {
         const response = await fetch(
-          `${SERVER_ORIGIN}/api/user/auth/verticals/${verticalId}/courses/${courseId}/units/${unitId}/quiz`,
+          `${SERVER_ORIGIN}/user/auth/verticals/${verticalId}/courses/${courseId}/units/${unitId}/quiz`,
           {
             method: "GET",
             headers: {
@@ -148,7 +148,7 @@ const UserQuiz = () => {
 
     try {
       const response = await fetch(
-        `${SERVER_ORIGIN}/api/user/auth/verticals/${verticalId}/courses/${courseId}/units/${unitId}/quiz/submit`,
+        `${SERVER_ORIGIN}/user/auth/verticals/${verticalId}/courses/${courseId}/units/${unitId}/quiz/submit`,
         {
           method: "POST",
           headers: {

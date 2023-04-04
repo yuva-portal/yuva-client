@@ -28,7 +28,7 @@ const HomePage = () => {
     async function getAllVerticals() {
       try {
         const response = await fetch(
-          `${SERVER_ORIGIN}/api/user/auth/verticals/all`,
+          `${SERVER_ORIGIN}/user/auth/verticals/all`,
           {
             method: "GET",
             headers: {

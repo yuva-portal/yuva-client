@@ -33,7 +33,7 @@ const VerticalsPage = () => {
 
       try {
         const response = await fetch(
-          `${SERVER_ORIGIN}/api/admin/auth/verticals/all`,
+          `${SERVER_ORIGIN}/admin/auth/verticals/all`,
           {
             method: "GET",
             headers: {
@@ -88,7 +88,7 @@ const VerticalsPage = () => {
     // todo: validate input
     try {
       const response = await fetch(
-        `${SERVER_ORIGIN}/api/admin/auth/verticals/add`,
+        `${SERVER_ORIGIN}/admin/auth/verticals/add`,
         {
           method: "POST",
           headers: {
@@ -149,7 +149,7 @@ const VerticalsPage = () => {
     // todo: validate input
     try {
       const response = await fetch(
-        `${SERVER_ORIGIN}/api/admin/auth/verticals/${verticalId}/delete`,
+        `${SERVER_ORIGIN}/admin/auth/verticals/${verticalId}/delete`,
         {
           method: "DELETE",
           headers: {

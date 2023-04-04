@@ -32,7 +32,7 @@ const CoursesPage = () => {
 
       try {
         const response = await fetch(
-          `${SERVER_ORIGIN}/api/user/auth/verticals/${verticalId}/courses/all`,
+          `${SERVER_ORIGIN}/user/auth/verticals/${verticalId}/courses/all`,
           {
             method: "GET",
             headers: {

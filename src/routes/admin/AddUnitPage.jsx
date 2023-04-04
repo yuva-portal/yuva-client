@@ -70,7 +70,7 @@ const AdminAddUnit = () => {
 
       try {
         const response = await fetch(
-          `${SERVER_ORIGIN}/api/admin/auth/verify-token`,
+          `${SERVER_ORIGIN}/admin/auth/verify-token`,
           {
             method: "POST",
             headers: {
@@ -217,7 +217,7 @@ const AdminAddUnit = () => {
       };
 
       const response = await fetch(
-        `${SERVER_ORIGIN}/api/admin/auth/verticals/${verticalId}/courses/${courseId}/units/add`,
+        `${SERVER_ORIGIN}/admin/auth/verticals/${verticalId}/courses/${courseId}/units/add`,
         {
           method: "POST",
           headers: {

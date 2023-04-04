@@ -72,7 +72,7 @@ const UserRegis = (props) => {
 
     try {
       const response = await fetch(
-        `${SERVER_ORIGIN}/api/user/auth/check-userid-availability`,
+        `${SERVER_ORIGIN}/user/auth/check-userid-availability`,
         {
           method: "POST",
           headers: {
@@ -111,7 +111,7 @@ const UserRegis = (props) => {
       setIsRegistering(true);
       setIsBtnDisabled(true);
 
-      const response = await fetch(`${SERVER_ORIGIN}/api/user/auth/register`, {
+      const response = await fetch(`${SERVER_ORIGIN}/user/auth/register`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

@@ -31,7 +31,7 @@ const UserUnits = () => {
       setIsLoading(true);
       try {
         const response = await fetch(
-          `${SERVER_ORIGIN}/api/user/auth/verticals/${verticalId}/courses/${courseId}/units/all`,
+          `${SERVER_ORIGIN}/user/auth/verticals/${verticalId}/courses/${courseId}/units/all`,
           {
             method: "GET",
             headers: {

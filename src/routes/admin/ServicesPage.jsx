@@ -23,7 +23,7 @@ const HomePage = () => {
 
       try {
         const response = await fetch(
-          `${SERVER_ORIGIN}/api/admin/auth/verify-token`,
+          `${SERVER_ORIGIN}/admin/auth/verify-token`,
           {
             method: "POST",
             headers: {

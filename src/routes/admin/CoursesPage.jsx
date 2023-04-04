@@ -29,7 +29,7 @@ const CoursesPage = () => {
 
       try {
         const response = await fetch(
-          `${SERVER_ORIGIN}/api/admin/auth/verticals/${verticalId}/courses/all`,
+          `${SERVER_ORIGIN}/admin/auth/verticals/${verticalId}/courses/all`,
           {
             method: "GET",
             headers: {
@@ -73,7 +73,7 @@ const CoursesPage = () => {
   //   try {
   //     const { verticalId } = params;
   //     const response = await fetch(
-  //       `${SERVER_ORIGIN}/api/admin/auth/verticals/${verticalId}/edit`,
+  //       `${SERVER_ORIGIN}/admin/auth/verticals/${verticalId}/edit`,
   //       {
   //         method: "PATCH",
   //         headers: {
@@ -128,7 +128,7 @@ const CoursesPage = () => {
     // todo: validate input
     try {
       const response = await fetch(
-        `${SERVER_ORIGIN}/api/admin/auth/verticals/${verticalId}/courses/add`,
+        `${SERVER_ORIGIN}/admin/auth/verticals/${verticalId}/courses/add`,
         {
           method: "POST",
           headers: {
@@ -189,7 +189,7 @@ const CoursesPage = () => {
     // todo: validate input
     try {
       const response = await fetch(
-        `${SERVER_ORIGIN}/api/admin/auth/verticals/${verticalId}/courses/${courseId}/delete`,
+        `${SERVER_ORIGIN}/admin/auth/verticals/${verticalId}/courses/${courseId}/delete`,
         {
           method: "DELETE",
           headers: {

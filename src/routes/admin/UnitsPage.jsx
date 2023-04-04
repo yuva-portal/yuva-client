@@ -31,7 +31,7 @@ const UnitsPage = () => {
 
       try {
         const response = await fetch(
-          `${SERVER_ORIGIN}/api/admin/auth/verticals/${verticalId}/courses/${courseId}/units/all`,
+          `${SERVER_ORIGIN}/admin/auth/verticals/${verticalId}/courses/${courseId}/units/all`,
           {
             method: "GET",
             headers: {
@@ -102,7 +102,7 @@ const UnitsPage = () => {
     // todo: validate input
     try {
       const response = await fetch(
-        `${SERVER_ORIGIN}/api/admin/auth/verticals/${verticalId}/courses/${courseId}/units/${unitId}/delete`,
+        `${SERVER_ORIGIN}/admin/auth/verticals/${verticalId}/courses/${courseId}/units/${unitId}/delete`,
         {
           method: "DELETE",
           headers: {

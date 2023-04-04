@@ -20,7 +20,7 @@ const UserResetPass = () => {
       try {
         setIsLoading(true);
         const response = await fetch(
-          `${SERVER_ORIGIN}/api/user/auth/verify-token`,
+          `${SERVER_ORIGIN}/user/auth/verify-token`,
           {
             method: "POST",
             headers: {
@@ -72,7 +72,7 @@ const UserResetPass = () => {
     try {
       setIsLoading(true);
       const response = await fetch(
-        `${SERVER_ORIGIN}/api/user/auth/reset-password`,
+        `${SERVER_ORIGIN}/user/auth/reset-password`,
         {
           method: "POST",
           headers: {
