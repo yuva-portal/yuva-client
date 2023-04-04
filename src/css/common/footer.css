@@ -1,35 +1,69 @@
-.footer {
-  /* background-color: purple; */
-  background-color: grey;
-  /* height: 360px; */
-  margin-top: 6rem;
-  padding: 40px 0 30px 0;
-  text-align: center;
-  color: white;
-  /* border: 2px solid red; */
-  font-family: var(--desc-font);
-  /* border-top: 2px solid var(--light-purple); */
-}
+.u-about-page-landing-footer {
+    max-width: 100%;
+    width: 80%;
+    margin: auto;
+    display: flex;
+    justify-content: space-between;
+  }
+  
+  .u-about-page-landing-footer-links {
+    display: flex;
+    width: 100%;
+  }
+  
+  .u-about-page-landing-footer-row {
+    margin-bottom: 1rem;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .u-about-page-landing-footer-link {
+    color: black;
+    font-family: var(--font-family-1);
+    text-decoration: none;
+    font-size: 1.1rem;
+    font-weight: 600;
+    transition: all ease-in-out 0.5s;
+    padding: 0.4rem 2rem;
+  }
+  
+  .u-about-page-landing-footer-link:hover {
+    color: var(--yuva-dark-orange);
+  }
+  
+  .u-about-page-landing-footer-icon {
+    color: black;
+    font-family: var(--font-family-1);
+    text-decoration: none;
+    transition: all ease-in-out 0.3s;
+    padding: 0.4rem 1rem;
+  }
+  
+  .u-about-page-landing-footer-icon:hover {
+    color: var(--yuva-dark-orange);
+  }
+  
+  .u-about-page-landing-footer-right {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+  }
+  
+  .u-about-page-landing-footer-social {
+    display: flex;
+  }
 
-.footer-heading {
-  font-size: var(--big-desc-fsz);
-  font-weight: var(--login-btn-fwt);
-  padding-bottom: 10px;
-}
+  @media only screen and (max-width: 480px) {
 
-.footer-tab {
-  color: white;
-  text-decoration: none;
-  display: block;
-  padding: 2px;
-}
+    .u-about-page-landing-footer {
+        flex-direction: column;
+      }
+    
+      .u-about-page-landing-footer-link {
+        font-size: 0.9rem;
+        text-align: center;
+      }
 
-.footer-tab:hover {
-  color: grey;
-}
-
-.copyright-tab {
-  margin-top: 40px;
-  font-size: 1rem;
-  font-weight: var(--sub-title-fwt);
-}
+  }
+  

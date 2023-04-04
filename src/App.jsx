@@ -34,7 +34,7 @@ import AdminAddUnit from "./routes/admin/AddUnitPage";
 
 // Common Pages
 import NotFound from "./routes/common/NotFound";
-import About from "./routes/common/AboutPage.jsx";
+import About from "./routes/user/AboutPage.jsx";
 
 import "./App.css";
 

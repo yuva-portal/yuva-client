@@ -67,7 +67,7 @@ const VideoPlayer = (props) => {
 
     try {
       const response = await fetch(
-        `${SERVER_ORIGIN}/api/user/auth/verticals/${verticalId}/courses/${courseId}/units/${unitId}/video/update-progress`,
+        `${SERVER_ORIGIN}/user/auth/verticals/${verticalId}/courses/${courseId}/units/${unitId}/video/update-progress`,
         {
           method: "POST",
           headers: {
