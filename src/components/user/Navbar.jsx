@@ -24,15 +24,18 @@ const Navbar = () => {
   };
 
   const handleLoginClick = (e) => {
+    setIsOpen(false)
     navigate("/user/login");
   };
 
   const handleLogoutClick = (e) => {
     localStorage.removeItem("token");
+    setIsOpen(false)
     navigate("/user/login");
   };
 
   const handleRegisterClick = (e) => {
+    setIsOpen(false)
     localStorage.removeItem("token");
     navigate("/user/register");
   };
@@ -41,7 +44,8 @@ const Navbar = () => {
 
   return (
     <nav ref={navbarRef} className={`${css.outerNav} navbar navbar-expand-lg fixed-top`}>
-      <Link to="/" style={{ marginRight: "1rem" }}>
+      <Link onClick={()=>setIsOpen(false)} to="/" style={{ marginRight: "1rem" }}>
+      
         <img src={img} alt="yi-logo" className={css.yiImg} />
       </Link>
       <button
@@ -58,12 +62,13 @@ const Navbar = () => {
       <div className= {`${isOpen? ``: "collapse"} navbar-collapse `} id="navbarCollapse">
         <ul className="navbar-nav mr-auto text-ff1">
           <li className="nav-item active">
-            <Link className="nav-link active" to="/" style={listItemStyle}>
+            <Link onClick={()=>setIsOpen(false)} className="nav-link active" to="/" style={listItemStyle}>
               Home
             </Link>
           </li>
           <li className="nav-item active">
             <Link
+            onClick={()=>setIsOpen(false)}
               className="nav-link active"
               to="/user/verticals/all"
               style={listItemStyle}
@@ -73,6 +78,7 @@ const Navbar = () => {
           </li>
           <li className="nav-item active">
             <Link
+            onClick={()=>setIsOpen(false)}
               className="nav-link active"
               to="/about"
               style={listItemStyle}
