@@ -1,14 +1,22 @@
 .u-about-page-landing-footer {
     max-width: 100%;
+    display: flex;
+    flex-direction: column;
     width: 80%;
     margin: auto;
+  }
+  
+  .u-about-page-landing-inner-footer {
+    max-width: 100%;
     display: flex;
     justify-content: space-between;
   }
   
   .u-about-page-landing-footer-links {
+    flex-basis: 50%;
+  
     display: flex;
-    width: 100%;
+    max-width: 100%;
   }
   
   .u-about-page-landing-footer-row {
@@ -44,6 +52,8 @@
   }
   
   .u-about-page-landing-footer-right {
+    flex-basis: 50%;
+  
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -53,17 +63,42 @@
   .u-about-page-landing-footer-social {
     display: flex;
   }
+  
+  .u-about-page-landing-footer-footer {
+    margin-top: 0.8rem;
+  }
+  
+  .u-about-page-landing-footer-footer p {
+    color: #535353;
+    flex-basis: 50%;
+    text-align: center;
+  }
+  
+  .u-about-page-landing-footer-footer a {
+    text-decoration: none;
+  }
 
   @media only screen and (max-width: 480px) {
 
-    .u-about-page-landing-footer {
-        flex-direction: column;
-      }
-    
-      .u-about-page-landing-footer-link {
-        font-size: 0.9rem;
-        text-align: center;
-      }
 
+  .u-about-page-landing-footer {
+    flex-direction: column;
   }
-  
+
+  .u-about-page-landing-inner-footer {
+    flex-direction: column;
+  }
+
+  .u-about-page-landing-footer-footer {
+    gap: 2rem;
+  }
+
+  .u-about-page-landing-footer-footer p {
+    font-size: 0.8rem;
+  }
+
+  .u-about-page-landing-footer-link {
+    font-size: 0.9rem;
+    text-align: center;
+  }
+}

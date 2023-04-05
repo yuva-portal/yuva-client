@@ -112,7 +112,7 @@ const AboutPage = () => {
         </div>
       </div>
       {/* Team section */}
-      <div className="u-about-page-landing-team">
+      {/* <div className="u-about-page-landing-team">
         <p className="u-about-page-landing-l-heading">Meet our Team</p>
         <div className="u-about-page-landing-team-row">
           <div className="u-about-page-landing-team-card">
@@ -222,7 +222,7 @@ const AboutPage = () => {
             <p className="u-about-page-landing-team-subheading">CEO</p>
           </div>
         </div>
-      </div>
+      </div> */}
       {/* Contact Section */}
       <div className="u-about-page-landing-reach">
         <p className="u-about-page-landing-l-heading">Reach Us</p>
@@ -245,62 +245,7 @@ const AboutPage = () => {
           <button className="u-about-page-landing-btn-1">Contact Us</button>
         </div>
       </div>
-      <div className="u-about-page-landing-hr"></div>
-
-      {/* footer */}
-      {/* <div className="u-about-page-landing-footer">
-        <div className="u-about-page-landing-footer-links">
-          <div className="u-about-page-landing-footer-row">
-            <Link to={"#"} className="u-about-page-landing-footer-link">
-              Home
-            </Link>
-            <Link to={"#"} className="u-about-page-landing-footer-link">
-              Contact Us
-            </Link>
-            <Link to={"#"} className="u-about-page-landing-footer-link">
-              Our Team
-            </Link>
-            <Link to={"#"} className="u-about-page-landing-footer-link">
-              Photo Gallery
-            </Link>
-          </div>
-          <div className="u-about-page-landing-footer-row">
-            <Link to={"#"} className="u-about-page-landing-footer-link">
-              Members
-            </Link>
-            <Link to={"#"} className="u-about-page-landing-footer-link">
-              Our Reach
-            </Link>
-            <Link to={"#"} className="u-about-page-landing-footer-link">
-              Accessibility
-            </Link>
-            <Link to={"#"} className="u-about-page-landing-footer-link">
-              Genesis of Yi
-            </Link>
-          </div>
-        </div>
-        <div className="u-about-page-landing-vr"></div>
-        <div className="u-about-page-landing-footer-right">
-          <div className="u-about-page-landing-footer-social">
-            <Link to={"#"} className="u-about-page-landing-footer-icon">
-              <BsFacebook fontSize={24} />
-            </Link>
-            <Link to={"#"} className="u-about-page-landing-footer-icon">
-              <BsTwitter fontSize={24} />
-            </Link>
-            <Link to={"#"} className="u-about-page-landing-footer-icon">
-              <BsYoutube fontSize={24} />
-            </Link>
-            <Link to={"#"} className="u-about-page-landing-footer-icon">
-              <BsInstagram fontSize={24} />
-            </Link>
-            <Link to={"#"} className="u-about-page-landing-footer-icon">
-              <BsLinkedin fontSize={24} />
-            </Link>
-          </div>
-          <img src={logo} alt="" className="u-about-page-landing-yuva-logo" />
-        </div>
-      </div> */}
+      
     </div>
   );
 };

@@ -57,7 +57,7 @@ const Navbar = () => {
           <li className="nav-item active">
             <Link
               className="nav-link active"
-              to="/user/about"
+              to="/about"
               style={listItemStyle}
             >
               About
