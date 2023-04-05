@@ -10,6 +10,7 @@ import { Toaster } from "react-hot-toast";
 import UserNavbar from "./components/user/Navbar";
 import AdminNavbar from "./components/admin/Navbar";
 import Footer from "./components/common/Footer";
+import ScrollToTop from "./components/common/ScrollToTop";
 
 // User Pages
 import UserHome from "./routes/user/HomePage";
@@ -42,6 +43,7 @@ function App() {
   return (
     <Router>
       <div className="app-outer-div">
+        <ScrollToTop/>
         <Routes>
           <Route
             exact
