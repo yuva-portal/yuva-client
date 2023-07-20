@@ -1,5 +1,6 @@
-const SERVER_ORIGIN = "http://localhost:5000";
+// const SERVER_ORIGIN = "http://localhost:5000";
 // const SERVER_ORIGIN = "https://yuvaportal.onrender.com";
+const SERVER_ORIGIN = "https://yuva-portal-server-1.onrender.com";
 
 const vars = {
   quizInstructions: [

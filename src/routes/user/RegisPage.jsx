@@ -101,12 +101,13 @@ const UserRegis = (props) => {
 
   const handleRegisterClick = async () => {
     // todo: trim fields, validate
+    // console.log(regisForm);
     const { isValid, desc } = isRegisFormValid(regisForm);
     if (!isValid) {
       toast.error(desc);
       return;
     }
-
+    console.log(regisForm);
     try {
       setIsRegistering(true);
       setIsBtnDisabled(true);
