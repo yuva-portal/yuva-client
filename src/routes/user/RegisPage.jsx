@@ -180,7 +180,7 @@ const UserRegis = (props) => {
               type="text"
               id="userId"
               name="userId"
-              placeholder="xyz@*123$"
+              placeholder="Enter a unique userID"
               autoComplete="off"
               maxLength={validation.authForm.userId.maxLen}
               value={regisForm.userId}
@@ -218,7 +218,7 @@ const UserRegis = (props) => {
               type="password"
               id="password"
               name="password"
-              placeholder="@ddx*12fqa3$"
+              placeholder="Enter a strong password"
               autoComplete="off"
               maxLength={validation.authForm.password.maxLen}
               value={regisForm.password}
@@ -235,7 +235,7 @@ const UserRegis = (props) => {
               type="password"
               id="cnfrmPassword"
               name="cnfrmPassword"
-              placeholder="@ddx*12fqa3$"
+              placeholder="Confirm the password you've entered"
               autoComplete="off"
               maxLength={validation.authForm.cnfrmPassword.maxLen}
               value={regisForm.cnfrmPassword}
@@ -252,7 +252,7 @@ const UserRegis = (props) => {
               type="email"
               id="email"
               name="email"
-              placeholder="xyz@gmail.com"
+              placeholder="Enter your email"
               value={regisForm.email}
               onChange={onChange}
               autoComplete="off"
@@ -268,7 +268,7 @@ const UserRegis = (props) => {
               type="text"
               id="fName"
               name="fName"
-              placeholder="Apoorv"
+              placeholder="Enter your first name"
               autoComplete="off"
               maxLength={validation.authForm.fName.maxLen}
               value={regisForm.fName}
@@ -285,7 +285,7 @@ const UserRegis = (props) => {
               type="text"
               id="mName"
               name="mName"
-              placeholder="Jain"
+              placeholder="Enter your middle name"
               autoComplete="off"
               maxLength={validation.authForm.mName.maxLen}
               value={regisForm.mName}
@@ -302,7 +302,7 @@ const UserRegis = (props) => {
               type="text"
               id="lName"
               name="lName"
-              placeholder="Jain"
+              placeholder="Enter your last name"
               autoComplete="off"
               maxLength={validation.authForm.lName.maxLen}
               value={regisForm.lName}
@@ -319,7 +319,7 @@ const UserRegis = (props) => {
               type="text"
               id="collegeName"
               name="collegeName"
-              placeholder="Lakshmi Narain College of Technology"
+              placeholder="Enter your college name"
               autoComplete="off"
               maxLength={validation.authForm.collegeName.maxLen}
               value={regisForm.collegeName}
@@ -353,7 +353,7 @@ const UserRegis = (props) => {
               type="text"
               id="branch"
               name="branch"
-              placeholder="Computer Science and Engineering"
+              placeholder="Enter your branch"
               autoComplete="off"
               maxLength={validation.authForm.branch.maxLen}
               value={regisForm.branch}
@@ -370,7 +370,7 @@ const UserRegis = (props) => {
               type="tel"
               id="phone"
               name="phone"
-              placeholder="9998887776"
+              placeholder="Enter your phone number"
               autoComplete="off"
               maxLength={validation.authForm.phone.maxLen}
               value={regisForm.phone}
@@ -422,7 +422,7 @@ const UserRegis = (props) => {
               type="text"
               id="city"
               name="city"
-              placeholder="Vidisha"
+              placeholder="Enter your city name"
               autoComplete="off"
               maxLength={validation.authForm.city.maxLen}
               value={regisForm.city}
@@ -439,7 +439,7 @@ const UserRegis = (props) => {
               type="text"
               id="pincode"
               name="pincode"
-              placeholder="464001"
+              placeholder="Enter your city's pincode"
               autoComplete="off"
               maxLength={validation.authForm.pincode.maxLen}
               value={regisForm.pincode}
@@ -456,7 +456,7 @@ const UserRegis = (props) => {
               type="text"
               id="country"
               name="country"
-              placeholder="India"
+              placeholder="Enter your country name"
               autoComplete="off"
               maxLength={validation.authForm.country.maxLen}
               value={regisForm.country}
