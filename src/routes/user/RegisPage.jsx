@@ -107,7 +107,7 @@ const UserRegis = (props) => {
       toast.error(desc);
       return;
     }
-    console.log(regisForm);
+    // console.log(regisForm);
     try {
       setIsRegistering(true);
       setIsBtnDisabled(true);
@@ -180,7 +180,7 @@ const UserRegis = (props) => {
               type="text"
               id="userId"
               name="userId"
-              placeholder="Enter a unique userID"
+              placeholder="Enter a unique username"
               autoComplete="off"
               maxLength={validation.authForm.userId.maxLen}
               value={regisForm.userId}

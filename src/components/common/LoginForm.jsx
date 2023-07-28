@@ -23,7 +23,7 @@ export const LoginForm = (props) => {
       <input
         className={css.input}
         type="text"
-        placeholder={props.role === "user" ? "User Id" : "Admin Id"}
+        placeholder={props.role === "user" ? "Username or Email" : "Admin Id"}
         name={props.role === "user" ? "userId" : "adminId"}
         value={props.role === "user" ? props.userId : props.adminId}
         onChange={handleChange}

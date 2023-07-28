@@ -1,12 +1,37 @@
-import React from "react";
+import {React, useEffect, useState} from "react";
 import { Link, useNavigate } from "react-router-dom";
 import img from "../../assets/images/yi_logo.png";
 
 // My css
 import css from "../../css/user/navbar.module.css";
+import { SERVER_ORIGIN} from "../../utilities/constants";
+
 
 const Navbar = () => {
   const navigate = useNavigate();
+  const [isUserLoggedIn, setIsUserLoggedIn] = useState(false);
+
+  useEffect(() => {
+    const verifyToken = async ()=>{
+        const response = await fetch(
+        `${SERVER_ORIGIN}/api/user/auth/verity-token`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            "auth-token": localStorage.getItem('token')
+          },
+        }
+      );
+      const result = await response.json();
+      if(result.userDoc){
+        setIsUserLoggedIn(true);
+      }
+    }
+
+    
+  }, [])
+  
 
   const handleLoginClick = (e) => {
     navigate("/user/login");

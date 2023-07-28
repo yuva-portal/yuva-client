@@ -47,6 +47,7 @@ const CoursesPage = () => {
 
         if (response.status >= 400 && response.status < 600) {
           if (response.status === 401) {
+            localStorage.removeItem("token");
             navigate("/user/login"); // login or role issue
           } else if (response.status === 404) {
             navigate("/user/resource-not-found");
