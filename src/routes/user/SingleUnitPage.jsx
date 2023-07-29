@@ -77,8 +77,6 @@ const UserSingleUnit = () => {
 
           setIsCertBtnDisabled(!result.isCertGenerated);
 
-          // console.log(result);
-
           // we also have userDoc here
         } else {
           // for future

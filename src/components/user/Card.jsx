@@ -31,9 +31,7 @@ function Card(props) {
           ? props.data.courseCount + " Courses"
           : props.type === "course"
           ? props.data.unitCount + " Units"
-          : props.data.activityCount +
-            " Activities • " +
-            props.data.quizCount +
+          : props.data.quizCount +
             " Questions"}
       </p>
 

@@ -41,6 +41,7 @@ const CertPage = () => {
     const getCert = async () => {
       setIsLoading(true);
       const certId = params.certId;
+      console.log("CertPage certId: ", certId);
 
       try {
         const response = await fetch(

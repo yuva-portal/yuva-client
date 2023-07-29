@@ -261,12 +261,7 @@ const UserQuiz = () => {
           <button
             className={css.btn}
             onClick={() => {
-              // reference: https://stackoverflow.com/questions/65948671/how-to-go-back-to-previous-route-in-react-router-dom-v6
-              if (window.history.state && window.history.state.idx > 0) {
-                navigate(-1); // there's a page behind this
-              } else {
-                navigate("/", { replace: true }); // the current entry in the history stack will be replaced with the new one with { replace: true }
-              }
+               navigate(-1);
             }}
           >
             Go back to Unit
