@@ -19,7 +19,7 @@ const vars = {
     CUT_OFF_IN_PERCENT: 60,
   },
   video: {
-    MIN_WATCH_TIME_IN_PERCENT: 50,
+    MIN_WATCH_TIME_IN_PERCENT: 40,
   },
 
   IMAGE_SIZE_LIMIT_IN_BYTES: 3 * 1000 * 1000, // 1MB = 10^3KB = 10^6 Bytes

@@ -125,11 +125,15 @@ const UserRegis = (props) => {
       // console.log(result);
 
       setIsRegistering(false);
+      setIsBtnDisabled(false);
 
       if (response.status >= 400 && response.status < 600) {
         if (response.status === 500) {
           toast.error(result.statusText); // todo: toast notify
           setIsBtnDisabled(false); // can reclick on register btn
+        }
+        else if(response.status===403){
+            toast.error(result.statusText);
         }
       } else if (response.ok && response.status === 200) {
         toast.success(result.statusText); // registered therefore regis btn remains disabled
