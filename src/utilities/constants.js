@@ -1,4 +1,5 @@
-const SERVER_ORIGIN = "http://localhost:8800";
+// const SERVER_ORIGIN = "http://localhost:8800";
+const SERVER_ORIGIN = "http://3.6.121.136:8080";
 // const SERVER_ORIGIN = "https://yuvaportal.onrender.com";
 // const SERVER_ORIGIN = "https://yuva-portal-server-1.onrender.com";
 // const SERVER_ORIGIN = process.env.REACT_APP_API_URL;
