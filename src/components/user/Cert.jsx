@@ -18,9 +18,9 @@ import orgLogo from "../../assets/images/2_org_logo.png";
 const Cert = (props) => {
   const { certInfo } = props;
   const certificate = (
-    <div className={css.outerDiv}>
+    <div style={{}} className={css.outerDiv}>
       <div className={css.innerDiv}>
-        <img src={orgLogo} className={css.orgLogo} alt="org-logo" />
+        <img src={orgLogo}  draggable="false" className={css.orgLogo} alt="org-logo" />
 
         <h2 className={css.completionText}>Certificate of Completion</h2>
         <h2 className={css.holderName}>{certInfo.holderName}</h2>
@@ -29,25 +29,25 @@ const Cert = (props) => {
           {certInfo.courseName} <br /> on {certInfo.passingDate}
         </p>
 
-        <img className={css.trophyLogo} src={trophy_logo} alt="trophy-logo" />
+        <img className={css.trophyLogo}  draggable="false" src={trophy_logo} alt="trophy-logo" />
 
         <div className="row">
           <div className="col-lg-4 col-md-4 col-4">
-            <img className={css.signImg} src={sign} alt="sign-img" />
+            <img className={css.signImg}  draggable="false" src={sign} alt="sign-img" />
             <p className={css.desigText}>
               NATIONAL <br /> YUVA CHAIR
             </p>
             <p className={css.ciyiText}>CIYI</p>
           </div>
           <div className="col-lg-4 col-md-4 col-4">
-            <img className={css.signImg} src={sign} alt="sign-img" />
+            <img className={css.signImg}  draggable="false" src={sign} alt="sign-img" />
             <p className={css.desigText}>
               NATIONAL <br /> YUVA CO-CHAIR
             </p>
             <p className={css.ciyiText}>CIYI</p>
           </div>
           <div className="col-lg-4 col-md-4 col-4">
-            <img className={css.signImg} src={sign} alt="sign-img" />
+            <img className={css.signImg}  draggable="false" src={sign} alt="sign-img" />
             <p className={css.desigText}>
               CHAIR <br /> YUVA
             </p>

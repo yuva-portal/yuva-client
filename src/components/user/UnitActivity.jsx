@@ -85,12 +85,16 @@ const UnitActivity = (props) => {
     // uploading file
     // ! donot set content-type while using fetch to upload properly
     try {
+        const userId = process.env.REACT_APP_USER_ID;
+        const userPassword = process.env.REACT_APP_USER_PASSWORD;
+        const basicAuth = btoa(`${userId}:${userPassword}`);
       const response = await fetch(
         `${SERVER_ORIGIN}/api/user/auth/verticals/${verticalId}/courses/${courseId}/units/${unitId}/activity/submit`,
         {
           method: "POST",
           headers: {
             "auth-token": localStorage.getItem("token"),
+            "Authorization": `Basic ${basicAuth}`,
           },
           body: form,
         }

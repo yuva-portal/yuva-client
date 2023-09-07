@@ -71,12 +71,16 @@ const UserRegis = (props) => {
     }
 
     try {
+        const userId = process.env.REACT_APP_USER_ID;
+        const userPassword = process.env.REACT_APP_USER_PASSWORD;
+        const basicAuth = btoa(`${userId}:${userPassword}`);
       const response = await fetch(
         `${SERVER_ORIGIN}/api/user/auth/check-userid-availability`,
         {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
+            "Authorization": `Basic ${basicAuth}`,
           },
           body: JSON.stringify({ userId: regisForm.userId }),
         }
@@ -111,11 +115,15 @@ const UserRegis = (props) => {
     try {
       setIsRegistering(true);
       setIsBtnDisabled(true);
+      const userId = process.env.REACT_APP_USER_ID;
+        const userPassword = process.env.REACT_APP_USER_PASSWORD;
+        const basicAuth = btoa(`${userId}:${userPassword}`);
 
       const response = await fetch(`${SERVER_ORIGIN}/api/user/auth/register`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
+          "Authorization": `Basic ${basicAuth}`,
         },
         body: JSON.stringify(regisForm),
       });

@@ -32,12 +32,16 @@ const VerticalsPage = () => {
       setIsLoading(true);
 
       try {
+        const adminId = process.env.REACT_APP_ADMIN_ID;
+        const adminPassword = process.env.REACT_APP_ADMIN_PASSWORD;
+        const basicAuth = btoa(`${adminId}:${adminPassword}`);
         const response = await fetch(
           `${SERVER_ORIGIN}/api/admin/auth/verticals/all`,
           {
             method: "GET",
             headers: {
               "Content-Type": "application/json",
+              "Authorization": `Basic ${basicAuth}`, // Include Basic Authentication
               "auth-token": localStorage.getItem("token"),
             },
           }
@@ -87,6 +91,9 @@ const VerticalsPage = () => {
   async function handleAddVertical() {
     // todo: validate input
     try {
+        const adminId = process.env.REACT_APP_ADMIN_ID;
+        const adminPassword = process.env.REACT_APP_ADMIN_PASSWORD;
+        const basicAuth = btoa(`${adminId}:${adminPassword}`);
       const response = await fetch(
         `${SERVER_ORIGIN}/api/admin/auth/verticals/add`,
         {
@@ -94,6 +101,7 @@ const VerticalsPage = () => {
           headers: {
             "Content-Type": "application/json",
             "auth-token": localStorage.getItem("token"),
+            "Authorization": `Basic ${basicAuth}`,
           },
           body: JSON.stringify(newVertical),
         }
@@ -148,6 +156,9 @@ const VerticalsPage = () => {
     const verticalId = toDeleteVerticalId;
     // todo: validate input
     try {
+        const adminId = process.env.REACT_APP_ADMIN_ID;
+        const adminPassword = process.env.REACT_APP_ADMIN_PASSWORD;
+        const basicAuth = btoa(`${adminId}:${adminPassword}`);
       const response = await fetch(
         `${SERVER_ORIGIN}/api/admin/auth/verticals/${verticalId}/delete`,
         {
@@ -155,6 +166,7 @@ const VerticalsPage = () => {
           headers: {
             "Content-Type": "application/json",
             "auth-token": localStorage.getItem("token"),
+            "Authorization": `Basic ${basicAuth}`,
           },
         }
       );

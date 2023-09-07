@@ -18,6 +18,9 @@ const UserResetPass = () => {
   useEffect(() => {
     const canVisitPage = async () => {
       try {
+        const userId = process.env.REACT_APP_USER_ID;
+        const userPassword = process.env.REACT_APP_USER_PASSWORD;
+        const basicAuth = btoa(`${userId}:${userPassword}`);
         setIsLoading(true);
         const response = await fetch(
           `${SERVER_ORIGIN}/api/user/auth/verify-token`,
@@ -26,6 +29,7 @@ const UserResetPass = () => {
             headers: {
               "Content-Type": "application/json",
               "auth-token": localStorage.getItem("token"),
+              "Authorization": `Basic ${basicAuth}`,
             },
           }
         );
@@ -71,6 +75,9 @@ const UserResetPass = () => {
 
     try {
       setIsLoading(true);
+      const userId = process.env.REACT_APP_USER_ID;
+        const userPassword = process.env.REACT_APP_USER_PASSWORD;
+        const basicAuth = btoa(`${userId}:${userPassword}`);
       const response = await fetch(
         `${SERVER_ORIGIN}/api/user/auth/reset-password`,
         {
@@ -78,6 +85,7 @@ const UserResetPass = () => {
           headers: {
             "Content-Type": "application/json",
             "auth-token": localStorage.getItem("token"),
+            "Authorization": `Basic ${basicAuth}`,
           },
           body: JSON.stringify(creds),
         }

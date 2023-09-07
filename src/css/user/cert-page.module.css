@@ -1,5 +1,6 @@
 .outerDiv {
   margin-top: 6.5rem;
+  user-select: none;
 }
 
 .certInfoDiv {

@@ -69,6 +69,9 @@ const AdminAddUnit = () => {
       const { verticalId, courseId, unitId } = params;
 
       try {
+        const adminId = process.env.REACT_APP_ADMIN_ID;
+        const adminPassword = process.env.REACT_APP_ADMIN_PASSWORD;
+        const basicAuth = btoa(`${adminId}:${adminPassword}`);
         const response = await fetch(
           `${SERVER_ORIGIN}/api/admin/auth/verify-token`,
           {
@@ -76,6 +79,7 @@ const AdminAddUnit = () => {
             headers: {
               // "Content-Type": "application/json",
               "auth-token": localStorage.getItem("token"),
+              "Authorization": `Basic ${basicAuth}`,
             },
           }
         );
@@ -209,6 +213,9 @@ const AdminAddUnit = () => {
     // console.log(params);
 
     try {
+        const adminId = process.env.REACT_APP_ADMIN_ID;
+        const adminPassword = process.env.REACT_APP_ADMIN_PASSWORD;
+        const basicAuth = btoa(`${adminId}:${adminPassword}`);
       const unit = {
         video: video,
         text: text,
@@ -223,6 +230,7 @@ const AdminAddUnit = () => {
           headers: {
             "Content-Type": "application/json",
             "auth-token": localStorage.getItem("token"),
+            "Authorization": `Basic ${basicAuth}`,
           },
           body: JSON.stringify(unit),
         }

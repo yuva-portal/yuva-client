@@ -30,6 +30,9 @@ const UnitsPage = () => {
       const { verticalId, courseId } = params;
 
       try {
+        const adminId = process.env.REACT_APP_ADMIN_ID;
+        const adminPassword = process.env.REACT_APP_ADMIN_PASSWORD;
+        const basicAuth = btoa(`${adminId}:${adminPassword}`);
         const response = await fetch(
           `${SERVER_ORIGIN}/api/admin/auth/verticals/${verticalId}/courses/${courseId}/units/all`,
           {
@@ -37,12 +40,13 @@ const UnitsPage = () => {
             headers: {
               "Content-Type": "application/json",
               "auth-token": localStorage.getItem("token"),
+              "Authorization": `Basic ${basicAuth}`,
             },
           }
         );
 
         const result = await response.json();
-        console.log(result);
+        // console.log(result);
 
         setIsLoading(false);
 
@@ -101,6 +105,9 @@ const UnitsPage = () => {
 
     // todo: validate input
     try {
+        const adminId = process.env.REACT_APP_ADMIN_ID;
+        const adminPassword = process.env.REACT_APP_ADMIN_PASSWORD;
+        const basicAuth = btoa(`${adminId}:${adminPassword}`);
       const response = await fetch(
         `${SERVER_ORIGIN}/api/admin/auth/verticals/${verticalId}/courses/${courseId}/units/${unitId}/delete`,
         {
@@ -108,6 +115,7 @@ const UnitsPage = () => {
           headers: {
             "Content-Type": "application/json",
             "auth-token": localStorage.getItem("token"),
+            "Authorization": `Basic ${basicAuth}`,
           },
         }
       );

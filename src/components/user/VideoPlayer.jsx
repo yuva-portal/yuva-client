@@ -66,6 +66,9 @@ const VideoPlayer = (props) => {
     // console.log(watchTimeInPercent);
 
     try {
+        const userId = process.env.REACT_APP_USER_ID;
+        const userPassword = process.env.REACT_APP_USER_PASSWORD;
+        const basicAuth = btoa(`${userId}:${userPassword}`);
       const response = await fetch(
         `${SERVER_ORIGIN}/api/user/auth/verticals/${verticalId}/courses/${courseId}/units/${unitId}/video/update-progress`,
         {
@@ -73,12 +76,14 @@ const VideoPlayer = (props) => {
           headers: {
             "Content-Type": "application/json",
             "auth-token": localStorage.getItem("token"),
+            "Authorization": `Basic ${basicAuth}`,
           },
           body: JSON.stringify({ vdoWatchTimeInPercent: watchTimeInPercent }),
         }
       );
 
       const result = await response.json();
+      console.log(result);
 
       if (response.status >= 400 && response.status < 600) {
         if (response.status === 401) {

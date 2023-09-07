@@ -30,6 +30,9 @@ const UserUnits = () => {
 
       setIsLoading(true);
       try {
+        const userId = process.env.REACT_APP_USER_ID;
+        const userPassword = process.env.REACT_APP_USER_PASSWORD;
+        const basicAuth = btoa(`${userId}:${userPassword}`);
         const response = await fetch(
           `${SERVER_ORIGIN}/api/user/auth/verticals/${verticalId}/courses/${courseId}/units/all`,
           {
@@ -37,6 +40,7 @@ const UserUnits = () => {
             headers: {
               "Content-Type": "application/json",
               "auth-token": localStorage.getItem("token"),
+              "Authorization": `Basic ${basicAuth}`,
             },
           }
         );

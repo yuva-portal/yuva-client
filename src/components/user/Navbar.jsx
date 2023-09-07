@@ -13,13 +13,17 @@ const Navbar = () => {
 
   useEffect(() => {
     const verifyToken = async ()=>{
+        const userId = process.env.REACT_APP_USER_ID;
+        const userPassword = process.env.REACT_APP_USER_PASSWORD;
+        const basicAuth = btoa(`${userId}:${userPassword}`);
         const response = await fetch(
         `${SERVER_ORIGIN}/api/user/auth/verity-token`,
         {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
-            "auth-token": localStorage.getItem('token')
+            "auth-token": localStorage.getItem('token'),
+            "Authorization": `Basic ${basicAuth}`,
           },
         }
       );

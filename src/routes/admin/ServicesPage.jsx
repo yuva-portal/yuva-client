@@ -22,6 +22,9 @@ const HomePage = () => {
       setIsLoading(true);
 
       try {
+        const adminId = process.env.REACT_APP_ADMIN_ID;
+        const adminPassword = process.env.REACT_APP_ADMIN_PASSWORD;
+        const basicAuth = btoa(`${adminId}:${adminPassword}`);
         const response = await fetch(
           `${SERVER_ORIGIN}/api/admin/auth/verify-token`,
           {
@@ -29,6 +32,7 @@ const HomePage = () => {
             headers: {
               "Content-Type": "application/json",
               "auth-token": localStorage.getItem("token"),
+              "Authorization": `Basic ${basicAuth}`,
             },
           }
         );

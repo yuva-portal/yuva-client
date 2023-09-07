@@ -24,8 +24,6 @@
   font-weight: 600;
 }
 
-.completionText {
-}
 
 .achieveText {
   margin-top: 0.4rem;
@@ -101,8 +99,7 @@
     margin-bottom: 0;
   }
 
-  .trophyLogo {
-  }
+
 
   .signImg {
     width: 2.4rem;

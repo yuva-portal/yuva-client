@@ -41,7 +41,9 @@ const UserQuiz = () => {
   const renderer = ({ hours, minutes, seconds, completed }) => {
     if (completed) {
       // Render a completed state
-      document.getElementById("quiz-submit-btn").click(); // auto submit
+    //   document.getElementById("quiz-submit-btn").click(); // auto submit
+        toast("Time is up. calculating results");
+        handleSubmitQuiz();
       // ! error here, see console
     } else {
       // Render a countdown
@@ -60,6 +62,9 @@ const UserQuiz = () => {
       const { verticalId, courseId, unitId } = params;
 
       try {
+        const userId = process.env.REACT_APP_USER_ID;
+        const userPassword = process.env.REACT_APP_USER_PASSWORD;
+        const basicAuth = btoa(`${userId}:${userPassword}`);
         const response = await fetch(
           `${SERVER_ORIGIN}/api/user/auth/verticals/${verticalId}/courses/${courseId}/units/${unitId}/quiz`,
           {
@@ -67,6 +72,7 @@ const UserQuiz = () => {
             headers: {
               "Content-Type": "application/json",
               "auth-token": localStorage.getItem("token"),
+              "Authorization": `Basic ${basicAuth}`,
             },
           }
         );
@@ -147,6 +153,9 @@ const UserQuiz = () => {
     const { verticalId, courseId, unitId } = params;
 
     try {
+        const userId = process.env.REACT_APP_USER_ID;
+        const userPassword = process.env.REACT_APP_USER_PASSWORD;
+        const basicAuth = btoa(`${userId}:${userPassword}`);
       const response = await fetch(
         `${SERVER_ORIGIN}/api/user/auth/verticals/${verticalId}/courses/${courseId}/units/${unitId}/quiz/submit`,
         {
@@ -154,6 +163,7 @@ const UserQuiz = () => {
           headers: {
             "Content-Type": "application/json",
             "auth-token": localStorage.getItem("token"),
+            "Authorization": `Basic ${basicAuth}`,
           },
           body: JSON.stringify({ quizScoreInPercent: calculatedCurrQuizScore }),
         }
@@ -369,6 +379,11 @@ const UserQuiz = () => {
 
   return (
     <>
+
+        {isLoading && <Loader />}
+        {}
+        {}
+        {}
       {isLoading ? (
         <Loader />
       ) : showQuiz ? (

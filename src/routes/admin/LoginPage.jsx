@@ -23,10 +23,14 @@ const LoginPage = () => {
     setIsLoading(true);
 
     try {
+        const adminId = process.env.REACT_APP_ADMIN_ID;
+        const adminPassword = process.env.REACT_APP_ADMIN_PASSWORD;
+        const basicAuth = btoa(`${adminId}:${adminPassword}`);
       const response = await fetch(`${SERVER_ORIGIN}/api/admin/auth/login`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
+          "Authorization": `Basic ${basicAuth}`,
         },
         body: JSON.stringify(creds),
       });

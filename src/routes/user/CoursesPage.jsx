@@ -31,6 +31,9 @@ const CoursesPage = () => {
       setIsLoading(true);
 
       try {
+        const userId = process.env.REACT_APP_USER_ID;
+        const userPassword = process.env.REACT_APP_USER_PASSWORD;
+        const basicAuth = btoa(`${userId}:${userPassword}`);
         const response = await fetch(
           `${SERVER_ORIGIN}/api/user/auth/verticals/${verticalId}/courses/all`,
           {
@@ -38,6 +41,7 @@ const CoursesPage = () => {
             headers: {
               "Content-Type": "application/json",
               "auth-token": localStorage.getItem("token"),
+              "Authorization": `Basic ${basicAuth}`,
             },
           }
         );
