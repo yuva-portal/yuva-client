@@ -386,31 +386,31 @@ const isRegisFormValid = (regisForm) => {
   }
 
   // College name
-  const collegeName = regisForm.collegeName;
-  if (!(collegeName && collegeName.length > 0)) {
-    return {
-      isValid: false,
-      desc: "College name is not valid",
-    };
-  }
+//   const collegeName = regisForm.collegeName;
+//   if (!(collegeName && collegeName.length > 0)) {
+//     return {
+//       isValid: false,
+//       desc: "College name is not valid",
+//     };
+//   }
 
   // Region
-  const region = regisForm.region;
-  if (!(region && region.length > 0)) {
-    return {
-      isValid: false,
-      desc: "Region is not valid",
-    };
-  }
+//   const region = regisForm.region;
+//   if (!(region && region.length > 0)) {
+//     return {
+//       isValid: false,
+//       desc: "Region is not valid",
+//     };
+//   }
 
   // Branch
-  const branch = regisForm.branch;
-  if (!(branch && branch.length > 0)) {
-    return {
-      isValid: false,
-      desc: "Branch name is not valid",
-    };
-  }
+//   const branch = regisForm.branch;
+//   if (!(branch && branch.length > 0)) {
+//     return {
+//       isValid: false,
+//       desc: "Branch name is not valid",
+//     };
+//   }
 
   // Phone
   const phone = regisForm.phone;
@@ -422,49 +422,49 @@ const isRegisFormValid = (regisForm) => {
   }
 
   // Add Line 1
-  const addLine1 = regisForm.addLine1;
-  if (!(addLine1 && addLine1.length > 0)) {
-    return {
-      isValid: false,
-      desc: "Address Line 1 is not valid",
-    };
-  }
+//   const addLine1 = regisForm.addLine1;
+//   if (!(addLine1 && addLine1.length > 0)) {
+//     return {
+//       isValid: false,
+//       desc: "Address Line 1 is not valid",
+//     };
+//   }
 
   // Add Line 2
-  const addLine2 = regisForm.addLine2;
-  if (!(addLine2 && addLine2.length > 0)) {
-    return {
-      isValid: false,
-      desc: "Address Line 2 is not valid",
-    };
-  }
+//   const addLine2 = regisForm.addLine2;
+//   if (!(addLine2 && addLine2.length > 0)) {
+//     return {
+//       isValid: false,
+//       desc: "Address Line 2 is not valid",
+//     };
+//   }
 
   // City
-  const city = regisForm.city;
-  if (!(city && city.length > 0)) {
-    return {
-      isValid: false,
-      desc: "City name is not valid",
-    };
-  }
+//   const city = regisForm.city;
+//   if (!(city && city.length > 0)) {
+//     return {
+//       isValid: false,
+//       desc: "City name is not valid",
+//     };
+//   }
 
   // Pincode
-  const pincode = regisForm.pincode;
-  if (!(pincode && pincode.length > 0)) {
-    return {
-      isValid: false,
-      desc: "Pincode is not valid",
-    };
-  }
+//   const pincode = regisForm.pincode;
+//   if (!(pincode && pincode.length > 0)) {
+//     return {
+//       isValid: false,
+//       desc: "Pincode is not valid",
+//     };
+//   }
 
   // Country
-  const country = regisForm.country;
-  if (!(country && country.length > 0)) {
-    return {
-      isValid: false,
-      desc: "Country name is not valid",
-    };
-  }
+//   const country = regisForm.country;
+//   if (!(country && country.length > 0)) {
+//     return {
+//       isValid: false,
+//       desc: "Country name is not valid",
+//     };
+//   }
 
   return {
     isValid: true,

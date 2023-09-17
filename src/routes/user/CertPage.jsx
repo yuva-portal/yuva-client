@@ -30,6 +30,7 @@ const CertPage = () => {
   });
 
   const [isLoading, setIsLoading] = useState(false);
+  const [isCertValid, setIsCertValid] = useState(true);
 
   const params = useParams();
   // console.log(params);
@@ -40,8 +41,9 @@ const CertPage = () => {
   useEffect(() => {
     const getCert = async () => {
       setIsLoading(true);
+
       const certId = params.certId;
-      console.log("CertPage certId: ", certId);
+    //   console.log("CertPage certId: ", certId);
 
       try {
         const userId = process.env.REACT_APP_USER_ID;
@@ -60,6 +62,12 @@ const CertPage = () => {
 
         const result = await response.json();
         // console.log(result);
+        if(result.success === false){
+            setIsCertValid(false);
+            setIsLoading(false);
+            return;
+        }
+        setIsCertValid(true);
 
         if (response.status >= 400 && response.status < 600) {
           if (response.status === 404) {
@@ -86,7 +94,8 @@ const CertPage = () => {
   const handleCertPDFDownload = () => {
     // console.log("downloading");
 
-    const certFileName = `Yuva_${certInfo.holderName}_${certInfo.unitId}`;
+    // const certFileName = `Yuva_${certInfo.holderName}_${certInfo.unitId}`;
+    const certFileName = `Yuva_${certInfo.holderName}_certificate`;
 
     downloadCertificate({ ...certInfo, fileName: certFileName });
   };
@@ -95,7 +104,7 @@ const CertPage = () => {
     <>
       {isLoading ? (
         <Loader />
-      ) : (
+      ) : isCertValid? (
         <div className={css.outerDiv}>
           <div className="row">
             <div className="col-lg-8">
@@ -169,7 +178,20 @@ const CertPage = () => {
             </div>
           </div>
         </div>
-      )}
+      ) : 
+      <>
+      <div style={{display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    justifyContent: 'center',
+    height: '100vh', // Makes the container take the full height of the viewport
+    textAlign: 'center',}}>
+      <p>This certificate is invalid.</p>
+      <p>Please visit <a href="https://yuvaportal.youngindians.net/">https://yuvaportal.youngindians.net/</a> to get a valid certificate.</p>
+    </div>
+      </>
+      
+      }
     </>
   );
 };

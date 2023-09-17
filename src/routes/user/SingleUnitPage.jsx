@@ -19,16 +19,19 @@ import { SERVER_ORIGIN, vars } from "../../utilities/constants";
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 
 const UserSingleUnit = () => {
+
   const [unit, setUnit] = useState({
     video: null,
     text: "",
     activities: [],
   });
   const [isCertBtnDisabled, setIsCertBtnDisabled] = useState(true);
-  const [isQuizBtnDisabled, setIsQuizBtnDisabled] = useState(false);
+  const [isQuizBtnDisabled, setIsQuizBtnDisabled] = useState(true);
   // const [courseInfo, setCourseInfo] = useState(null);
   // const [userInfo, setUserInfo] = useState(null);
   const [certId, setCertId] = useState("");
+  const [storedWatchPercentage, setStoredWatchPercentage] = useState(0);
+  const [videoWatchTimeCutoffPercentage, setVideoWatchTimeCutoffPercentage] = useState(0);
 
   const [isLoading, setIsLoading] = useState(false);
   const [videoInfo, setVideoInfo] = useState({});
@@ -58,7 +61,7 @@ const UserSingleUnit = () => {
         );
 
         const result = await response.json();
-        // console.log(result);
+        console.log(result);
 
         setIsLoading(false);
 
@@ -74,6 +77,8 @@ const UserSingleUnit = () => {
           setUnit(result.unit);
           setVideoInfo(result.unit.video);
           setIsQuizBtnDisabled(!result.isEligibleToTakeQuiz);
+          setStoredWatchPercentage(result.storedWatchPercentage);
+          setVideoWatchTimeCutoffPercentage(result.videoWatchTimeCutoffPercentage)
           // setCourseInfo(result.courseInfo);
           // setUserInfo(result.userInfo);
 
@@ -94,6 +99,10 @@ const UserSingleUnit = () => {
     getUnit();
   }, []);
 
+  function handleChangeQuizState(){
+    setIsQuizBtnDisabled((prev)=>!prev)
+  }
+
   function handleOpenQuizClick() {
     const { verticalId, courseId, unitId } = params;
 
@@ -112,7 +121,7 @@ const UserSingleUnit = () => {
 
   const element = (
     <div className={css.outerDiv}>
-      {unit.video !== null ? <VideoPlayer video={unit.video} /> : null}
+      {unit.video !== null ? <VideoPlayer video={unit.video} storedWatchPercentage={storedWatchPercentage} handleChangeQuizState={handleChangeQuizState}  videoWatchTimeCutoffPercentage={videoWatchTimeCutoffPercentage} /> : null}
 
       {unit.video ? (
         <div className={css.common}>

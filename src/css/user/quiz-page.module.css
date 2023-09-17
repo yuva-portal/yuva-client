@@ -68,6 +68,20 @@
   /* font-size: 1rem; */
   margin: 0.5rem;
 }
+.certBtn{
+    background: linear-gradient(135deg, #45b31a, #378509);
+    border-radius: 0.6rem;
+  height: 2.2rem;
+  border: none;
+  color: white;
+  padding: 0 1rem 0 1rem;
+  font-family: var(--font-family-2);
+  /* font-size: 1rem; */
+  margin: 0.5rem;
+}
+.certBtn:hover{
+    background: var(--yuva-dark-green)
+}
 
 .btn:hover,
 .btn:active {

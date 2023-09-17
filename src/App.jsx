@@ -264,7 +264,7 @@ function App() {
 
             <Toaster
                 toastOptions={{
-                    duration: 2500,
+                    duration: 3000,
                     style: {
                         fontFamily: "var(--font-family-2)",
                         marginTop: "2rem",

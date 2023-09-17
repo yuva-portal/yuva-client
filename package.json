@@ -1,7 +1,7 @@
 {
   "name": "rough_work_react",
   "version": "0.1.0",
-  "homepage": ".",
+  "homepage": "/",
   "overrides": {
     "@react-pdf/renderer": {
       "react": "^18.2.0"

@@ -111,7 +111,7 @@ const UserRegis = (props) => {
       toast.error(desc);
       return;
     }
-    // console.log(regisForm);
+    
     try {
       setIsRegistering(true);
       setIsBtnDisabled(true);
@@ -185,7 +185,7 @@ const UserRegis = (props) => {
         <div className="text-ff2" autoComplete="off">
           <div style={{ marginBottom: "0.8rem" }}>
             <label className={regisCss.regisLabel} htmlFor="userId">
-              User ID * <UserIdAvailabilityMsg />
+              User ID <span style={{color: "red"}}>*</span> <UserIdAvailabilityMsg />
             </label>
             <input
               className={regisCss.regisInput}
@@ -213,7 +213,7 @@ const UserRegis = (props) => {
 
           <div style={{ marginBottom: "0.8rem" }}>
             <label className={regisCss.regisLabel} htmlFor="password">
-              Password * |{" "}
+              Password <span style={{color: "red"}}>*</span> |{" "}
               <span
                 className={regisCss.passPolicy}
                 onClick={() => {
@@ -240,7 +240,7 @@ const UserRegis = (props) => {
 
           <div style={{ marginBottom: "0.8rem" }}>
             <label className={regisCss.regisLabel} htmlFor="cnfrmPassword">
-              Confirm Password *
+              Confirm Password <span style={{color: "red"}}>*</span>
             </label>
             <input
               className={regisCss.regisInput}
@@ -257,7 +257,7 @@ const UserRegis = (props) => {
 
           <div style={{ marginBottom: "0.8rem" }}>
             <label className={regisCss.regisLabel} htmlFor="email">
-              Email *
+              Email <span style={{color: "red"}}>*</span>
             </label>
             <input
               className={regisCss.regisInput}
@@ -273,7 +273,7 @@ const UserRegis = (props) => {
 
           <div style={{ marginBottom: "0.8rem" }}>
             <label className={regisCss.regisLabel} htmlFor="fName">
-              First name *
+              First name <span style={{color: "red"}}>*</span>
             </label>
             <input
               className={regisCss.regisInput}
@@ -307,7 +307,7 @@ const UserRegis = (props) => {
 
           <div style={{ marginBottom: "0.8rem" }}>
             <label className={regisCss.regisLabel} htmlFor="lName">
-              Last name *
+              Last name <span style={{color: "red"}}>*</span>
             </label>
             <input
               className={regisCss.regisInput}
@@ -324,7 +324,7 @@ const UserRegis = (props) => {
 
           <div style={{ marginBottom: "0.8rem" }}>
             <label className={regisCss.regisLabel} htmlFor="collegeName">
-              College name *
+              College name 
             </label>
             <input
               className={regisCss.regisInput}
@@ -341,7 +341,7 @@ const UserRegis = (props) => {
 
           <div style={{ marginBottom: "0.8rem" }}>
             <label className={regisCss.regisLabel} htmlFor="region">
-              Region *
+              Region 
             </label>
             <input
               className={regisCss.regisInput}
@@ -358,7 +358,7 @@ const UserRegis = (props) => {
 
           <div style={{ marginBottom: "0.8rem" }}>
             <label className={regisCss.regisLabel} htmlFor="branch">
-              Branch *
+              Branch 
             </label>
             <input
               className={regisCss.regisInput}
@@ -375,7 +375,7 @@ const UserRegis = (props) => {
 
           <div style={{ marginBottom: "0.8rem" }}>
             <label className={regisCss.regisLabel} htmlFor="phone">
-              Phone *
+              Phone <span style={{color: "red"}}>*</span>
             </label>
             <input
               className={regisCss.regisInput}
@@ -392,7 +392,7 @@ const UserRegis = (props) => {
 
           <div style={{ marginBottom: "0.8rem" }}>
             <label className={regisCss.regisLabel} htmlFor="addLine1">
-              Address line 1 *
+              Address line 1 
             </label>
             <input
               className={regisCss.regisInput}
@@ -410,7 +410,7 @@ const UserRegis = (props) => {
 
           <div style={{ marginBottom: "0.8rem" }}>
             <label className={regisCss.regisLabel} htmlFor="addLine2">
-              Address line 2 *
+              Address line 2 
             </label>
             <input
               className={regisCss.regisInput}
@@ -427,7 +427,7 @@ const UserRegis = (props) => {
 
           <div style={{ marginBottom: "0.8rem" }}>
             <label className={regisCss.regisLabel} htmlFor="city">
-              City *
+              City 
             </label>
             <input
               className={regisCss.regisInput}
@@ -444,7 +444,7 @@ const UserRegis = (props) => {
 
           <div style={{ marginBottom: "0.8rem" }}>
             <label className={regisCss.regisLabel} htmlFor="pincode">
-              Pincode *
+              Pincode 
             </label>
             <input
               className={regisCss.regisInput}
@@ -461,7 +461,7 @@ const UserRegis = (props) => {
 
           <div style={{ marginBottom: "0.8rem" }}>
             <label className={regisCss.regisLabel} htmlFor="country">
-              Country *
+              Country 
             </label>
             <input
               className={regisCss.regisInput}
