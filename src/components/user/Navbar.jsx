@@ -1,6 +1,11 @@
 import {React, useEffect, useState} from "react";
 import { Link, useNavigate } from "react-router-dom";
 import img from "../../assets/images/yi_logo.png";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faUser } from '@fortawesome/free-solid-svg-icons';
+import { toast } from "react-hot-toast";
+
+
 
 // My css
 import css from "../../css/user/navbar.module.css";
@@ -44,12 +49,17 @@ const Navbar = () => {
   const handleLogoutClick = (e) => {
     localStorage.removeItem("token");
     navigate("/user/login");
+    toast.success("Logged out successfully");
   };
 
   const handleRegisterClick = (e) => {
     localStorage.removeItem("token");
     navigate("/user/register");
   };
+
+  const handleProfileClick = ()=>{
+    navigate('/user/profile');
+  }
 
   const listItemStyle = { fontSize: "0.9rem", fontWeight: "400" };
 
@@ -96,12 +106,22 @@ const Navbar = () => {
 
         <ul className="navbar-nav ms-auto">
           {localStorage.getItem("token") ? (
+            <>
+
+            <button
+              className={`${css.navBtn} text-ff1 navbar-right`}
+              onClick={handleProfileClick}
+            >
+              My Profile <FontAwesomeIcon icon={faUser} style={{color: "#6f6f71",}} />
+            </button>
             <button
               className={`${css.navBtn} text-ff1 navbar-right`}
               onClick={handleLogoutClick}
             >
               Logout
             </button>
+            </>
+            
           ) : (
             <>
               <button

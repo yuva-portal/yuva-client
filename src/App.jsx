@@ -24,6 +24,7 @@ import UserRegis from "./routes/user/RegisPage";
 import UserQuiz from "./routes/user/QuizPage";
 import CertPage from "./routes/user/CertPage";
 import UserDashBoard from "./routes/user/Dashboard";
+import UserProfile from "./components/user/UserProfile";
 
 // Admin Pages
 import AdminLogin from "./routes/admin/LoginPage";
@@ -78,6 +79,16 @@ function App() {
                             <>
                                 <UserNavbar />
                                 <UserAboutPage />
+                            </>
+                        }
+                    />
+                    <Route
+                        exact
+                        path="/user/profile"
+                        element={
+                            <>
+                                <UserNavbar />
+                                <UserProfile />
                             </>
                         }
                     />

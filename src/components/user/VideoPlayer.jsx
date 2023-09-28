@@ -55,7 +55,7 @@ const VideoPlayer = (props) => {
     const newWatchPercentage = totalWatchPercentage+oneSecWatchPercentage;
     // console.log("newWatchPercentage: ", newWatchPercentage);
     //* if the criteria of minimum watch percentage is fulfilled
-    if(totalWatchPercentage<videoWatchTimeCutoffPercentage && newWatchPercentage>=videoWatchTimeCutoffPercentage){
+    if(totalWatchPercentage<=videoWatchTimeCutoffPercentage && newWatchPercentage>videoWatchTimeCutoffPercentage){
         toast.success("Quiz has been unlocked");
         props.handleChangeQuizState();
         updateVdoProgress();
