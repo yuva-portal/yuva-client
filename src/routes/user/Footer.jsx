@@ -1,77 +1,68 @@
-import React from 'react'
+import React from "react";
 import { Link } from "react-router-dom";
-import {
-    BsFacebook,
-    BsInstagram,
-    BsLinkedin,
-    BsTwitter,
-    BsYoutube,
-  } from "react-icons/bs";
+// import {
+//     BsFacebook,
+//     BsInstagram,
+//     BsLinkedin,
+//     BsTwitter,
+//     BsYoutube,
+// } from "react-icons/bs";
 import logo from "../../assets/images/yuva_logo.png";
-import "../../css/user/u-about-page.css";
+import lnctLogo from "../../assets/images/lnct-logo.png";
+import "../../css/user/footer.css";
 
 const Footer = () => {
-  return (
-    <>
-    <div  className='u-about-page-outer-div'>
+    return (
+        <>
+            <div className="u-footer-div">
+                <div className="u-footer">
+                    <div className="u-footer-main">
+                        {/* Column 1 */}
+                        <div className="u-footer-logo">
+                            <img src={logo} alt="" className="u-yuva-logo" />
+                        </div>
+                        {/* Column 2 */}
+                        <div className="u-footer-links">
+                            <h1>Important Links</h1>
+                            <div className="u-footer-col">
+                                <Link to={"#"} className="u-footer-link">
+                                    Home
+                                </Link>
+                                <Link to={"#"} className="u-footer-link">
+                                    Contact Us
+                                </Link>
+                                <Link to={"#"} className="u-footer-link">
+                                    Privacy Policy
+                                </Link>
+                                <Link to={"#"} className="u-footer-link">
+                                    Terms and Conditions
+                                </Link>
+                            </div>
+                        </div>
+                        {/* Column 3 */}
+                        <div className="u-footer-lnct">
+                            <div className="u-footer-logo">
+                                <img
+                                    src={lnctLogo}
+                                    alt=""
+                                    className="u-yuva-logo"
+                                />
+                            </div>
+                            <h1>
+                                Developed and Maintained by <br />
+                                Yuva LNCT
+                            </h1>
+                        </div>
+                    </div>
+                    <div className="u-footer-section">
+                        <span>
+                            Copyright ©️ 2023 Yuva Portal - All Rights Reserved.
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </>
+    );
+};
 
-    <div className="u-about-page-landing-hr "></div>
-      <div className="u-about-page-landing-footer">
-        <div className="u-about-page-landing-footer-links">
-          <div className="u-about-page-landing-footer-row">
-            <Link to={"#"} className="u-about-page-landing-footer-link">
-              Home
-            </Link>
-            <Link to={"#"} className="u-about-page-landing-footer-link">
-              Contact Us
-            </Link>
-            <Link to={"#"} className="u-about-page-landing-footer-link">
-              Our Team
-            </Link>
-            <Link to={"#"} className="u-about-page-landing-footer-link">
-              Photo Gallery
-            </Link>
-          </div>
-          <div className="u-about-page-landing-footer-row">
-            <Link to={"#"} className="u-about-page-landing-footer-link">
-              Members
-            </Link>
-            <Link to={"#"} className="u-about-page-landing-footer-link">
-              Our Reach
-            </Link>
-            <Link to={"#"} className="u-about-page-landing-footer-link">
-              Accessibility
-            </Link>
-            <Link to={"#"} className="u-about-page-landing-footer-link">
-              Genesis of Yi
-            </Link>
-          </div>
-        </div>
-        <div className="u-about-page-landing-vr"></div>
-        <div className="u-about-page-landing-footer-right">
-          <div className="u-about-page-landing-footer-social">
-            <Link to={"#"} className="u-about-page-landing-footer-icon">
-              <BsFacebook fontSize={24} />
-            </Link>
-            <Link to={"#"} className="u-about-page-landing-footer-icon">
-              <BsTwitter fontSize={24} />
-            </Link>
-            <Link to={"#"} className="u-about-page-landing-footer-icon">
-              <BsYoutube fontSize={24} />
-            </Link>
-            <Link to={"#"} className="u-about-page-landing-footer-icon">
-              <BsInstagram fontSize={24} />
-            </Link>
-            <Link to={"#"} className="u-about-page-landing-footer-icon">
-              <BsLinkedin fontSize={24} />
-            </Link>
-          </div>
-          <img src={logo} alt="" className="u-about-page-landing-yuva-logo" />
-        </div>
-        </div>
-      </div>
-    </>
-  )
-}
-
-export default Footer
+export default Footer;
