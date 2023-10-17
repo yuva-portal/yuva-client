@@ -7,8 +7,8 @@ import { Link } from "react-router-dom";
 //     BsTwitter,
 //     BsYoutube,
 // } from "react-icons/bs";
-import logo from "../../assets/images/yuva_logo.png";
-import lnctLogo from "../../assets/images/lnct-logo.png";
+import logo from "../../assets/images/yuva-logo-transparent.png";
+import lnctLogo from "../../assets/images/lnct-logo-transparent.png";
 import "../../css/user/footer.css";
 
 const Footer = () => {
@@ -23,7 +23,6 @@ const Footer = () => {
                         </div>
                         {/* Column 2 */}
                         <div className="u-footer-links">
-                            <h1>Important Links</h1>
                             <div className="u-footer-col">
                                 <Link to={"#"} className="u-footer-link">
                                     Home
@@ -31,6 +30,8 @@ const Footer = () => {
                                 <Link to={"#"} className="u-footer-link">
                                     Contact Us
                                 </Link>
+                            </div>
+                            <div className="u-footer-col">
                                 <Link to={"#"} className="u-footer-link">
                                     Privacy Policy
                                 </Link>
