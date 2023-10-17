@@ -113,9 +113,11 @@ const AboutPage = () => {
       </div>
 
       {/* Contact Section */}
-      <div className="u-about-page-landing-reach">
+      <div className="u-about-page-landing-reach" id="contact">
         <p className="u-about-page-landing-l-heading">Reach Us</p>
-        <div className="u-about-page-landing-reach-form">
+        <p className="u-about-page-landing-hero-subheading">
+If you have any questions, concerns, or need assistance, do not hesitate to contact us. You can reach out to our team at any time by emailing us at  <a href="mailto:yuva.onlineportal@gmail.com">yuva.onlineportal@gmail.com</a>. Your inquiries are important to us, and we are here to provide you with the support you need.</p>
+        {/* <div className="u-about-page-landing-reach-form">
           <div className="u-about-page-landing-reach-input-row">
             <input type="text" placeholder="Email" />
             <input type="text" placeholder="First Name" />
@@ -132,7 +134,7 @@ const AboutPage = () => {
             rows="10"
           ></textarea>
           <button className="u-about-page-landing-btn-1">Contact Us</button>
-        </div>
+        </div> */}
       </div>
 
     </div>

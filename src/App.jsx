@@ -25,6 +25,7 @@ import UserQuiz from "./routes/user/QuizPage";
 import CertPage from "./routes/user/CertPage";
 import UserDashBoard from "./routes/user/Dashboard";
 import UserProfile from "./components/user/UserProfile";
+import PrivacyPolicy from "./routes/user/PrivacyPolicy";
 
 // Admin Pages
 import AdminLogin from "./routes/admin/LoginPage";
@@ -79,6 +80,16 @@ function App() {
                             <>
                                 <UserNavbar />
                                 <UserAboutPage />
+                            </>
+                        }
+                    />
+                    <Route
+                        exact
+                        path="/privacy-policy"
+                        element={
+                            <>
+                                <UserNavbar />
+                                <PrivacyPolicy />
                             </>
                         }
                     />

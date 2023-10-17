@@ -11,7 +11,7 @@ import {
 
 import html2canvas from 'html2canvas';
 import jsPDF from 'jspdf';
-import cert_img from "./cert_new.png"
+// import cert_img from "./cert_new.png"
 
 
 
@@ -29,8 +29,8 @@ import css from "../../css/user/cert-page.module.css";
 import { SERVER_ORIGIN } from "../../utilities/constants";
 
 //!
-import "./cert_new.css";
-import cert_bg from "./cert_new.png";
+import "../../css/user/cert_new.css";
+import cert_bg from "../../assets/images/cert_new.png";
 //!
 
 const CertPage = () => {
@@ -42,6 +42,7 @@ const CertPage = () => {
     });
 
     const [isLoading, setIsLoading] = useState(false);
+    const [isDownloading, setIsDownloading] = useState(false);
     const [isCertValid, setIsCertValid] = useState(true);
 
     const params = useParams();
@@ -103,103 +104,41 @@ const CertPage = () => {
         getCert();
     }, []);
 
-    // const downloadCertificate = (certInfo) => {
-    //     const doc = new jsPDF("l", "mm", "a4"); // Set the PDF size to A4 (landscape)
-
-    //     const pageWidth = doc.internal.pageSize.getWidth();
-    //     const pageHeight = doc.internal.pageSize.getHeight();
-
-    //     const fontSize = 35; // Adjust the font size as needed
-
-    //     doc.addImage(cert_img, "PNG", 0, 0, pageWidth, pageHeight);
-
-    //     // Insert dynamic content
-    //     doc.setFont("Allura", "cursive", "cursive");
-    //     doc.setFontSize(fontSize);
-
-    //     // Calculate text width for centering
-    //     const nameText = certInfo.holderName;
-    //     const nameWidth = doc.getStringUnitWidth(nameText) * fontSize;
-    //     // console.log(pageWidth);
-    //     // const nameX = (pageWidth ) / 2;
-    //     const nameX = 110;
-
-    //     // Insert the name
-    //     doc.text(certInfo.holderName, nameX, 75);
-
-    //     // Insert the course info
-    //     doc.setFont("Sans-serif", "normal", "normal");
-    //     doc.setFontSize(fontSize - 10);
-
-    //     // Limit the height to prevent overflow
-    //     const courseInfoText = doc.splitTextToSize(
-    //         `has successfully completed a module which is a part of the course "${certInfo.courseName}" "${certInfo.courseName}" on  ${certInfo.passingDate}`,
-    //         pageWidth - 40,
-    //         {}
-    //     );
-
-    //     const courseInfoX = 20;
-    //     const courseInfoY = 90; // Adjust the Y position as needed
-
-    //     doc.text(courseInfoText, courseInfoX, courseInfoY);
-
-    //     // Download
-    //     doc.save(certInfo.fileName);
-    // };
-    const downloadCertificate = (certInfo) => {
-        const doc = new jsPDF("l", "mm", "a4"); // Set the PDF size to A4 (landscape)
-      
+    const downloadCertificate = async () => {
+        setIsDownloading(true);
+        // Create a new jsPDF instance
+        const doc = new jsPDF("l", "mm", "a4");
+    
+        // Determine the height based on the device's screen size
         const pageWidth = doc.internal.pageSize.getWidth();
         const pageHeight = doc.internal.pageSize.getHeight();
-      
-        const fontSize = 35; // Adjust the font size as needed
-      
-        doc.addImage(cert_img, "PNG", 0, 0, pageWidth, pageHeight);
-      
-        // Insert dynamic content
-        doc.setFont("Allura", "normal", "normal");
-        doc.setFontSize(fontSize);
-      
-        // Calculate text width for centering
-        const nameText = certInfo.holderName;
-        const nameWidth = doc.getStringUnitWidth(nameText) * fontSize;
-        const nameX = (pageWidth - nameWidth) / 2;
-      
-        // Insert the name with Allura (cursive) font
-        doc.text(certInfo.holderName, 110, 75);
-      
-        // Insert the course info centered
-        doc.setFont("Sans-serif", "normal", "normal");
-        doc.setFontSize(fontSize - 4);
-      
-        // Limit the height to prevent overflow
-        const courseInfoText = doc.splitTextToSize(
-          `has successfully completed a unit which is a part of the course "${certInfo.courseName}"`,
-          pageWidth - 40
-        );
-      
-        const courseInfoX = (pageWidth - doc.getTextDimensions(courseInfoText[0]).w) / 2;
-        let courseInfoY = (pageHeight - (courseInfoText.length * doc.getTextDimensions(courseInfoText[0]).h)) / 2;
-      
-        courseInfoText.forEach((line) => {
-          doc.text(line, courseInfoX, courseInfoY);
-          courseInfoY += doc.getTextDimensions(line).h;
-        });
-      
-        // Add "on [date]" together if it fits, otherwise wrap to a new line
-        const fullDateText = `on ${certInfo.passingDate}`;
-        const fullDateTextWidth = doc.getTextDimensions(fullDateText).w;
-      
-        if (courseInfoText[0] && fullDateTextWidth <= doc.getTextDimensions(courseInfoText[0]).w) {
-          doc.text(fullDateText, courseInfoX, courseInfoY + 15);
-        } else {
-          courseInfoY += 15; // Adjust vertical spacing as needed
-          doc.text(fullDateText, pageWidth / 2, courseInfoY, { align: "center" });
+    
+    
+        // Get all the elements you want to include in the PDF
+        const elementsToCapture = document.querySelectorAll('.element-to-capture');
+        // console.log('Number of elements to capture:', elementsToCapture.length);
+    
+        // Loop through each element and add it as a new page in the PDF
+        for (const element of elementsToCapture) {
+            // console.log('Capturing element:', element);
+            // Capture the content of the element as an image using html2canvas
+            const canvas = await html2canvas(element, {scale: 10});
+            const imgData = canvas.toDataURL('image/jpeg', 0.7);
+    
+            // Add the image to the PDF
+            doc.addImage(imgData, 'JPEG', 0, 0, pageWidth, pageHeight, '', 'FAST');
+    
+            // Add a new page for the next element
+            if (element !== elementsToCapture[elementsToCapture.length - 1]) {
+                doc.addPage();
+            }
         }
-      
-        // Download
-        doc.save(certInfo.fileName);
-      };
+        // Save the PDF with a specific filename
+        const certFileName = `Yuva_${certInfo.holderName}_certificate`;
+        // console.log("File: ", certFileName);
+        doc.save(certFileName);
+        setIsDownloading(false);
+    };
       
       
 
@@ -207,10 +146,8 @@ const CertPage = () => {
     const handleCertPDFDownload = () => {
         // console.log("downloading");
 
-        // const certFileName = `Yuva_${certInfo.holderName}_${certInfo.unitId}`;
-        const certFileName = `Yuva_${certInfo.holderName}_certificate`;
 
-        downloadCertificate({ ...certInfo, fileName: certFileName });
+        downloadCertificate();
     };
 
    
@@ -250,8 +187,8 @@ const CertPage = () => {
 
                         {/* //!NEW CERT */}
                         
-                        <div className="col-lg-8">
-                            <div className="certificate" id="certificate">
+                        <div className="col-lg-8 element-to-capture">
+                            <div className="certificate" >
                                 <img src={cert_bg} alt="Certificate Background" className="certificate-background" />
                                 <div className="text-overlay">
                                     <div className="name">{certInfo.holderName}</div>
@@ -274,10 +211,9 @@ const CertPage = () => {
 
                                 <button
                                     className={css.downloadBtn}
-                                    // onClick={handleCertPDFDownload}
                                     onClick={handleCertPDFDownload}
                                 >
-                                    Download PDF
+                                    {isDownloading?"Please wait..": "Download PDF"}
                                 </button>
                                 <p className={css.shareText}>Or share on</p>
                                 <div className={css.shareBtnDiv}>

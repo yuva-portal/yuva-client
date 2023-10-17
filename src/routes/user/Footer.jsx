@@ -27,15 +27,15 @@ const Footer = () => {
                                 <Link to={"#"} className="u-footer-link">
                                     Home
                                 </Link>
-                                <Link to={"#"} className="u-footer-link">
+                                <Link to="/about#contact" className="u-footer-link">
                                     Contact Us
                                 </Link>
                             </div>
                             <div className="u-footer-col">
-                                <Link to={"#"} className="u-footer-link">
+                                <Link to="/privacy-policy" className="u-footer-link">
                                     Privacy Policy
                                 </Link>
-                                <Link to={"#"} className="u-footer-link">
+                                <Link to="/privacy-policy" className="u-footer-link">
                                     Terms and Conditions
                                 </Link>
                             </div>
