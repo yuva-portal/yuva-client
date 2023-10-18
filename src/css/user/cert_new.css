@@ -43,10 +43,10 @@
   }
   
   .course-info {
-    font-size: 1.3vw;
+    font-size: 1.1vw;
     position: absolute;
     font-family: 'Libre Caslon Text', serif;
-    top: 41%; 
+    top: 42%; 
     left: 50%; 
     transform: translateX(-50%); 
     overflow: hidden;
@@ -69,8 +69,8 @@
       }
     
       .course-info {
-        font-size: 2.0vw;
-        top: 41%; 
+        font-size: 1.5vw;
+        top: 43%; 
         width: 70%; 
       }
   }
@@ -84,7 +84,7 @@
       }
     
       .course-info {
-        font-size: 2.2vw;
+        font-size: 1.5vw;
         top: 43%; 
         width: 70%; 
       }

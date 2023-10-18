@@ -160,7 +160,7 @@ const CertPage = () => {
                     <div className="row">
                         <div className="col-lg-8 ">
                         {/* //!NEW CERT */}
-                            <div className="certificate"  >
+                            <div className="certificate" >
                                 <div className="element-to-capture">
                                     <img src={cert_bg} alt="Certificate Background" className="certificate-background" />
                                     <div className="text-overlay">
