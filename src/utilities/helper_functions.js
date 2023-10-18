@@ -7,7 +7,6 @@ import trophy_logo from "../assets/images/trophy_logo.jpg";
 import sign from "../assets/images/all_signs.png";
 import all_logo from "../assets/images/2_org_logo.png";
 
-import cert_img from "./cert_new.png"
 
 /////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -57,106 +56,64 @@ function downloadCertificateOld() {
   });
 }
 
-// const downloadCertificate = (certInfo) => {
-//   // console.log(certInfo);
-
-//   const doc = new jsPDF("l", "px", [350, 500]); // h,w (for h<w use landscape)
-
-//   var pageHeight =
-//     doc.internal.pageSize.height || doc.internal.pageSize.getHeight();
-//   var pageWidth =
-//     doc.internal.pageSize.width || doc.internal.pageSize.getWidth();
-
-//   let startYMargin = 100; // reference vertical margin
-
-//   doc
-//     // All Yuva logos
-//     .addImage(all_logo, "PNG", 0, 10, pageWidth, pageWidth / 8)
-
-//     // Title: Certificate of Completion
-//     .setFont("Helvetica", "normal", "normal")
-//     .setFontSize(30)
-//     .text("Certificate of Completion", pageWidth / 2, startYMargin, {
-//       align: "center",
-//     })
-
-//     // Holder name
-//     .setFont("Times", "italic", "bold")
-//     .setFontSize(40)
-//     .text(certInfo.holderName, pageWidth / 2, (startYMargin += 40), {
-//       align: "center",
-//     })
-
-//     // Achievement description
-//     .setFont("Helvetica", "normal", "normal")
-//     .setFontSize(13)
-//     .text(
-//       `has successfully completed a unit which is a part of the course ${certInfo.courseName}`,
-//       pageWidth / 2,
-//       (startYMargin += 25),
-//       {
-//         align: "center",
-//       }
-//     )
-
-//     // Achievement date
-//     .text(`on ${certInfo.passingDate}`, pageWidth / 2, (startYMargin += 15), {
-//       align: "center",
-//     })
-
-//     // Trophy logo
-//     .addImage(trophy_logo, "JPG", 215, (startYMargin += 20), 70, 70)
-
-//     // All officials' signs
-//     .addImage(sign, "PNG", 0, (startYMargin += 70), pageWidth, pageWidth / 8)
-
-//     // Download
-//     .save(certInfo.fileName);
-// };
-
 const downloadCertificate = (certInfo) => {
-    const doc = new jsPDF("l", "mm", "a4"); // Set the PDF size to A4 (landscape)
-  
-    const pageWidth = doc.internal.pageSize.getWidth();
-    const pageHeight = doc.internal.pageSize.getHeight();
-  
-    const fontSize = 35; // Adjust the font size as needed
-  
-    doc.addImage(cert_img, "PNG", 0, 0, pageWidth, pageHeight);
-  
-    // Insert dynamic content
-    doc.setFont("Cursive", "normal", "normal");
-    doc.setFontSize(fontSize);
-  
-    // Calculate text width for centering
-    const nameText = certInfo.holderName;
-    const nameWidth = doc.getStringUnitWidth(nameText) * fontSize;
-    // console.log(pageWidth);
-    // const nameX = (pageWidth ) / 2;
-    const nameX = 110;
-  
-    // Insert the name
-    doc.text(certInfo.holderName, nameX, 75);
-  
-    // Insert the course info
-    doc.setFont("Sans-serif", "normal", "normal");
-    doc.setFontSize(fontSize - 4);
-  
-    // Limit the height to prevent overflow
-    const courseInfoText = doc.splitTextToSize(
-      `has successfully completed a unit which is a part of the course "${certInfo.courseName}"`,
-      pageWidth - 40,
-      {}
-    );
-  
-    const courseInfoX = 20;
-    const courseInfoY = 100; // Adjust the Y position as needed
-  
-    doc.text(courseInfoText, courseInfoX, courseInfoY);
-  
+  // console.log(certInfo);
+
+  const doc = new jsPDF("l", "px", [350, 500]); // h,w (for h<w use landscape)
+
+  var pageHeight =
+    doc.internal.pageSize.height || doc.internal.pageSize.getHeight();
+  var pageWidth =
+    doc.internal.pageSize.width || doc.internal.pageSize.getWidth();
+
+  let startYMargin = 100; // reference vertical margin
+
+  doc
+    // All Yuva logos
+    .addImage(all_logo, "PNG", 0, 10, pageWidth, pageWidth / 8)
+
+    // Title: Certificate of Completion
+    .setFont("Helvetica", "normal", "normal")
+    .setFontSize(30)
+    .text("Certificate of Completion", pageWidth / 2, startYMargin, {
+      align: "center",
+    })
+
+    // Holder name
+    .setFont("Times", "italic", "bold")
+    .setFontSize(40)
+    .text(certInfo.holderName, pageWidth / 2, (startYMargin += 40), {
+      align: "center",
+    })
+
+    // Achievement description
+    .setFont("Helvetica", "normal", "normal")
+    .setFontSize(13)
+    .text(
+      `has successfully completed a unit which is a part of the course ${certInfo.courseName}`,
+      pageWidth / 2,
+      (startYMargin += 25),
+      {
+        align: "center",
+      }
+    )
+
+    // Achievement date
+    .text(`on ${certInfo.passingDate}`, pageWidth / 2, (startYMargin += 15), {
+      align: "center",
+    })
+
+    // Trophy logo
+    .addImage(trophy_logo, "JPG", 215, (startYMargin += 20), 70, 70)
+
+    // All officials' signs
+    .addImage(sign, "PNG", 0, (startYMargin += 70), pageWidth, pageWidth / 8)
+
     // Download
-    doc.save(certInfo.fileName);
-  };
+    .save(certInfo.fileName);
+};
+
+
 
 const convertBytesToMegaBytes = (bytes) => {
   return bytes / 1000000;

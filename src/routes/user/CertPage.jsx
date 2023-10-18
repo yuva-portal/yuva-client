@@ -108,26 +108,26 @@ const CertPage = () => {
         setIsDownloading(true);
         // Create a new jsPDF instance
         const doc = new jsPDF("l", "mm", "a4");
-    
+
         // Determine the height based on the device's screen size
         const pageWidth = doc.internal.pageSize.getWidth();
         const pageHeight = doc.internal.pageSize.getHeight();
-    
-    
+
+
         // Get all the elements you want to include in the PDF
         const elementsToCapture = document.querySelectorAll('.element-to-capture');
         // console.log('Number of elements to capture:', elementsToCapture.length);
-    
+
         // Loop through each element and add it as a new page in the PDF
         for (const element of elementsToCapture) {
             // console.log('Capturing element:', element);
             // Capture the content of the element as an image using html2canvas
-            const canvas = await html2canvas(element, {scale: 10});
+            const canvas = await html2canvas(element, { scale: 10 });
             const imgData = canvas.toDataURL('image/jpeg', 0.7);
-    
+
             // Add the image to the PDF
             doc.addImage(imgData, 'JPEG', 0, 0, pageWidth, pageHeight, '', 'FAST');
-    
+
             // Add a new page for the next element
             if (element !== elementsToCapture[elementsToCapture.length - 1]) {
                 doc.addPage();
@@ -139,8 +139,8 @@ const CertPage = () => {
         doc.save(certFileName);
         setIsDownloading(false);
     };
-      
-      
+
+
 
 
     const handleCertPDFDownload = () => {
@@ -150,7 +150,7 @@ const CertPage = () => {
         downloadCertificate();
     };
 
-   
+
     return (
         <>
             {isLoading ? (
@@ -158,46 +158,41 @@ const CertPage = () => {
             ) : isCertValid ? (
                 <div className={css.outerDiv}>
                     <div className="row">
-
-                        {/* //! OLD CERTIFICATE */}
-                        {/* <div className="col-lg-8">
-              <Cert certInfo={certInfo} />
-
-              <div className={css.certDescDiv}>
-                <div className={css.certInfoDiv}>
-                  <p className="text-ff2">
-                    This certificate above verifies that{" "}
-                    <span className="text-underline">
-                      {certInfo.holderName}
-                    </span>{" "}
-                    has successfully completed a unit which is a part of the
-                    course{" "}
-                    <span className="text-underline">
-                      {certInfo.courseName}
-                    </span>{" "}
-                    on{" "}
-                    <span className="text-underline">
-                      {certInfo.passingDate}
-                    </span>{" "}
-                    on Yuva Portal.
-                  </p>
-                </div>
-              </div>
-            </div> */}
-
+                        <div className="col-lg-8 ">
                         {/* //!NEW CERT */}
-                        
-                        <div className="col-lg-8 element-to-capture">
-                            <div className="certificate" >
-                                <img src={cert_bg} alt="Certificate Background" className="certificate-background" />
-                                <div className="text-overlay">
-                                    <div className="name">{certInfo.holderName}</div>
-                                    <div className="course-info">{`has successfully completed a module which is a part of the course '${certInfo.courseName}` }' <span className="date"> on {certInfo.passingDate}</span></div>
+                            <div className="certificate"  >
+                                <div className="element-to-capture">
+                                    <img src={cert_bg} alt="Certificate Background" className="certificate-background" />
+                                    <div className="text-overlay">
+                                        <div className="name">{certInfo.holderName}</div>
+                                        <div className="course-info">{`has successfully completed a module which is a part of the course '${certInfo.courseName}`}' <span className="date"> on {certInfo.passingDate}</span></div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        {/* //!NEW CERT */}
+                            <div className={css.certDescDiv}>
+                                <div style={{fontSize:"120%"}}>
+                                    <p className="text-ff2">
+                                        This certificate verifies that{" "}
+                                        <span className="text-underline">
+                                            {certInfo.holderName}
+                                        </span>{" "}
+                                        has successfully completed a module that is  part of the
+                                        {" "}
+                                        <span className="text-underline">
+                                            {certInfo.courseName}
+                                        </span>{" "}
+                                        course{" "}
+                                        on the Yuva Portal on{" "}
+                                        <span className="text-underline">
+                                            {certInfo.passingDate}
+                                        </span>{" "}.
+                                    </p>
                                 </div>
                             </div>
                         </div>
 
-                        {/* //!NEW CERT */}
 
                         <div className="col-lg-4">
                             <div className={css.certInfoDiv}>
@@ -213,7 +208,7 @@ const CertPage = () => {
                                     className={css.downloadBtn}
                                     onClick={handleCertPDFDownload}
                                 >
-                                    {isDownloading?"Please wait..": "Download PDF"}
+                                    {isDownloading ? "Please wait.." : "Download PDF"}
                                 </button>
                                 <p className={css.shareText}>Or share on</p>
                                 <div className={css.shareBtnDiv}>
