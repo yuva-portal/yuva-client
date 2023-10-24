@@ -51,6 +51,41 @@ const CertPage = () => {
     const certPagePublicURL = window.location.href;
     // console.log(certPagePublicURL);
 
+    function formatDate(inputDate) {
+        const months = [
+          "January", "February", "March", "April", "May", "June",
+          "July", "August", "September", "October", "November", "December"
+        ];
+      
+        // Split the input date into day, month, and year
+        const dateParts = inputDate.split('-');
+        if (dateParts.length !== 3) {
+          return "Invalid date format";
+        }
+      
+        const day = parseInt(dateParts[0], 10);
+        const month = parseInt(dateParts[1], 10);
+        const year = parseInt(dateParts[2], 10); // Assuming 2000 as the base year for 'yy'
+      
+        // Handle the day suffix (e.g., 1st, 2nd, 3rd, 4th, ...)
+        const daySuffix = (() => {
+          if (day >= 11 && day <= 13) {
+            return "th";
+          }
+          switch (day % 10) {
+            case 1: return "st";
+            case 2: return "nd";
+            case 3: return "rd";
+            default: return "th";
+          }
+        })();
+      
+        // Format the date
+        const formattedDate = `${day}${daySuffix} ${months[month - 1]} ${year}`;
+      
+        return formattedDate;
+      }
+
     useEffect(() => {
         const getCert = async () => {
             setIsLoading(true);
@@ -89,6 +124,10 @@ const CertPage = () => {
                         alert("Internal server error"); // todo: toast notify
                     }
                 } else if (response.ok && response.status === 200) {
+                    const date = result.certInfo.passingDate;
+                    const dateInWords = formatDate(date);
+                    result.certInfo.passingDate = dateInWords
+
                     setCertInfo(result.certInfo);
                 } else {
                     // for future
@@ -165,7 +204,10 @@ const CertPage = () => {
                                     <img src={cert_bg} alt="Certificate Background" className="certificate-background" />
                                     <div className="text-overlay">
                                         <div className="name">{certInfo.holderName}</div>
-                                        <div className="course-info">{`has successfully completed a module which is a part of the course '${certInfo.courseName}`}' <span className="date"> on {certInfo.passingDate}</span></div>
+                                        <div className="course-info">{`has successfully completed a module which is a part of the '${certInfo.courseName}' course on ${certInfo.passingDate}`}
+                                        </div>
+
+                                        
                                     </div>
 
                                 </div>

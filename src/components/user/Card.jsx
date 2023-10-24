@@ -34,6 +34,12 @@ function Card(props) {
           : props.data.quizCount +
             " Questions"}
       </p>
+      <p className={css.cardCount} style={{textDecoration: "none",  fontSize: "14px"}}>
+        {props.type==="vertical" 
+         ? props.data.certUnlocked + " Certificates Unlocked by Users" : ""
+        
+        }
+      </p>
 
       <button
         className={css.cardViewBtn}
