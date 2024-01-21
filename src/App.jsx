@@ -20,7 +20,7 @@ import UserCourses from "./routes/user/CoursesPage";
 import UserUnits from "./routes/user/UnitsPage";
 import UserSingleUnit from "./routes/user/SingleUnitPage";
 import UserResetPass from "./routes/user/ResetPassPage";
-import UserRegis from "./routes/user/RegisPage";
+// import UserRegis from "./routes/user/RegisPage";
 import UserQuiz from "./routes/user/QuizPage";
 import CertPage from "./routes/user/CertPage";
 import UserDashBoard from "./routes/user/Dashboard";
@@ -34,6 +34,8 @@ import AdminVerticals from "./routes/admin/VerticalsPage";
 import AdminCourses from "./routes/admin/CoursesPage.jsx";
 import AdminUnits from "./routes/admin/UnitsPage";
 import AdminAddUnit from "./routes/admin/AddUnitPage";
+
+import AdminUsers from "./routes/admin/AdminUsers.jsx";
 
 // Common Pages
 import NotFound from "./routes/common/NotFound";
@@ -163,7 +165,7 @@ function App() {
                             </>
                         }
                     />
-                    <Route
+                    {/* <Route
                         exact
                         path="/user/register"
                         element={
@@ -172,7 +174,7 @@ function App() {
                                 <UserRegis />
                             </>
                         }
-                    />
+                    /> */}
                     <Route
                         exact
                         path="/user/certificate/:certId"
@@ -226,6 +228,15 @@ function App() {
                             <>
                                 <AdminNavbar />
                                 <AdminVerticals />
+                            </>
+                        }
+                    />
+                    <Route
+                        path="/admin/users/all"
+                        element={
+                            <>
+                                <AdminNavbar />
+                                <AdminUsers />
                             </>
                         }
                     />

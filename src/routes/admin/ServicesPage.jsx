@@ -58,8 +58,12 @@ const HomePage = () => {
     canVisitPage();
   }, []);
 
-  function handleServiceClick() {
+  function handleContentClick() {
     navigate("/admin/verticals/all");
+  }
+
+  function handleUsersClick() {
+    navigate("/admin/users/all");
   }
 
   return isLoading ? (
@@ -70,25 +74,41 @@ const HomePage = () => {
         <h1 className="headerTitle">Welcome to the platform analysis</h1>
         <hr />
         <p className="headerSubtitle">
-          Here are the services we provide to you
+          You can control the complete data on the portal from this panel. You will also get a view-only list of all the users registered on platform.
         </p>
       </HeaderCard>
       <CardGrid>
         <div className="cardOuterDiv col-lg-6 col-md-6 col-sm-12" key={1}>
           <SecCard>
-            <h1 className={css.serviceName}>Verticals</h1>
+            <h1 className={css.serviceName}>Manage Content</h1>
             <p className={css.serviceDesc}>
-              You can manage all the verticals from here
+              You can manage the content on the portal by clicking on below button
             </p>
             <button
               className={`${css.serviceBtn} commonBtn`}
-              onClick={handleServiceClick}
+              onClick={handleContentClick}
             >
-              Manage verticals
+              Manage content
             </button>
           </SecCard>
         </div>
       </CardGrid>
+      {/* <CardGrid>
+        <div className="cardOuterDiv col-lg-6 col-md-6 col-sm-12" key={1}>
+          <SecCard>
+            <h1 className={css.serviceName}>Users List</h1>
+            <p className={css.serviceDesc}>
+              You can access the list of registered users by clicking on the below button
+            </p>
+            <button
+              className={`${css.serviceBtn} commonBtn`}
+              onClick={handleUsersClick}
+            >
+              View User List
+            </button>
+          </SecCard>
+        </div>
+      </CardGrid> */}
     </div>
   );
 };

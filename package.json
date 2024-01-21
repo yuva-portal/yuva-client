@@ -1,12 +1,7 @@
 {
-  "name": "rough_work_react",
+  "name": "yuva_portal",
   "version": "0.1.0",
   "homepage": "/",
-  "overrides": {
-    "@react-pdf/renderer": {
-      "react": "^18.2.0"
-    }
-  },
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^6.4.2",
     "@fortawesome/free-solid-svg-icons": "^6.4.2",
@@ -15,7 +10,7 @@
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
-    "axios": "^1.2.6",
+    "axios": "^1.6.5",
     "html2canvas": "^1.4.1",
     "html2pdf.js": "^0.10.1",
     "image-validator": "^1.2.1",
@@ -25,7 +20,7 @@
     "react-confetti": "^6.1.0",
     "react-countdown": "^2.3.5",
     "react-dom": "^18.2.0",
-    "react-hot-toast": "^2.4.0",
+    "react-hot-toast": "^2.4.1",
     "react-icons": "^4.10.1",
     "react-player": "^2.11.0",
     "react-router-dom": "^6.4.3",

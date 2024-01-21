@@ -85,9 +85,9 @@ const UserRegis = (props) => {
           body: JSON.stringify({ userId: regisForm.userId }),
         }
       );
+
       const result = await response.json();
       // console.log(result);
-
       if (response.status >= 400 && response.status < 600) {
         if (response.status === 500) {
           toast.error(result.statusText); // todo: toast notify
