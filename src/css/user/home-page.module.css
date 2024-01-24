@@ -56,7 +56,7 @@
   background-color: var(--yuva-green);
 }
 
-.exploreBtn:hover {
+.exploreBtn:hover { 
   background-color: var(--yuva-dark-green);
 }
 
