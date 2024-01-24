@@ -18,7 +18,9 @@ import logo from "../../assets/images/yuva_logo.png";
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 
 const HomePage = () => {
-  const [allVerticals, setAllVerticals] = useState([]);
+  // const [allVerticals, setAllVerticals] = useState([]);
+  const [projectVerticals, setProjectVerticals] = useState([]); // [vertical1, vertical2]
+  const [initiativeVerticals, setInitiativeVerticals] = useState([]); // [vertical3, vertical4, vertical5, vertical6]
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
 
@@ -36,7 +38,7 @@ const HomePage = () => {
             method: "GET",
             headers: {
               "Content-Type": "application/json",
-              "Authorization": `Basic ${basicAuth}`,
+              Authorization: `Basic ${basicAuth}`,
             },
           }
         );
@@ -49,7 +51,9 @@ const HomePage = () => {
             toast.error(result.statusText);
           }
         } else if (response.ok && response.status === 200) {
-          setAllVerticals(result.allVerticals);
+          setProjectVerticals(result.allVerticals?.slice(0, 2));
+          setInitiativeVerticals(result.allVerticals?.slice(2));
+          // setAllVerticals(result.allVerticals);
         } else {
           // for future
         }
@@ -71,11 +75,47 @@ const HomePage = () => {
 
   const element = (
     <>
-      <HeaderCard>
+      {/* <HeaderCard>
         <p className={vCss.headerText}>Here's what we have got for you !</p>
-      </HeaderCard>
+      </HeaderCard> */}
 
-      {allVerticals.length > 0 ? (
+      <section id="projects" className="d-flex flex-column gap-2">
+        <h1 className={homeCss.headerText}>Our Projects</h1>
+        <CardGrid className={homeCss["card-grid-verticals"]}>
+          {projectVerticals.map((vertical) => (
+            <div
+              className="col-lg-6 col-md-6 col-sm-12 cardOuterDiv"
+              key={vertical._id}
+            >
+              <Card
+                data={vertical}
+                type="vertical"
+                onClick={handleViewCourses}
+              />
+            </div>
+          ))}
+        </CardGrid>
+      </section>
+
+      <section id="initiatives" className="mt-5 d-flex flex-column gap-2">
+        <h1 className={homeCss.headerText}>Our Initiatives</h1>
+        <CardGrid className={homeCss["card-grid-verticals"]}>
+          {initiativeVerticals.map((vertical) => (
+            <div
+              className="col-lg-6 col-md-6 col-sm-12 cardOuterDiv"
+              key={vertical._id}
+            >
+              <Card
+                data={vertical}
+                type="vertical"
+                onClick={handleViewCourses}
+              />
+            </div>
+          ))}
+        </CardGrid>
+      </section>
+
+      {/* {allVerticals.length > 0 ? (
         <section id="verticals">
           <CardGrid>
             {allVerticals.map((vertical) => (
@@ -94,7 +134,7 @@ const HomePage = () => {
         </section>
       ) : (
         <h1 className="nothingText">Sorry, we found nothing</h1>
-      )}
+      )} */}
     </>
   );
 

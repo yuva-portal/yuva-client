@@ -18,7 +18,9 @@ import { SERVER_ORIGIN } from "../../utilities/constants";
 ///////////////////////////////////////////////////////////////////////////////////////////
 
 const VerticalsPage = () => {
-  const [allVerticals, setAllVerticals] = useState([]);
+  // const [allVerticals, setAllVerticals] = useState([]);
+  const [projectVerticals, setProjectVerticals] = useState([]); // [vertical1, vertical2]
+  const [initiativeVerticals, setInitiativeVerticals] = useState([]); // [vertical3, vertical4, vertical5, vertical6]
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
 
@@ -36,8 +38,7 @@ const VerticalsPage = () => {
             method: "GET",
             headers: {
               "Content-Type": "application/json",
-              "Authorization": `Basic ${basicAuth}`,
-
+              Authorization: `Basic ${basicAuth}`,
             },
           }
         );
@@ -50,7 +51,9 @@ const VerticalsPage = () => {
             toast.error(result.statusText);
           }
         } else if (response.ok && response.status === 200) {
-          setAllVerticals(result.allVerticals);
+          setProjectVerticals(result.allVerticals?.slice(0, 2));
+          setInitiativeVerticals(result.allVerticals?.slice(2));
+          // setAllVerticals(result.allVerticals);
         } else {
           // for future
         }
@@ -80,11 +83,12 @@ const VerticalsPage = () => {
         <p className={css.headerText}>Here's what we have got for you !</p>
       </HeaderCard>
 
-      {allVerticals.length > 0 ? (
-        <CardGrid>
-          {allVerticals.map((vertical) => (
+      <section id="projects" className="mt-5 d-flex flex-column gap-5">
+        <h1 className={css.headerText}>Our Projects</h1>
+        <CardGrid className={css["card-grid-verticals"]}>
+          {projectVerticals.map((vertical) => (
             <div
-              className="col-lg-4 col-md-6 col-sm-12 cardOuterDiv"
+              className="col-lg-6 col-md-6 col-sm-12 cardOuterDiv"
               key={vertical._id}
             >
               <Card
@@ -95,9 +99,25 @@ const VerticalsPage = () => {
             </div>
           ))}
         </CardGrid>
-      ) : (
-        <h1 className="nothingText">Sorry, we found nothing</h1>
-      )}
+      </section>
+
+      <section id="initiatives" className="mt-5 d-flex flex-column gap-5">
+        <h1 className={css.headerText}>Our Initiatives</h1>
+        <CardGrid>
+          {initiativeVerticals.map((vertical) => (
+            <div
+              className="col-lg-6 col-md-6 col-sm-12 cardOuterDiv"
+              key={vertical._id}
+            >
+              <Card
+                data={vertical}
+                type="vertical"
+                onClick={handleViewCourses}
+              />
+            </div>
+          ))}
+        </CardGrid>
+      </section>
     </div>
   );
 
