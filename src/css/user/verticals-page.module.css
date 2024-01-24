@@ -10,7 +10,7 @@
 }
 
 .card-grid-verticals {
-  margin: auto 4rem;
+  margin: auto 8rem;
 }
 
 .headerText {
@@ -26,6 +26,10 @@
 /****************************************** Mobile and tab ******************************************/
 
 @media (max-width: 992px) and (min-width: 576px) {
+  .card-grid-verticals{
+    margin: auto 2rem;
+  }
+
   .outerDiv {
     margin-top: 6rem;
   }
@@ -36,6 +40,10 @@
 }
 
 @media (max-width: 576px) {
+  .card-grid-verticals{
+    margin: auto 2rem;
+  }
+  
   .outerDiv {
     margin-top: 5rem;
   }
