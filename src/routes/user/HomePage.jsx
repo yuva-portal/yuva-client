@@ -18,104 +18,106 @@ import logo from "../../assets/images/yuva_logo.png";
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 
 const HomePage = () => {
-  // const [allVerticals, setAllVerticals] = useState([]);
-  const [projectVerticals, setProjectVerticals] = useState([]); // [vertical1, vertical2]
-  const [initiativeVerticals, setInitiativeVerticals] = useState([]); // [vertical3, vertical4, vertical5, vertical6]
-  const [isLoading, setIsLoading] = useState(false);
-  const navigate = useNavigate();
+    // const [allVerticals, setAllVerticals] = useState([]);
+    const [projectVerticals, setProjectVerticals] = useState([]); // [vertical1, vertical2]
+    const [initiativeVerticals, setInitiativeVerticals] = useState([]); // [vertical3, vertical4, vertical5, vertical6]
+    const [isLoading, setIsLoading] = useState(false);
+    const navigate = useNavigate();
 
-  useEffect(() => {
-    setIsLoading(true);
+    useEffect(() => {
+        setIsLoading(true);
 
-    async function getAllVerticals() {
-      try {
-        const userId = process.env.REACT_APP_USER_ID;
-        const userPassword = process.env.REACT_APP_USER_PASSWORD;
-        const basicAuth = btoa(`${userId}:${userPassword}`);
-        const response = await fetch(
-          `${SERVER_ORIGIN}/api/user/auth/verticals/all`,
-          {
-            method: "GET",
-            headers: {
-              "Content-Type": "application/json",
-              Authorization: `Basic ${basicAuth}`,
-            },
-          }
-        );
+        async function getAllVerticals() {
+            try {
+                const userId = process.env.REACT_APP_USER_ID;
+                const userPassword = process.env.REACT_APP_USER_PASSWORD;
+                const basicAuth = btoa(`${userId}:${userPassword}`);
+                const response = await fetch(
+                    `${SERVER_ORIGIN}/api/user/auth/verticals/all`,
+                    {
+                        method: "GET",
+                        headers: {
+                            "Content-Type": "application/json",
+                            Authorization: `Basic ${basicAuth}`,
+                        },
+                    }
+                );
 
-        const result = await response.json();
-        // console.log(result);
+                const result = await response.json();
+                // console.log(result);
 
-        if (response.status >= 400 && response.status < 600) {
-          if (response.status === 500) {
-            toast.error(result.statusText);
-          }
-        } else if (response.ok && response.status === 200) {
-          setProjectVerticals(result.allVerticals?.slice(0, 2));
-          setInitiativeVerticals(result.allVerticals?.slice(2));
-          // setAllVerticals(result.allVerticals);
-        } else {
-          // for future
+                if (response.status >= 400 && response.status < 600) {
+                    if (response.status === 500) {
+                        toast.error(result.statusText);
+                    }
+                } else if (response.ok && response.status === 200) {
+                    setProjectVerticals(result.allVerticals?.slice(0, 2));
+                    setInitiativeVerticals(result.allVerticals?.slice(2));
+                    // setAllVerticals(result.allVerticals);
+                } else {
+                    // for future
+                }
+            } catch (err) {
+                console.log(err.message);
+            }
+
+            setIsLoading(false);
         }
-      } catch (err) {
-        console.log(err.message);
-      }
 
-      setIsLoading(false);
+        getAllVerticals();
+    }, []);
+
+    function handleViewCourses(e) {
+        const verticalId = e.target.id;
+        // console.log(verticalId);
+        navigate(`/user/verticals/${verticalId}/courses/all`);
     }
 
-    getAllVerticals();
-  }, []);
-
-  function handleViewCourses(e) {
-    const verticalId = e.target.id;
-    // console.log(verticalId);
-    navigate(`/user/verticals/${verticalId}/courses/all`);
-  }
-
-  const element = (
-    <>
-      {/* <HeaderCard>
+    const element = (
+        <>
+            {/* <HeaderCard>
         <p className={vCss.headerText}>Here's what we have got for you !</p>
       </HeaderCard> */}
 
-      <section id="projects" className="d-flex flex-column gap-2">
-        <h1 className={homeCss.headerText}>Our Projects</h1>
-        <CardGrid className={homeCss["card-grid-verticals"]}>
-          {projectVerticals.map((vertical) => (
-            <div
-              className="col-lg-6 col-md-6 col-sm-12 cardOuterDiv"
-              key={vertical._id}
-            >
-              <Card
-                data={vertical}
-                type="vertical"
-                onClick={handleViewCourses}
-              />
-            </div>
-          ))}
-        </CardGrid>
-      </section>
+            <section id="projects" className="d-flex flex-column gap-2">
+                <h1 className={homeCss.headerText}>Our Projects</h1>
+                <div className="horizontal"></div>
+                <CardGrid className={homeCss["card-grid-verticals"]}>
+                    {projectVerticals.map((vertical) => (
+                        <div
+                            className="col-lg-6 col-md-6 col-sm-12 cardOuterDiv"
+                            key={vertical._id}
+                        >
+                            <Card
+                                data={vertical}
+                                type="vertical"
+                                onClick={handleViewCourses}
+                            />
+                        </div>
+                    ))}
+                </CardGrid>
+            </section>
 
-      <section id="initiatives" className="mt-5 d-flex flex-column gap-2">
-        <h1 className={homeCss.headerText}>Our Initiatives</h1>
-        <CardGrid className={homeCss["card-grid-verticals"]}>
-          {initiativeVerticals.map((vertical) => (
-            <div
-              className="col-lg-6 col-md-6 col-sm-12 cardOuterDiv"
-              key={vertical._id}
-            >
-              <Card
-                data={vertical}
-                type="vertical"
-                onClick={handleViewCourses}
-              />
-            </div>
-          ))}
-        </CardGrid>
-      </section>
+            <section id="initiatives" className="mt-5 d-flex flex-column gap-2">
+                <h1 className={homeCss.headerText}>Our Initiatives</h1>
+                    <div className="horizontal"></div>
+                <CardGrid className={homeCss["card-grid-verticals"]}>
+                    {initiativeVerticals.map((vertical) => (
+                        <div
+                            className="col-lg-6 col-md-6 col-sm-12 cardOuterDiv"
+                            key={vertical._id}
+                        >
+                            <Card
+                                data={vertical}
+                                type="vertical"
+                                onClick={handleViewCourses}
+                            />
+                        </div>
+                    ))}
+                </CardGrid>
+            </section>
 
-      {/* {allVerticals.length > 0 ? (
+            {/* {allVerticals.length > 0 ? (
         <section id="verticals">
           <CardGrid>
             {allVerticals.map((vertical) => (
@@ -135,48 +137,60 @@ const HomePage = () => {
       ) : (
         <h1 className="nothingText">Sorry, we found nothing</h1>
       )} */}
-    </>
-  );
+        </>
+    );
 
-  return (
-    <>
-      <div className={`${homeCss.outerDiv} row`}>
-        <div className={`col-lg-8 col-md-8 col-sm-8 ${homeCss.introDiv}`}>
-          <p className={homeCss.introHeading}>Welcome to YUVA Portal</p>
-          <p className={homeCss.introSubheading}>
-            We Are The Voice Of Young Indians Globally
-          </p>
-          <p className={homeCss.introDesc}>
-            YUVA is one of the most active focus areas within Young Indians by
-            which Yi members engage students from across the country in various
-            initiatives that the students conceptualize, plan and execute. The
-            objective is to create a bridge, a platform for the students to work
-            in cross functional teams with a broad objective of enhancing their
-            leadership skills and giving back to the nation.
-          </p>
-          <button
-            className={homeCss.aboutBtn}
-            onClick={() => {
-              navigate("/about");
-            }}
-          >
-            More about Yuva
-          </button>
-          <a href="#verticals" style={{ textDecoration: "none" }}>
-            <button className={homeCss.exploreBtn}>Explore Verticals</button>
-          </a>
-        </div>
-        <div
-          style={{ textAlign: "right" }}
-          className="col-lg-4 col-md-4 col-sm-4"
-        >
-          <img src={logo} className={homeCss.yuvaImg} alt="yuva-big-img"></img>
-        </div>
-      </div>
+    return (
+        <>
+            <div className={`${homeCss.outerDiv} row`}>
+                <div
+                    className={`col-lg-8 col-md-8 col-sm-8 ${homeCss.introDiv}`}
+                >
+                    <p className={homeCss.introHeading}>
+                        Welcome to YUVA Portal
+                    </p>
+                    <p className={homeCss.introSubheading}>
+                        We Are The Voice Of Young Indians Globally
+                    </p>
+                    <p className={homeCss.introDesc}>
+                        YUVA is one of the most active focus areas within Young
+                        Indians by which Yi members engage students from across
+                        the country in various initiatives that the students
+                        conceptualize, plan and execute. The objective is to
+                        create a bridge, a platform for the students to work in
+                        cross functional teams with a broad objective of
+                        enhancing their leadership skills and giving back to the
+                        nation.
+                    </p>
+                    <button
+                        className={homeCss.aboutBtn}
+                        onClick={() => {
+                            navigate("/about");
+                        }}
+                    >
+                        More about Yuva
+                    </button>
+                    <a href="#verticals" style={{ textDecoration: "none" }}>
+                        <button className={homeCss.exploreBtn}>
+                            Explore Verticals
+                        </button>
+                    </a>
+                </div>
+                <div
+                    style={{ textAlign: "right" }}
+                    className="col-lg-4 col-md-4 col-sm-4"
+                >
+                    <img
+                        src={logo}
+                        className={homeCss.yuvaImg}
+                        alt="yuva-big-img"
+                    ></img>
+                </div>
+            </div>
 
-      {isLoading ? <Loader /> : element}
-    </>
-  );
+            {isLoading ? <Loader /> : element}
+        </>
+    );
 };
 
 export default HomePage;
