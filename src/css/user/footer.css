@@ -58,8 +58,7 @@
     font-family: var(--font-family-1);
     text-decoration: none;
     font-size: 1.2rem;
-
-    font-weight: 600;
+    font-weight: 400;
     transition: all ease-in-out 0.5s;
 }
 
@@ -92,7 +91,6 @@
 
 .u-footer-lnct h1 {
     font-size: 1.1rem;
-    font-weight: bold;
     text-align: center;
 }
 

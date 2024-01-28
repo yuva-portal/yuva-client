@@ -10,14 +10,13 @@
 .vNameText {
   font-size: 4rem;
   font-family: var(--font-family-1);
-  font-weight: 800;
+  font-weight: 700;
   margin: 0;
 }
 
 .vDescText {
   font-size: 1.5rem;
   font-family: var(--font-family-2);
-  margin-top: 1rem;
 }
 
 /****************************************** Mobile and Tab *******************************************/
