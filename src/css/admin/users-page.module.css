@@ -54,6 +54,19 @@
     height: 40px;
 }
 
+.viewBtn {
+    outline: none;
+    border: none;
+    padding: 0.4rem 1rem;
+    border-radius: 0.4rem;
+    background-color: var(--yuva-dark-green);
+    color: white;
+    height: 35px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
 .prevBtn,
 .nextBtn,
 .sortTypeBtn {
