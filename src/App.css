@@ -1,6 +1,8 @@
 body {
     margin: 0;
     word-wrap: break-word;
+    background-color: rgb(241, 247, 250)
+
 }
 
 .app-outer-div {
@@ -23,7 +25,7 @@ body {
     /* height: 100%; */
     padding-top: 0.3rem;
     padding-bottom: 0.3rem;
-    margin-right: 0.8rem;
+    margin-left: 1.5rem;
 }
 
 .navbar-nav .nav-link:hover {

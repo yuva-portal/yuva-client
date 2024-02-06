@@ -6,7 +6,6 @@ import {
 } from "react-router-dom";
 import { Toaster } from "react-hot-toast";
 
-
 // My components
 import UserNavbar from "./components/user/Navbar";
 import AdminNavbar from "./components/admin/Navbar";
@@ -42,17 +41,14 @@ import NotFound from "./routes/common/NotFound";
 import UserAboutPage from "./routes/user/AboutPage";
 import Footer from "./routes/user/Footer";
 
-
 import "./App.css";
 import ScrollToTop from "./components/user/ScrollToTop";
+import AdminUserPage from "./routes/admin/AdminUserPage.jsx";
 
 function App() {
-    
-      
     return (
-
         <Router>
-            <ScrollToTop/>
+            <ScrollToTop />
             <div className="app-outer-div">
                 <Routes>
                     <Route
@@ -241,6 +237,15 @@ function App() {
                         }
                     />
                     <Route
+                        path="/admin/users/:userId"
+                        element={
+                            <>
+                                <AdminNavbar />
+                                <AdminUserPage />
+                            </>
+                        }
+                    />
+                    <Route
                         path="/admin/verticals/:verticalId/courses/all"
                         element={
                             <>
@@ -277,7 +282,7 @@ function App() {
                             </>
                         }
                     />
-                    
+
                     <Route
                         exact
                         path="/admin/resource-not-found"
