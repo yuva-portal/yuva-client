@@ -9,6 +9,7 @@ import {
   BsYoutube,
 } from "react-icons/bs";
 import logo from "../../assets/images/yuva_logo.png";
+import img from "../../assets/images/students.jpeg";
 
 const AboutPage = () => {
   return (
@@ -24,7 +25,7 @@ const AboutPage = () => {
         <div className="u-about-page-landing-div-right">
           {/* <p className="u-about-page-landing-slogan">'We Can, We Will'</p> */}
           <img
-            src="https://idronline.org/wp-content/uploads/2021/01/Graphic-of-diverse-youth-in-India_Youth-Bol.jpg"
+            src={img}
             alt=""
             className="u-about-page-landing-slogan-bg"
           />
