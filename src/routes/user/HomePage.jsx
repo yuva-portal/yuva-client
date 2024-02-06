@@ -13,7 +13,7 @@ import homeCss from "../../css/user/home-page.module.css";
 import vCss from "../../css/user/verticals-page.module.css";
 
 import { SERVER_ORIGIN } from "../../utilities/constants";
-import logo from "../../assets/images/yuva_logo.png";
+import logo from "../../assets/images/yuva-logo-transparent.png";
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -80,7 +80,7 @@ const HomePage = () => {
       </HeaderCard> */}
 
             <section id="projects" className="d-flex flex-column gap-2">
-                <h1 className={homeCss.headerText}>Our Projects</h1>
+                <h1 className={homeCss.headerText}>Our Initiatives</h1>
                 <div className="horizontal"></div>
                 <CardGrid className={homeCss["card-grid-verticals"]}>
                     {projectVerticals.map((vertical) => (
@@ -99,8 +99,8 @@ const HomePage = () => {
             </section>
 
             <section id="initiatives" className="mt-5 d-flex flex-column gap-2">
-                <h1 className={homeCss.headerText}>Our Initiatives</h1>
-                    <div className="horizontal"></div>
+                <h1 className={homeCss.headerText}>Our Projects</h1>
+                <div className="horizontal"></div>
                 <CardGrid className={homeCss["card-grid-verticals"]}>
                     {initiativeVerticals.map((vertical) => (
                         <div
@@ -177,7 +177,7 @@ const HomePage = () => {
                     </a>
                 </div>
                 <div
-                    style={{ textAlign: "right" }}
+                    style={{ textAlign: "right", display: "flex", alignItems: "center"  }}
                     className="col-lg-4 col-md-4 col-sm-4"
                 >
                     <img

@@ -108,7 +108,7 @@ const AdminUsers = () => {
                 <div>
                     <input
                         type="text"
-                        value={searchQuery}
+                        value={searchQuery} placeholder="Search First Name"
                         onChange={(e) => {
                             setSearchQuery(e.target.value);
                             setPage(1);
@@ -129,6 +129,7 @@ const AdminUsers = () => {
                                 <th>Full Name</th>
                                 <th>Email</th>
                                 <th>Mobile no.</th>
+                                <th></th>
                             </tr>
                         </thead>
                         <tbody>
@@ -137,7 +138,7 @@ const AdminUsers = () => {
                                     <td>
                                         {page === 1
                                             ? idx + 1
-                                            : idx + 1 + page * 10}
+                                            : idx + 1 + page * 20}
                                     </td>
                                     <td>
                                         {capitalizeFirstLetter(user.fName)}{" "}
@@ -145,6 +146,18 @@ const AdminUsers = () => {
                                     </td>
                                     <td>{user.email}</td>
                                     <td>{user.phone}</td>
+                                    <td>
+                                        <button
+                                            className={css.viewBtn}
+                                            onClick={() =>
+                                                navigate(
+                                                    `/admin/users/${user.userId}`
+                                                )
+                                            }
+                                        >
+                                            View Details
+                                        </button>
+                                    </td>
                                 </tr>
                             ))}
                         </tbody>
