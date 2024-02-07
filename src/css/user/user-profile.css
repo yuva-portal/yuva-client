@@ -3,23 +3,25 @@
 .outerDiv {
     max-width: 800px;
     margin: 8rem auto;
-    padding: 20px;
-    font-family: Arial, sans-serif;
-    background-color: #f9f9f9;
+    /* padding: 20px; */
+    font-family: Rubik;
+    /* background-color: #f9f9f9; */
   }
   
   .user-profile-title {
     text-align: center;
-    color: #007bff;
-    font-size: 28px;
+    color : #2A3E78;
+    font-size: 38px;
     margin-bottom: 20px;
+    font-weight: 600;
   }
   
   .user-profile-form {
     background-color: #fff;
-    padding: 20px;
+    padding: 20px 20px 0 20px;
+    border : rgb(152, 152, 152) solid 1px;
     border-radius: 10px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 2px 4px rgba(0.1, 0.1, 0.1, 0.1);
   }
   
   .user-profile-grid {
@@ -30,18 +32,18 @@
   
   .user-profile-section {
     flex: 1;
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
+    padding: 2px 10px;
+    /* border: 1px solid #ccc;
+    border-radius: 5px; */
   }
   
   .user-profile-non-editable {
-    background-color: #eee;
+    /* background-color: #eee; */
   }
   
   .user-profile-label {
     display: block;
-    font-weight: bold;
+    font-weight: 500;
     margin-bottom: 5px;
     color: #555;
   }
@@ -49,14 +51,14 @@
   .user-profile-input,
   .user-profile-text {
     width: 100%;
-    padding: 10px;
+    padding: 7px 10px;
     border: 1px solid #ccc;
     border-radius: 5px;
     font-size: 16px;
   }
   
   .user-profile-button {
-    background-color: #007bff;
+    background-color: #2A3E78;
     color: white;
     border: none;
     border-radius: 5px;
@@ -72,7 +74,7 @@
     border: 1px solid #ccc;
     border-radius: 5px;
     margin-top: 10px;
-    color: #007bff;
+    color: #acacac;
   }
   
   .user-profile-user-id {
@@ -81,7 +83,7 @@
     border: 1px solid #ccc;
     border-radius: 5px;
     margin-top: 10px;
-    color: #007bff;
+    color: #acacac;
   }
   
   /* Media queries for responsiveness */

@@ -26,8 +26,8 @@
 
 .u-about-page-landing-slogan-bg {
     position: absolute;
-    width: 500px;
-    top: -120px;
+    width: 400px;
+    top: -100px;
     left: 100px;
     border-radius: 40% 20% 42% 40%;
 }
@@ -254,14 +254,16 @@ textarea {
     }
 
     .u-about-page-landing-slogan-bg {
-        width: 150px;
+        /* width: 150px;
         top: -190px;
-        left: 140px;
+        left: 140px; */
+        display : none;
     }
 
     .u-about-page-landing-hero {
         flex-direction: column;
         height: 100%;
+        box-sizing: border-box;
     }
 
     .u-about-page-landing-hero-left,
@@ -324,3 +326,12 @@ textarea {
         width: 100%;
     }
 }
+
+@media only screen and (min-width: 600px) and (max-width: 1024px) {
+    /* Your tablet-specific styles go here */
+    .u-about-page-landing-slogan-bg {
+        display : none;
+    }
+  
+    
+  }
