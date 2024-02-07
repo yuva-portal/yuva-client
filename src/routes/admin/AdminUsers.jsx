@@ -23,6 +23,10 @@ const AdminUsers = () => {
     const [sortType, setSortType] = useState(true);
     const [searchQuery, setSearchQuery] = useState("");
     const [totalPages, setTotalPages] = useState(0);
+    const [colleges, setColleges] = useState([]);
+    const [searchCollege, setSearchCollege] = useState("");
+    const [isDropDownOpen, setIsDropDownOpen] = useState(false);
+    const [rerender, setRerender] = useState(true);
 
     const navigate = useNavigate();
 
@@ -37,6 +41,53 @@ const AdminUsers = () => {
     };
 
     useEffect(() => {
+        async function getCollegeName() {
+            setIsLoading(true);
+
+            try {
+                const adminId = process.env.REACT_APP_ADMIN_ID;
+                const adminPassword = process.env.REACT_APP_ADMIN_PASSWORD;
+                const basicAuth = btoa(`${adminId}:${adminPassword}`);
+                const response = await fetch(
+                    `${SERVER_ORIGIN}/api/admin/auth/users/college-names`,
+                    {
+                        method: "GET",
+                        headers: {
+                            "Content-Type": "application/json",
+                            Authorization: `Basic ${basicAuth}`, // Include Basic Authentication
+                            "auth-token": localStorage.getItem("token"),
+                        },
+                    }
+                );
+
+                const result = await response.json();
+
+                setIsLoading(false);
+
+                if (response.status >= 400 && response.status < 600) {
+                    if (response.status === 401) {
+                        navigate("/admin/login");
+                    } else if (response.status === 500) {
+                        toast.error(result.statusText);
+                    }
+                } else if (response.ok && response.status === 200) {
+                    console.log(result.collegeNames);
+                    setColleges(result.collegeNames);
+                } else {
+                    // for future
+                }
+            } catch (err) {
+                // console.log(err.message);
+                setIsLoading(false);
+            }
+        }
+
+        getCollegeName();
+    }, [navigate]);
+
+
+
+    useEffect(() => {
         async function getAllUsers() {
             setIsLoading(true);
 
@@ -47,7 +98,7 @@ const AdminUsers = () => {
                 const response = await fetch(
                     `${SERVER_ORIGIN}/api/admin/auth/users/all?page=${page}&limit=20&search=${searchQuery}&sortBy=fName&sortType=${
                         sortType === true ? "asc" : "desc"
-                    }`,
+                    }&collegeName=${searchCollege}`,
                     {
                         method: "GET",
                         headers: {
@@ -82,7 +133,7 @@ const AdminUsers = () => {
         }
 
         getAllUsers();
-    }, [page, sortType, searchQuery, navigate]);
+    }, [page, sortType, searchQuery, rerender,navigate]);
 
     return (
         <div className={css.outerDiv}>
@@ -105,17 +156,68 @@ const AdminUsers = () => {
                 >
                     Sort Type - ({sortType ? "Ascending" : "Descending"})
                 </button>
-                <div>
-                    <input
-                        type="text"
-                        value={searchQuery} placeholder="Search First Name"
-                        onChange={(e) => {
-                            setSearchQuery(e.target.value);
-                            setPage(1);
-                        }}
-                        className={css.searchInput}
-                    />
-                    <button className={css.searchBtn}>Search</button>
+                <div className={css.searchInputs}>
+                    <div>
+                        <input
+                            type="text"
+                            value={searchQuery}
+                            placeholder="Search First Name"
+                            onChange={(e) => {
+                                setSearchQuery(e.target.value);
+                                setPage(1);
+                            }}
+                            className={css.searchInput}
+                        />
+                    </div>
+                    <div className={css.collegeSearch}>
+                    <form onSubmit={(e)=> {
+                        e.preventDefault();
+                        setRerender(p => !p);
+                    }}>
+                        <input
+                            type="text"
+                            value={searchCollege}
+                            className={css.searchInput}
+                            onChange={(e) => {
+                                setSearchCollege(e.target.value);
+                                setIsDropDownOpen(true);
+                            }}
+                            placeholder="Search Colleges"
+                        />
+                    </form>
+                        {isDropDownOpen && (
+                            <div className={css.searchCollegeDropdown}>
+                                {colleges
+                                    ?.filter((item) => {
+                                        const searchTerm =
+                                            searchCollege.toLowerCase();
+                                        const college = item.toLowerCase();
+
+                                        return (
+                                            searchTerm &&
+                                            college.startsWith(searchTerm)
+                                        );
+                                    })
+                                    .slice(0, 10)
+                                    .map((college) => (
+                                        <div
+                                            value={college}
+                                            className={
+                                                css.searchCollegeDropdownRow
+                                            }
+                                            onClick={() => {
+                                                setSearchCollege(college);
+                                                setRerender((p) => !p)
+                                                setIsDropDownOpen(false);
+                                            }}
+                                            key={college}
+                                        >
+                                            {college}
+                                        </div>
+                                    ))}
+                            </div>
+                        )}
+                    </div>
                 </div>
             </div>
             {isLoading ? (
@@ -138,7 +240,7 @@ const AdminUsers = () => {
                                     <td>
                                         {page === 1
                                             ? idx + 1
-                                            : idx + 1 + page * 20}
+                                            : idx + 1 + (page - 1) * 20}
                                     </td>
                                     <td>
                                         {capitalizeFirstLetter(user.fName)}{" "}
