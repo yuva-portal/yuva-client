@@ -112,7 +112,7 @@ const Navbar = () => {
               className={`${css.navBtn} text-ff1 navbar-right`}
               onClick={handleProfileClick}
             >
-              My Profile <FontAwesomeIcon icon={faUser} style={{color: "#6f6f71",}} />
+              My Profile <FontAwesomeIcon icon={faUser} style={{color: "white", marginLeft: "4px"}} />
             </button>
             <button
               className={`${css.navBtn} text-ff1 navbar-right`}
