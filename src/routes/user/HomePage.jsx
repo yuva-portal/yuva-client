@@ -78,6 +78,55 @@ const HomePage = () => {
             {/* <HeaderCard>
         <p className={vCss.headerText}>Here's what we have got for you !</p>
       </HeaderCard> */}
+            <div className={`${homeCss.outerDiv} row`}>
+                <div
+                    className={`col-lg-8 col-md-8 col-sm-8 ${homeCss.introDiv}`}
+                >
+                    <p className={homeCss.introHeading}>
+                        Welcome to YUVA Portal
+                    </p>
+                    <p className={homeCss.introSubheading}>
+                        We Are The Voice Of Young Indians Globally
+                    </p>
+                    <p className={homeCss.introDesc}>
+                        YUVA is one of the most active focus areas within Young
+                        Indians by which Yi members engage students from across
+                        the country in various initiatives that the students
+                        conceptualize, plan and execute. The objective is to
+                        create a bridge, a platform for the students to work in
+                        cross functional teams with a broad objective of
+                        enhancing their leadership skills and giving back to the
+                        nation.
+                    </p>
+                    <button
+                        className={homeCss.aboutBtn}
+                        onClick={() => {
+                            navigate("/about");
+                        }}
+                    >
+                        More about Yuva
+                    </button>
+                    <a href="#verticals" style={{ textDecoration: "none" }}>
+                        <button className={homeCss.exploreBtn}>
+                            Explore Verticals
+                        </button>
+                    </a>
+                </div>
+                <div
+                    style={{
+                        textAlign: "right",
+                        display: "flex",
+                        alignItems: "center",
+                    }}
+                    className="col-lg-4 col-md-4 col-sm-4"
+                >
+                    <img
+                        src={logo}
+                        className={homeCss.yuvaImg}
+                        alt="yuva-big-img"
+                    ></img>
+                </div>
+            </div>
 
             <section id="projects" className="d-flex flex-column gap-2">
                 <h1 className={homeCss.headerText}>Our Initiatives</h1>
@@ -140,57 +189,7 @@ const HomePage = () => {
         </>
     );
 
-    return (
-        <>
-            <div className={`${homeCss.outerDiv} row`}>
-                <div
-                    className={`col-lg-8 col-md-8 col-sm-8 ${homeCss.introDiv}`}
-                >
-                    <p className={homeCss.introHeading}>
-                        Welcome to YUVA Portal
-                    </p>
-                    <p className={homeCss.introSubheading}>
-                        We Are The Voice Of Young Indians Globally
-                    </p>
-                    <p className={homeCss.introDesc}>
-                        YUVA is one of the most active focus areas within Young
-                        Indians by which Yi members engage students from across
-                        the country in various initiatives that the students
-                        conceptualize, plan and execute. The objective is to
-                        create a bridge, a platform for the students to work in
-                        cross functional teams with a broad objective of
-                        enhancing their leadership skills and giving back to the
-                        nation.
-                    </p>
-                    <button
-                        className={homeCss.aboutBtn}
-                        onClick={() => {
-                            navigate("/about");
-                        }}
-                    >
-                        More about Yuva
-                    </button>
-                    <a href="#verticals" style={{ textDecoration: "none" }}>
-                        <button className={homeCss.exploreBtn}>
-                            Explore Verticals
-                        </button>
-                    </a>
-                </div>
-                <div
-                    style={{ textAlign: "right", display: "flex", alignItems: "center"  }}
-                    className="col-lg-4 col-md-4 col-sm-4"
-                >
-                    <img
-                        src={logo}
-                        className={homeCss.yuvaImg}
-                        alt="yuva-big-img"
-                    ></img>
-                </div>
-            </div>
-
-            {isLoading ? <Loader /> : element}
-        </>
-    );
+    return <>{isLoading ? <Loader /> : element}</>;
 };
 
 export default HomePage;

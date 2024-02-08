@@ -2,6 +2,61 @@
     margin-top: 8rem;
 }
 
+.fileDiv {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    margin-top: 1rem;
+}
+
+.innerFileDiv {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+}
+
+input[type="file"] {
+    display: none;
+}
+
+.fileInput {
+    background-color: #2a3e78;
+}
+
+.fileUploaded {
+    font-size: 1rem;
+}
+
+.fileUploadBtn {
+    background-color: var(--blue);
+    display: block;
+    height: 2.75rem;
+    width: fit-content;
+    display: flex;
+    align-items: center;
+    padding-left: 2rem;
+    padding-right: 2rem;
+    color: white;
+    font-family: var(--font-family-2);
+    cursor: pointer;
+}
+
+.addBtn {
+    background-color: var(--blue);
+    margin-top: 1.4rem;
+    height: 2.75rem;
+    padding-left: 2rem;
+    padding-right: 2rem;
+    color: white;
+    font-family: var(--font-family-2);
+}
+
+.addBtn:hover {
+    background-color: var(--yuva-dark-blue);
+}
+
 .addBtn {
     background-color: var(--blue);
     margin-top: 1.4rem;
