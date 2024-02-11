@@ -1,6 +1,7 @@
-import React, { useEffect, useState, useRef } from "react";
+import React, { useEffect, useState } from "react";                     
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-hot-toast";
+import FileUpload from "../../components/common/FileUpload";
 
 import Loader from "../../components/common/Loader";
 
@@ -27,7 +28,6 @@ const AdminUsers = () => {
     const [searchCollege, setSearchCollege] = useState("");
     const [isDropDownOpen, setIsDropDownOpen] = useState(false);
     const [rerender, setRerender] = useState(true);
-    const [excelData, setExcelData] = useState(null);
 
     const navigate = useNavigate();
 
@@ -38,40 +38,6 @@ const AdminUsers = () => {
     const decrement = () => {
         if (page > 1) {
             setPage((prev) => prev - 1);
-        }
-    };
-
-    const handleFileChange = (event) => {
-        setExcelData(event.target.files[0]);
-    };
-
-    const handleSubmit = async (event) => {
-        event.preventDefault();
-
-        if (!excelData) {
-            alert("Please select a file");
-            return;
-        }
-
-        const formData = new FormData();
-        formData.append("file", excelData);
-
-        try {
-            const response = await fetch("http://example.com/upload", {
-                method: "POST",
-                body: formData,
-            });
-
-            if (response.ok) {
-                alert("File uploaded successfully");
-                // Handle success
-            } else {
-                alert("Failed to upload file");
-                // Handle error
-            }
-        } catch (error) {
-            console.error("Error uploading file:", error);
-            // Handle network errors
         }
     };
 
@@ -105,8 +71,7 @@ const AdminUsers = () => {
                     } else if (response.status === 500) {
                         toast.error(result.statusText);
                     }
-                } else if (response.ok && response.status === 200) {
-                    console.log(result.collegeNames);
+                } else if (response.ok && response.status === 200) {  
                     setColleges(result.collegeNames);
                 } else {
                     // for future
@@ -143,7 +108,6 @@ const AdminUsers = () => {
                 );
 
                 const result = await response.json();
-                console.log(result);
 
                 setIsLoading(false);
 
@@ -181,35 +145,8 @@ const AdminUsers = () => {
                     Note: Deleting a user is irreversible. Do it at your own
                     risk.
                 </p>
-                <form className={css.fileDiv} onSubmit={handleSubmit}>
-                    <div className={css.innerFileDiv}>
-                        <label
-                            htmlFor="inputTag"
-                            className={`${css.fileUploadBtn} commonBtn`}
-                        >
-                            Select File
-                            <input
-                                id="inputTag"
-                                type="file"
-                                onChange={handleFileChange}
-                                accept=".xlsx, .xls"
-                                className={css.fileInput}
-                            />
-                        </label>
-                        {excelData && (
-                            <h3 className={css.fileUploaded}>
-                                Excel data uploaded
-                            </h3>
-                        )}
-                    </div>
-                    <button
-                        type="submit"
-                        className={`${css.fileUploadBtn} commonBtn`}
-                    
-                    >
-                        Upload
-                    </button>
-                </form>
+
+                <FileUpload />
             </HeaderCard>
             <div className={css.filterBtns}>
                 <button

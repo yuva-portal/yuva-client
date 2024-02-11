@@ -8,19 +8,27 @@
 .yiImg {
   width: 4.5rem;
   margin-right: 2%;
+  cursor: pointer;
 }
 
 .navBtn {
-  background-color: var(--light-grey);
-  color: black;
+  border: 3px solid rgba(255, 106, 131, 0.578);
+  background-color: pink;
+  color: white;
   border-radius: 0.3rem;
   height: 2.2rem;
   width: fit-content;
-  padding: 0 1rem;
+  padding: 0 1.5rem;
   /* padding: 0; */
   font-size: 0.9rem;
-  border: none;
   margin-left: 1rem;
+
+  transition: all 200ms;
+}
+
+.navBtn:hover{
+  background-color: rgb(252, 64, 64);
+  color: white;
 }
 
 @media (max-width: 1000px) and (min-width: 576px) {

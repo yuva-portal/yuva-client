@@ -16,12 +16,15 @@ const Navbar = () => {
     localStorage.removeItem("token");
     navigate("/admin/login");
   };
+  function handleImgClick(){
+    navigate("/");
+  }
 
   const listItemStyle = { fontSize: "0.9rem", fontWeight: "400" };
 
   return (
     <nav className={`${css.outerNav} navbar navbar-expand-lg fixed-top`}>
-      <img src={img} alt="yi-logo" className={css.yiImg} />
+      <img src={img} alt="yi-logo" className={css.yiImg} onClick={handleImgClick} />
       <button
         type="button"
         className="navbar-toggler"

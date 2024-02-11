@@ -1,7 +1,6 @@
 .headerDiv {
-  background-image: linear-gradient(to right, #c2dcfe, #cf4b8d);
-  box-shadow: var(--box-shadow-1);
-  border-radius: 1.5rem;
+  background-color: rgb(158, 201, 252);
+  border-radius: 1rem;
   text-align: center;
   /* font-family: var(--font-family-1); */
   padding: 4rem;

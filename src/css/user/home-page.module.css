@@ -52,6 +52,7 @@
 
 .aboutBtn:hover {
     background-color: var(--yuva-dark-blue);
+    transition: all 200ms;
 }
 
 .exploreBtn {
@@ -60,6 +61,7 @@
 
 .exploreBtn:hover {
     background-color: var(--yuva-dark-green);
+    transition: all 200ms;
 }
 
 .headerText {

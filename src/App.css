@@ -29,8 +29,8 @@ body {
 }
 
 .navbar-nav .nav-link:hover {
-    color: black !important;
-    background-color: var(--light-grey);
+    color: #0c5e9b !important;
+    /* background-color: var(--light-grey); */
     /* text-decoration: underline; */
 }
 

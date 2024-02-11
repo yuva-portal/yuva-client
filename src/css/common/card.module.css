@@ -15,7 +15,6 @@ box-shadow: 0px 0px 6px -8px rgba(0,0,0,1);
     height: 100%;
     min-height: 400px;
     transition: 0.25s;
-    cursor: pointer;
 }
 
 .cardDiv:hover {
