@@ -130,12 +130,12 @@ const Navbar = () => {
               >
                 Login
               </button>
-              {/* <button
+              <button
                 className={`${css.navBtn} text-ff1 navbar-right`}
                 onClick={handleRegisterClick}
               >
                 Register
-              </button> */}
+              </button>
             </>
           )}
         </ul>
