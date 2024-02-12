@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-hot-toast";
 
 // My components
@@ -18,6 +18,8 @@ import logo from "../../assets/images/yuva-logo-transparent.png";
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 
 const HomePage = () => {
+    const params = useLocation();
+    console.log(params);
     // const [allVerticals, setAllVerticals] = useState([]);
     const [projectVerticals, setProjectVerticals] = useState([]); // [vertical1, vertical2]
     const [initiativeVerticals, setInitiativeVerticals] = useState([]); // [vertical3, vertical4, vertical5, vertical6]
@@ -67,10 +69,38 @@ const HomePage = () => {
         getAllVerticals();
     }, []);
 
-    function handleViewCourses(e) {
+    async function handleViewCourses(e) {
         const verticalId = e.target.id;
-        // console.log(verticalId);
-        navigate(`/user/verticals/${verticalId}/courses/all`);
+        console.log(verticalId);
+        // if (localStorage.getItem("token")) {
+        // } else
+        try {
+            const userId = process.env.REACT_APP_USER_ID;
+            const userPassword = process.env.REACT_APP_USER_PASSWORD;
+            const basicAuth = btoa(`${userId}:${userPassword}`);
+            const response = await fetch(
+                `${SERVER_ORIGIN}/api/user/auth/check-authorized`,
+                {
+                    method: "GET",
+                    headers: {
+                        "Content-Type": "application/json",
+                        "auth-token": localStorage.getItem("token"),
+                        Authorization: `Basic ${basicAuth}`,
+                    },
+                }
+            );
+            // console.log(result);
+
+            if (response.status >= 400 && response.status < 600) {
+                navigate("/user/login");
+            } else if (response.ok && response.status === 200) {
+                navigate(`/user/verticals/${verticalId}/courses/all`);
+            } else {
+                // for future
+            }
+        } catch (error) {
+            console.log(error.message);
+        }
     }
 
     const element = (

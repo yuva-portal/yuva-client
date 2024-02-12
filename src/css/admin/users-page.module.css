@@ -22,7 +22,7 @@ input[type="file"] {
 }
 
 .fileInput {
-    background-color: #2a3e78;
+    background-color: var(--yuva-blue);
 }
 
 .fileUploaded {
@@ -30,7 +30,7 @@ input[type="file"] {
 }
 
 .fileUploadBtn {
-    background-color: var(--blue);
+    background-color: var(--yuva-blue);
     display: block;
     height: 2.75rem;
     width: fit-content;
@@ -164,7 +164,7 @@ input[type="file"] {
     border: none;
     padding: 0.4rem 1.4rem;
     border-radius: 0.4rem;
-    background-color: #2a3e78;
+    background-color: var(--yuva-blue);
     color: white;
     font-weight: 600;
     height: 40px;
@@ -185,9 +185,8 @@ table {
     border-collapse: collapse;
     background: white;
     border-radius: 1rem;
-    border: 2px solid #2a3e78;
+    border: 2px solid var(--yuva-blue);
     overflow: hidden;
-    max-width: 1200px;
     width: 100%;
     margin: 0 auto;
     position: relative;
@@ -211,7 +210,7 @@ tbody tr:hover {
 
 thead tr {
     height: 60px;
-    background: #2a3e78;
+    background: var(--yuva-blue);
     font-size: 1.2rem;
     color: #ffff;
 }
