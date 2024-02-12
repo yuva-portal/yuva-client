@@ -19,7 +19,7 @@ import UserCourses from "./routes/user/CoursesPage";
 import UserUnits from "./routes/user/UnitsPage";
 import UserSingleUnit from "./routes/user/SingleUnitPage";
 import UserResetPass from "./routes/user/ResetPassPage";
-// import UserRegis from "./routes/user/RegisPage";
+import UserRegis from "./routes/user/RegisPage";
 import UserQuiz from "./routes/user/QuizPage";
 import CertPage from "./routes/user/CertPage";
 import UserDashBoard from "./routes/user/Dashboard";
@@ -161,7 +161,7 @@ function App() {
                             </>
                         }
                     />
-                    {/* <Route
+                    <Route
                         exact
                         path="/user/register"
                         element={
@@ -170,7 +170,7 @@ function App() {
                                 <UserRegis />
                             </>
                         }
-                    /> */}
+                    />
                     <Route
                         exact
                         path="/user/certificate/:certId"
