@@ -75,6 +75,7 @@ const LoginPage = () => {
       <img src={logo} alt="yuva-big-logo" className={loginCss.yuvaImg}></img>
 
       <LoginForm
+        // className={loginCss.login}
         role="user"
         userId={creds.userId}
         password={creds.password}

@@ -48,14 +48,14 @@ export const LoginForm = (props) => {
       >
         {props.isBtnDisabled ? "Logging in ..." : "Login"}
       </button>
-      {/* {props.role === "user" ? (
+      {props.role === "user" ? (
         <>
           <p className={css.forgotPassText}>Don't have an account ?</p>
           <Link className={css.registerText} to="/user/register">
             Register
           </Link>
         </>
-      ) : null} */}
+      ) : null}
     </div>
   );
 };

@@ -1,5 +1,6 @@
 .outerDiv {
-  margin-top: 8rem;
+  /* margin-top: 12rem; */
+  margin : 200px 0;
   display: grid;
   grid-template-columns: 1fr 1fr;
   /* border: 2px solid blue; */
