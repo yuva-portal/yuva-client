@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { SERVER_ORIGIN, validation } from "../../utilities/constants";
+import Spinloader from "./Spinloader";
 
 import css from "../../css/admin/users-page.module.css";
 
@@ -8,6 +9,7 @@ const FileUpload = () => {
     const [fileUploaded, setFileUploaded] = useState(false);
     const [excelData, setExcelData] = useState(null);
     const [correctFormat, setCorrectFormat] = useState(false);
+    const [loader, setLoader] = useState(false);
 
     function handleFileRetrieve(e) {
         // const excelFile = e.target.files[0];
@@ -34,9 +36,11 @@ const FileUpload = () => {
             .then((response) => {
                 // console.log("*******" + response.data);
                 setCorrectFormat(true);
+                setLoader(true);
                 setFileUploaded(false);
             })
             .catch((error) => {
+                console.log(error);
                 alert(error.response.data.message || error.response.data);
                 setExcelData(null);
                 setFileUploaded(false);
@@ -67,6 +71,8 @@ const FileUpload = () => {
                         className={css.fileInput}
                     />
                 </label>
+
+                {loader && <Spinloader />}
                 {fileUploaded && excelData ? (
                     <h3 className={css.fileUploaded}>
                         Excel data retrieved successfully. Press the 'Upload'
