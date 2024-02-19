@@ -45,7 +45,6 @@ const UserProfile = () => {
         }
       );
       const result = await response.json();
-      console.log(result);
       if (result.userDoc) {
         setUser(result.userDoc);
       } else {

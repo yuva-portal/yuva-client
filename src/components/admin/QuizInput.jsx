@@ -5,8 +5,6 @@ import css from "../../css/admin/add-unit-page.module.css";
 // ! use checked attr for checkbox, dont use value attr, it produces bugs
 
 const QuizInput = (props) => {
-  // console.log(props);
-  // console.log(props.quizItem);
   return (
     <div style={{ marginBottom: "2rem" }} className="text-ff2">
       <label htmlFor="question">Question {props.quizItemIdx + 1}</label>

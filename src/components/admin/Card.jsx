@@ -89,7 +89,7 @@ function Card(props) {
 export default Card;
 
 // function Card(props) {
-//   // console.log(props);
+//   // (props);
 //   return (
 //       <div className={css.cardDiv}>
 //           {props.type === "course" ? null : (

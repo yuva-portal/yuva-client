@@ -17,404 +17,420 @@ import { refreshScreen } from "../../utilities/helper_functions";
 //////////////////////////////////////////////////////////////////////////////////////////////
 
 const VerticalsPage = () => {
-  const [allVerticals, setAllVerticals] = useState([]);
-  const [isLoading, setIsLoading] = useState(false);
-  const [newVertical, setNewVertical] = useState({
-    name: "",
-    desc: "",
-    imgSrc: "",
-  });
+    const [allVerticals, setAllVerticals] = useState([]);
+    const [isLoading, setIsLoading] = useState(false);
+    const [newVertical, setNewVertical] = useState({
+        name: "",
+        desc: "",
+        imgSrc: "",
+    });
 
-  const navigate = useNavigate();
+    const navigate = useNavigate();
 
-  useEffect(() => {
-    async function getAllVerticals() {
-      setIsLoading(true);
+    useEffect(() => {
+        async function getAllVerticals() {
+            setIsLoading(true);
 
-      try {
-        const adminId = process.env.REACT_APP_ADMIN_ID;
-        const adminPassword = process.env.REACT_APP_ADMIN_PASSWORD;
-        const basicAuth = btoa(`${adminId}:${adminPassword}`);
-        const response = await fetch(
-          `${SERVER_ORIGIN}/api/admin/auth/verticals/all`,
-          {
-            method: "GET",
-            headers: {
-              "Content-Type": "application/json",
-              "Authorization": `Basic ${basicAuth}`, // Include Basic Authentication
-              "auth-token": localStorage.getItem("token"),
-            },
-          }
-        );
+            try {
+                const adminId = process.env.REACT_APP_ADMIN_ID;
+                const adminPassword = process.env.REACT_APP_ADMIN_PASSWORD;
+                const basicAuth = btoa(`${adminId}:${adminPassword}`);
+                const response = await fetch(
+                    `${SERVER_ORIGIN}/api/admin/auth/verticals/all`,
+                    {
+                        method: "GET",
+                        headers: {
+                            "Content-Type": "application/json",
+                            Authorization: `Basic ${basicAuth}`, // Include Basic Authentication
+                            "auth-token": localStorage.getItem("token"),
+                        },
+                    }
+                );
 
-        const result = await response.json();
-        // console.log(result);
+                const result = await response.json();
+                // (result);
 
-        setIsLoading(false);
+                setIsLoading(false);
 
-        if (response.status >= 400 && response.status < 600) {
-          if (response.status === 401) {
-            navigate("/admin/login");
-          } else if (response.status === 500) {
-            toast.error(result.statusText);
-          }
-        } else if (response.ok && response.status === 200) {
-          setAllVerticals(result.allVerticals);
-        } else {
-          // for future
+                if (response.status >= 400 && response.status < 600) {
+                    if (response.status === 401) {
+                        navigate("/admin/login");
+                    } else if (response.status === 500) {
+                        toast.error(result.statusText);
+                    }
+                } else if (response.ok && response.status === 200) {
+                    setAllVerticals(result.allVerticals);
+                } else {
+                    // for future
+                }
+            } catch (err) {
+                // (err.message);
+                setIsLoading(false);
+            }
         }
-      } catch (err) {
-        // console.log(err.message);
-        setIsLoading(false);
-      }
+
+        getAllVerticals();
+    }, []);
+
+    //////////////////////////////// Add Vertical Modal ////////////////////////////////////////
+
+    const ref = useRef(null);
+    const refClose = useRef(null);
+
+    async function openAddModal() {
+        ref.current.click();
     }
 
-    getAllVerticals();
-  }, []);
+    function onAddChange(e) {
+        const updatedVertical = {
+            ...newVertical,
+            [e.target.name]: e.target.value,
+        };
+        setNewVertical(updatedVertical);
 
-  //////////////////////////////// Add Vertical Modal ////////////////////////////////////////
-
-  const ref = useRef(null);
-  const refClose = useRef(null);
-
-  async function openAddModal() {
-    ref.current.click();
-  }
-
-  function onAddChange(e) {
-    const updatedVertical = { ...newVertical, [e.target.name]: e.target.value };
-    setNewVertical(updatedVertical);
-
-    // console.log(updatedVertical);
-  }
-
-  async function handleAddVertical() {
-    // todo: validate input
-    try {
-        const adminId = process.env.REACT_APP_ADMIN_ID;
-        const adminPassword = process.env.REACT_APP_ADMIN_PASSWORD;
-        const basicAuth = btoa(`${adminId}:${adminPassword}`);
-      const response = await fetch(
-        `${SERVER_ORIGIN}/api/admin/auth/verticals/add`,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            "auth-token": localStorage.getItem("token"),
-            "Authorization": `Basic ${basicAuth}`,
-          },
-          body: JSON.stringify(newVertical),
-        }
-      );
-
-      const result = await response.json();
-      console.log(result);
-
-      if (response.status >= 400 && response.status < 600) {
-        if (response.status === 401) {
-          navigate("/admin/login"); // login or role issue
-        } else if (response.status === 500) {
-          toast.error(result.statusText);
-        }
-      } else if (response.ok && response.status === 200) {
-        refreshScreen();
-        // set fields in modal to empty if not refreshing scrn
-      } else {
-        // for future
-      }
-
-      refClose.current.click();
-    } catch (err) {
-      console.log(err.message);
+        // (updatedVertical);
     }
-  }
 
-  //////////////////////////////////////////////////////////////////////////////////////////
+    async function handleAddVertical() {
+        // todo: validate input
+        try {
+            const adminId = process.env.REACT_APP_ADMIN_ID;
+            const adminPassword = process.env.REACT_APP_ADMIN_PASSWORD;
+            const basicAuth = btoa(`${adminId}:${adminPassword}`);
+            const response = await fetch(
+                `${SERVER_ORIGIN}/api/admin/auth/verticals/add`,
+                {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                        "auth-token": localStorage.getItem("token"),
+                        Authorization: `Basic ${basicAuth}`,
+                    },
+                    body: JSON.stringify(newVertical),
+                }
+            );
 
-  async function handleAddOrViewCourses(e) {
-    const verticalId = e.target.id;
-    // console.log(verticalId);
-    navigate(`/admin/verticals/${verticalId}/courses/all`);
-  }
+            const result = await response.json();
 
-  ////////////////////////////////////// Delete Vertical Modal ///////////////////////////////////////////////////
-  const ref2 = useRef(null);
-  const refClose2 = useRef(null);
-  const [toDeleteVerticalId, setToDeleteVerticalId] = useState("");
-  const [confirmText, setConfirmText] = useState("");
+            if (response.status >= 400 && response.status < 600) {
+                if (response.status === 401) {
+                    navigate("/admin/login"); // login or role issue
+                } else if (response.status === 500) {
+                    toast.error(result.statusText);
+                }
+            } else if (response.ok && response.status === 200) {
+                refreshScreen();
+                // set fields in modal to empty if not refreshing scrn
+            } else {
+                // for future
+            }
 
-  function openDeleteModal(e) {
-    ref2.current.click();
-    setToDeleteVerticalId(e.target.id);
-  }
-
-  function onConfirmTextChange(e) {
-    setConfirmText(e.target.value);
-  }
-
-  async function handleDeleteVertical() {
-    const verticalId = toDeleteVerticalId;
-    // todo: validate input
-    try {
-        const adminId = process.env.REACT_APP_ADMIN_ID;
-        const adminPassword = process.env.REACT_APP_ADMIN_PASSWORD;
-        const basicAuth = btoa(`${adminId}:${adminPassword}`);
-      const response = await fetch(
-        `${SERVER_ORIGIN}/api/admin/auth/verticals/${verticalId}/delete`,
-        {
-          method: "DELETE",
-          headers: {
-            "Content-Type": "application/json",
-            "auth-token": localStorage.getItem("token"),
-            "Authorization": `Basic ${basicAuth}`,
-          },
+            refClose.current.click();
+        } catch (err) {
         }
-      );
-
-      const result = await response.json();
-      console.log(result);
-
-      if (response.status >= 400 && response.status < 600) {
-        if (response.status === 401) {
-          navigate("/admin/login"); // login or role issue
-        } else if (response.status === 404) {
-          toast.error(result.statusText);
-        } else if (response.status === 500) {
-          toast.error(result.statusText);
-        }
-      } else if (response.ok && response.status === 200) {
-        refreshScreen();
-        // set fields in modal to empty if not refreshing scrn
-      } else {
-        // for future
-      }
-
-      refClose2.current.click();
-    } catch (error) {
-      console.log(error.message);
     }
-  }
 
-  const deleteModal = (
-    <>
-      <button
-        ref={ref2}
-        type="button"
-        className="btn btn-primary d-none"
-        data-bs-toggle="modal"
-        data-bs-target="#exampleModal3"
-      >
-        Launch demo modal
-      </button>
+    //////////////////////////////////////////////////////////////////////////////////////////
 
-      <div
-        className="modal fade"
-        id="exampleModal3"
-        tabIndex="-1"
-        aria-labelledby="exampleModalLabel"
-        aria-hidden="true"
-      >
-        <div className="modal-dialog">
-          <div className="modal-content">
-            <div className="modal-header">
-              <h5 className="modal-title text-ff1" id="exampleModalLabel">
-                Delete vertical
-              </h5>
-              <button
+    async function handleAddOrViewCourses(e) {
+        const verticalId = e.target.id;
+        // (verticalId);
+        navigate(`/admin/verticals/${verticalId}/courses/all`);
+    }
+
+    ////////////////////////////////////// Delete Vertical Modal ///////////////////////////////////////////////////
+    const ref2 = useRef(null);
+    const refClose2 = useRef(null);
+    const [toDeleteVerticalId, setToDeleteVerticalId] = useState("");
+    const [confirmText, setConfirmText] = useState("");
+
+    function openDeleteModal(e) {
+        ref2.current.click();
+        setToDeleteVerticalId(e.target.id);
+    }
+
+    function onConfirmTextChange(e) {
+        setConfirmText(e.target.value);
+    }
+
+    async function handleDeleteVertical() {
+        const verticalId = toDeleteVerticalId;
+        // todo: validate input
+        try {
+            const adminId = process.env.REACT_APP_ADMIN_ID;
+            const adminPassword = process.env.REACT_APP_ADMIN_PASSWORD;
+            const basicAuth = btoa(`${adminId}:${adminPassword}`);
+            const response = await fetch(
+                `${SERVER_ORIGIN}/api/admin/auth/verticals/${verticalId}/delete`,
+                {
+                    method: "DELETE",
+                    headers: {
+                        "Content-Type": "application/json",
+                        "auth-token": localStorage.getItem("token"),
+                        Authorization: `Basic ${basicAuth}`,
+                    },
+                }
+            );
+
+            const result = await response.json();
+
+            if (response.status >= 400 && response.status < 600) {
+                if (response.status === 401) {
+                    navigate("/admin/login"); // login or role issue
+                } else if (response.status === 404) {
+                    toast.error(result.statusText);
+                } else if (response.status === 500) {
+                    toast.error(result.statusText);
+                }
+            } else if (response.ok && response.status === 200) {
+                refreshScreen();
+                // set fields in modal to empty if not refreshing scrn
+            } else {
+                // for future
+            }
+
+            refClose2.current.click();
+        } catch (error) {
+        }
+    }
+
+    const deleteModal = (
+        <>
+            <button
+                ref={ref2}
                 type="button"
-                className="btn-close"
-                data-bs-dismiss="modal"
-                aria-label="Close"
-              />
-            </div>
-            <div className="modal-body">
-              <div style={{ marginBottom: "1rem" }}>
-                <label htmlFor="confirm" className="modalLabel">
-                  Confirmation
-                </label>
-                <input
-                  type="text"
-                  className="modalInput"
-                  id="confirm"
-                  autoComplete="off"
-                  name="confirm"
-                  placeholder="Type 'Confirm' to delete"
-                  value={confirmText}
-                  onChange={onConfirmTextChange}
-                />
-              </div>
-            </div>
-            <div className="modal-footer">
-              <button
-                type="button"
-                className="modalCloseBtn"
-                data-bs-dismiss="modal"
-                ref={refClose2}
-              >
-                Close
-              </button>
-              <button
-                onClick={handleDeleteVertical}
-                type="button"
-                className="modalDltBtn"
-                disabled={confirmText !== "Confirm"}
-              >
-                Delete Vertical
-              </button>
-            </div>
-          </div>
-        </div>
-      </div>
-    </>
-  );
-
-  const loader = <Loader />;
-
-  const element = (
-    <section id="verticals">
-      {allVerticals.length > 0 ? (
-        <CardGrid>
-          {allVerticals.map((vertical) => (
-            <div
-              className="col-lg-4 col-md-6 col-sm-12 cardOuterDiv"
-              key={vertical._id}
+                className="btn btn-primary d-none"
+                data-bs-toggle="modal"
+                data-bs-target="#exampleModal3"
             >
-              <Card
-                data={vertical}
-                type="vertical"
-                onAddViewClick={handleAddOrViewCourses}
-                onDeleteClick={openDeleteModal}
-              />
+                Launch demo modal
+            </button>
+
+            <div
+                className="modal fade"
+                id="exampleModal3"
+                tabIndex="-1"
+                aria-labelledby="exampleModalLabel"
+                aria-hidden="true"
+            >
+                <div className="modal-dialog">
+                    <div className="modal-content">
+                        <div className="modal-header">
+                            <h5
+                                className="modal-title text-ff1"
+                                id="exampleModalLabel"
+                            >
+                                Delete vertical
+                            </h5>
+                            <button
+                                type="button"
+                                className="btn-close"
+                                data-bs-dismiss="modal"
+                                aria-label="Close"
+                            />
+                        </div>
+                        <div className="modal-body">
+                            <div style={{ marginBottom: "1rem" }}>
+                                <label htmlFor="confirm" className="modalLabel">
+                                    Confirmation
+                                </label>
+                                <input
+                                    type="text"
+                                    className="modalInput"
+                                    id="confirm"
+                                    autoComplete="off"
+                                    name="confirm"
+                                    placeholder="Type 'Confirm' to delete"
+                                    value={confirmText}
+                                    onChange={onConfirmTextChange}
+                                />
+                            </div>
+                        </div>
+                        <div className="modal-footer">
+                            <button
+                                type="button"
+                                className="modalCloseBtn"
+                                data-bs-dismiss="modal"
+                                ref={refClose2}
+                            >
+                                Close
+                            </button>
+                            <button
+                                onClick={handleDeleteVertical}
+                                type="button"
+                                className="modalDltBtn"
+                                disabled={confirmText !== "Confirm"}
+                            >
+                                Delete Vertical
+                            </button>
+                        </div>
+                    </div>
+                </div>
             </div>
-          ))}
-        </CardGrid>
-      ) : (
-        <h1 className="nothingText">Sorry, we found nothing</h1>
-      )}
-    </section>
-  );
+        </>
+    );
 
-  return (
-    <div className={css.outerDiv}>
-      <HeaderCard>
-        <h1 className="headerTitle">Verticals</h1>
+    const loader = <Loader />;
 
-        <hr />
-        <p className="headerSubtitle">
-          You can View/Add/Delete verticals from here
-        </p>
-        <p className="headerSubtitle">
-          Note: Deleting a vertical is irreversible. Do it at your own risk.
-        </p>
+    const element = (
+        <section id="verticals">
+            {allVerticals.length > 0 ? (
+                <CardGrid>
+                    {allVerticals.map((vertical) => (
+                        <div
+                            className="col-lg-4 col-md-6 col-sm-12 cardOuterDiv"
+                            key={vertical._id}
+                        >
+                            <Card
+                                data={vertical}
+                                type="vertical"
+                                onAddViewClick={handleAddOrViewCourses}
+                                onDeleteClick={openDeleteModal}
+                            />
+                        </div>
+                    ))}
+                </CardGrid>
+            ) : (
+                <h1 className="nothingText">Sorry, we found nothing</h1>
+            )}
+        </section>
+    );
 
-        <button onClick={openAddModal} className={`${css.addBtn} commonBtn`}>
-          Add a new vertical
-        </button>
-      </HeaderCard>
+    return (
+        <div className={css.outerDiv}>
+            <HeaderCard>
+                <h1 className="headerTitle">Verticals</h1>
 
-      {isLoading ? loader : element}
+                <hr />
+                <p className="headerSubtitle">
+                    You can View/Add/Delete verticals from here
+                </p>
+                <p className="headerSubtitle">
+                    Note: Deleting a vertical is irreversible. Do it at your own
+                    risk.
+                </p>
 
-      <button
-        ref={ref}
-        type="button"
-        className="btn btn-primary d-none"
-        data-bs-toggle="modal"
-        data-bs-target="#exampleModal2"
-      >
-        Launch demo modal
-      </button>
+                <button
+                    onClick={openAddModal}
+                    className={`${css.addBtn} commonBtn`}
+                >
+                    Add a new vertical
+                </button>
+            </HeaderCard>
 
-      <div
-        className="modal fade"
-        id="exampleModal2"
-        tabIndex="-1"
-        aria-labelledby="exampleModalLabel"
-        aria-hidden="true"
-      >
-        <div className="modal-dialog">
-          <div className="modal-content">
-            <div className="modal-header">
-              <h5 className="modal-title text-ff1" id="exampleModalLabel">
-                Add a new vertical
-              </h5>
-              <button
+            {isLoading ? loader : element}
+
+            <button
+                ref={ref}
                 type="button"
-                className="btn-close"
-                data-bs-dismiss="modal"
-                aria-label="Close"
-              />
+                className="btn btn-primary d-none"
+                data-bs-toggle="modal"
+                data-bs-target="#exampleModal2"
+            >
+                Launch demo modal
+            </button>
+
+            <div
+                className="modal fade"
+                id="exampleModal2"
+                tabIndex="-1"
+                aria-labelledby="exampleModalLabel"
+                aria-hidden="true"
+            >
+                <div className="modal-dialog">
+                    <div className="modal-content">
+                        <div className="modal-header">
+                            <h5
+                                className="modal-title text-ff1"
+                                id="exampleModalLabel"
+                            >
+                                Add a new vertical
+                            </h5>
+                            <button
+                                type="button"
+                                className="btn-close"
+                                data-bs-dismiss="modal"
+                                aria-label="Close"
+                            />
+                        </div>
+                        <div className="modal-body">
+                            <div style={{ marginBottom: "0.8rem" }}>
+                                <label htmlFor="name" className="modalLabel">
+                                    Name *
+                                </label>
+                                <input
+                                    type="text"
+                                    className="modalInput"
+                                    id="name"
+                                    name="name"
+                                    minLength={1}
+                                    maxLength={
+                                        validation.verticalModal.name.maxLen
+                                    }
+                                    onChange={onAddChange}
+                                    value={newVertical.name}
+                                    autoComplete="off"
+                                />
+                            </div>
+                            <div className="mb-3">
+                                <label
+                                    htmlFor="description"
+                                    className="modalLabel"
+                                >
+                                    Description *
+                                </label>
+                                <input
+                                    type="text"
+                                    className="modalInput"
+                                    id="desc"
+                                    name="desc"
+                                    onChange={onAddChange}
+                                    maxLength={
+                                        validation.verticalModal.desc.maxLen
+                                    }
+                                    value={newVertical.desc}
+                                    autoComplete="off"
+                                />
+                            </div>
+                            <div className="mb-3">
+                                <label htmlFor="imgSrc" className="modalLabel">
+                                    Image Source *
+                                </label>
+                                <input
+                                    type="text"
+                                    className="modalInput"
+                                    id="imgSrc"
+                                    name="imgSrc"
+                                    onChange={onAddChange}
+                                    value={newVertical.imgSrc}
+                                    autoComplete="off"
+                                />
+                            </div>
+                        </div>
+                        <div className="modal-footer">
+                            <button
+                                type="button"
+                                className="modalCloseBtn"
+                                data-bs-dismiss="modal"
+                                ref={refClose}
+                            >
+                                Close
+                            </button>
+                            <button
+                                onClick={handleAddVertical}
+                                type="button"
+                                className="modalAddBtn"
+                            >
+                                Add Vertical
+                            </button>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <div className="modal-body">
-              <div style={{ marginBottom: "0.8rem" }}>
-                <label htmlFor="name" className="modalLabel">
-                  Name *
-                </label>
-                <input
-                  type="text"
-                  className="modalInput"
-                  id="name"
-                  name="name"
-                  minLength={1}
-                  maxLength={validation.verticalModal.name.maxLen}
-                  onChange={onAddChange}
-                  value={newVertical.name}
-                  autoComplete="off"
-                />
-              </div>
-              <div className="mb-3">
-                <label htmlFor="description" className="modalLabel">
-                  Description *
-                </label>
-                <input
-                  type="text"
-                  className="modalInput"
-                  id="desc"
-                  name="desc"
-                  onChange={onAddChange}
-                  maxLength={validation.verticalModal.desc.maxLen}
-                  value={newVertical.desc}
-                  autoComplete="off"
-                />
-              </div>
-              <div className="mb-3">
-                <label htmlFor="imgSrc" className="modalLabel">
-                  Image Source *
-                </label>
-                <input
-                  type="text"
-                  className="modalInput"
-                  id="imgSrc"
-                  name="imgSrc"
-                  onChange={onAddChange}
-                  value={newVertical.imgSrc}
-                  autoComplete="off"
-                />
-              </div>
-            </div>
-            <div className="modal-footer">
-              <button
-                type="button"
-                className="modalCloseBtn"
-                data-bs-dismiss="modal"
-                ref={refClose}
-              >
-                Close
-              </button>
-              <button
-                onClick={handleAddVertical}
-                type="button"
-                className="modalAddBtn"
-              >
-                Add Vertical
-              </button>
-            </div>
-          </div>
+
+            {deleteModal}
         </div>
-      </div>
-
-      {deleteModal}
-    </div>
-  );
+    );
 };
 
 export default VerticalsPage;

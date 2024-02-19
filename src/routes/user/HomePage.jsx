@@ -19,7 +19,6 @@ import logo from "../../assets/images/yuva-logo-transparent.png";
 
 const HomePage = () => {
     const params = useLocation();
-    console.log(params);
     // const [allVerticals, setAllVerticals] = useState([]);
     const [projectVerticals, setProjectVerticals] = useState([]); // [vertical1, vertical2]
     const [initiativeVerticals, setInitiativeVerticals] = useState([]); // [vertical3, vertical4, vertical5, vertical6]
@@ -46,7 +45,7 @@ const HomePage = () => {
                 );
 
                 const result = await response.json();
-                // console.log(result);
+                // (result);
 
                 if (response.status >= 400 && response.status < 600) {
                     if (response.status === 500) {
@@ -60,7 +59,6 @@ const HomePage = () => {
                     // for future
                 }
             } catch (err) {
-                console.log(err.message);
             }
 
             setIsLoading(false);
@@ -71,7 +69,6 @@ const HomePage = () => {
 
     async function handleViewCourses(e) {
         const verticalId = e.target.id;
-        console.log(verticalId);
         // if (localStorage.getItem("token")) {
         // } else
         try {
@@ -89,7 +86,7 @@ const HomePage = () => {
                     },
                 }
             );
-            // console.log(result);
+            // (result);
 
             if (response.status >= 400 && response.status < 600) {
                 navigate("/user/login");
@@ -99,7 +96,6 @@ const HomePage = () => {
                 // for future
             }
         } catch (error) {
-            console.log(error.message);
         }
     }
 

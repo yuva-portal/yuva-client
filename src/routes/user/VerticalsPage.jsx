@@ -43,7 +43,7 @@ const VerticalsPage = () => {
                 );
 
                 const result = await response.json();
-                // console.log(result);
+                // (result);
 
                 if (response.status >= 400 && response.status < 600) {
                     if (response.status === 500) {
@@ -57,8 +57,6 @@ const VerticalsPage = () => {
 
                 setIsLoading(false);
             } catch (error) {
-                console.log(error.message);
-                console.log("In catch");
                 setIsLoading(false);
             }
         }
@@ -68,7 +66,7 @@ const VerticalsPage = () => {
 
     function handleViewCourses(e) {
         const verticalId = e.target.id;
-        // console.log(verticalId);
+        // (verticalId);
         navigate(`/user/verticals/${verticalId}/courses/all`);
     }
 

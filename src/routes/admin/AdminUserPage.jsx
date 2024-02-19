@@ -43,7 +43,6 @@ const AdminUserPage = () => {
                 );
 
                 const result = await response.json();
-                console.log(result);
 
                 if (response.status >= 400 && response.status < 600) {
                     if (response.status === 401) {
@@ -58,7 +57,7 @@ const AdminUserPage = () => {
                     // for future
                 }
             } catch (err) {
-                // console.log(err.message);
+                // (err.message);
                 setIsLoading(false);
             }
         }

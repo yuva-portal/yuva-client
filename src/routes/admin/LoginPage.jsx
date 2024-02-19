@@ -15,79 +15,85 @@ import { SERVER_ORIGIN } from "../../utilities/constants";
 
 ///////////////////////////////////////////////////////////////////////////////////////////////
 const LoginPage = () => {
-  const [creds, setCreds] = useState({ adminId: "", password: "" });
-  const [isLoading, setIsLoading] = useState(false);
-  const navigate = useNavigate();
+    const [creds, setCreds] = useState({ adminId: "", password: "" });
+    const [isLoading, setIsLoading] = useState(false);
+    const navigate = useNavigate();
 
-  const handleSubmit = async () => {
-    setIsLoading(true);
+    const handleSubmit = async () => {
+        setIsLoading(true);
 
-    try {
-        const adminId = process.env.REACT_APP_ADMIN_ID;
-        const adminPassword = process.env.REACT_APP_ADMIN_PASSWORD;
-        const basicAuth = btoa(`${adminId}:${adminPassword}`);
-      const response = await fetch(`${SERVER_ORIGIN}/api/admin/auth/login`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          "Authorization": `Basic ${basicAuth}`,
-        },
-        body: JSON.stringify(creds),
-      });
+        try {
+            const adminId = process.env.REACT_APP_ADMIN_ID;
+            const adminPassword = process.env.REACT_APP_ADMIN_PASSWORD;
+            const basicAuth = btoa(`${adminId}:${adminPassword}`);
+            const response = await fetch(
+                `${SERVER_ORIGIN}/api/admin/auth/login`,
+                {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                        Authorization: `Basic ${basicAuth}`,
+                    },
+                    body: JSON.stringify(creds),
+                }
+            );
 
-      const result = await response.json();
-      // console.log(response);
+            const result = await response.json();
+            // (response);
 
-      setIsLoading(false);
+            setIsLoading(false);
 
-      if (response.status >= 400 && response.status < 600) {
-        if (response.status === 401) {
-          if (
-            !("areCredsInvalid" in result) ||
-            result.areCredsInvalid === true
-          ) {
-            toast.error(result.statusText);
-          }
-        } else {
-          toast.error(result.statusText);
+            if (response.status >= 400 && response.status < 600) {
+                if (response.status === 401) {
+                    if (
+                        !("areCredsInvalid" in result) ||
+                        result.areCredsInvalid === true
+                    ) {
+                        toast.error(result.statusText);
+                    }
+                } else {
+                    toast.error(result.statusText);
+                }
+            } else if (response.ok && response.status === 200) {
+                if ("token" in result) {
+                    const token = result.token;
+                    localStorage.setItem("token", token);
+                    navigate("/admin/services");
+                }
+            } else {
+                // for future
+            }
+        } catch (error) {
         }
-      } else if (response.ok && response.status === 200) {
-        if ("token" in result) {
-          const token = result.token;
-          localStorage.setItem("token", token);
-          navigate("/admin/services");
-        }
-      } else {
-        // for future
-      }
-    } catch (error) {
-      console.log(error.message);
-    }
-  };
+    };
 
-  const updateCreds = (e) => {
-    setCreds((prevCreds) => {
-      const newCreds = { ...prevCreds, [e.target.name]: e.target.value };
-      // console.log(newCreds);
+    const updateCreds = (e) => {
+        setCreds((prevCreds) => {
+            const newCreds = { ...prevCreds, [e.target.name]: e.target.value };
+            // (newCreds);
 
-      return newCreds;
-    });
-  };
+            return newCreds;
+        });
+    };
 
-  return (
-    <div className={loginCss.outerDiv}>
-      <img src={logo} alt="yuva-big-logo" className={loginCss.yuvaImg}></img>
+    return (
+        <div className={loginCss.outerDiv}>
+            <img
+                src={logo}
+                alt="yuva-big-logo"
+                className={loginCss.yuvaImg}
+            ></img>
 
-      <LoginForm
-        role="admin"
-        adminId={creds.adminId}
-        password={creds.password}
-        onChange={updateCreds}
-        onClick={handleSubmit}
-        isBtnDisabled={isLoading}
-      />
-    </div>
-  );
+            <LoginForm
+                role="admin"
+                adminId={creds.adminId}
+                password={creds.password}
+                onChange={updateCreds}
+                onClick={handleSubmit}
+                isBtnDisabled={isLoading}
+            />
+        </div>
+    );
 };
 
 export default LoginPage;

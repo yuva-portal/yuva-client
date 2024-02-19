@@ -19,99 +19,102 @@ import { toast } from "react-hot-toast";
 //////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 const CoursesPage = () => {
-  const [allCourses, setAllCourses] = useState([]);
-  const [isLoading, setIsLoading] = useState(false);
-  const [verticalInfo, setVerticalInfo] = useState({ name: "", desc: "" });
-  const navigate = useNavigate();
-  const params = useParams();
+    const [allCourses, setAllCourses] = useState([]);
+    const [isLoading, setIsLoading] = useState(false);
+    const [verticalInfo, setVerticalInfo] = useState({ name: "", desc: "" });
+    const navigate = useNavigate();
+    const params = useParams();
 
-  useEffect(() => {
-    async function getAllCourses() {
-      const { verticalId } = params;
-      setIsLoading(true);
+    useEffect(() => {
+        async function getAllCourses() {
+            const { verticalId } = params;
+            setIsLoading(true);
 
-      try {
-        const userId = process.env.REACT_APP_USER_ID;
-        const userPassword = process.env.REACT_APP_USER_PASSWORD;
-        const basicAuth = btoa(`${userId}:${userPassword}`);
-        const response = await fetch(
-          `${SERVER_ORIGIN}/api/user/auth/verticals/${verticalId}/courses/all`,
-          {
-            method: "GET",
-            headers: {
-              "Content-Type": "application/json",
-              "auth-token": localStorage.getItem("token"),
-              "Authorization": `Basic ${basicAuth}`,
-            },
-          }
-        );
+            try {
+                const userId = process.env.REACT_APP_USER_ID;
+                const userPassword = process.env.REACT_APP_USER_PASSWORD;
+                const basicAuth = btoa(`${userId}:${userPassword}`);
+                const response = await fetch(
+                    `${SERVER_ORIGIN}/api/user/auth/verticals/${verticalId}/courses/all`,
+                    {
+                        method: "GET",
+                        headers: {
+                            "Content-Type": "application/json",
+                            "auth-token": localStorage.getItem("token"),
+                            Authorization: `Basic ${basicAuth}`,
+                        },
+                    }
+                );
 
-        const result = await response.json();
-        // console.log(result);
+                const result = await response.json();
+                // (result);
 
-        if (response.status >= 400 && response.status < 600) {
-          if (response.status === 401) {
-            localStorage.removeItem("token");
-            navigate("/user/login"); // login or role issue
-          } else if (response.status === 404) {
-            navigate("/user/resource-not-found");
-          } else {
-            toast.error(result.statusText);
-          }
-        } else if (response.ok && response.status === 200) {
-          setAllCourses(result.allCourses);
-          setVerticalInfo(result.verticalDoc);
-        } else {
-          // for future
+                if (response.status >= 400 && response.status < 600) {
+                    if (response.status === 401) {
+                        localStorage.removeItem("token");
+                        navigate("/user/login"); // login or role issue
+                    } else if (response.status === 404) {
+                        navigate("/user/resource-not-found");
+                    } else {
+                        toast.error(result.statusText);
+                    }
+                } else if (response.ok && response.status === 200) {
+                    setAllCourses(result.allCourses);
+                    setVerticalInfo(result.verticalDoc);
+                } else {
+                    // for future
+                }
+
+                setIsLoading(false);
+            } catch (error) {
+                setIsLoading(false);
+            }
         }
 
-        setIsLoading(false);
-      } catch (error) {
-        console.log(error.message);
-        setIsLoading(false);
-      }
+        getAllCourses();
+    }, []);
+
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    function handleViewUnits(e) {
+        const { verticalId } = params;
+        const courseId = e.target.id;
+        // (courseId);
+
+        navigate(`/user/verticals/${verticalId}/courses/${courseId}/units/all`);
     }
 
-    getAllCourses();
-  }, []);
+    const loader = <Loader />;
 
-  /////////////////////////////////////////////////////////////////////////////////////////////////////////
+    const element = (
+        <div className={css.outerDiv}>
+            <HeaderCard>
+                <p className={css.vNameText}>{verticalInfo.name}</p>
+                <p className={css.vDescText}>{verticalInfo.desc}</p>
+            </HeaderCard>
 
-  function handleViewUnits(e) {
-    const { verticalId } = params;
-    const courseId = e.target.id;
-    // console.log(courseId);
+            {allCourses.length > 0 ? (
+                <CardGrid>
+                    {allCourses.map((course) => (
+                        <div
+                            className="col-lg-4 col-md-6 col-sm-12 cardOuterDiv"
+                            key={course._id}
+                        >
+                            <Card
+                                data={course}
+                                type="course"
+                                onClick={handleViewUnits}
+                            />
+                        </div>
+                    ))}
+                </CardGrid>
+            ) : (
+                <h1 className="nothingText">Sorry, we found nothing</h1>
+            )}
+        </div>
+    );
 
-    navigate(`/user/verticals/${verticalId}/courses/${courseId}/units/all`);
-  }
-
-  const loader = <Loader />;
-
-  const element = (
-    <div className={css.outerDiv}>
-      <HeaderCard>
-        <p className={css.vNameText}>{verticalInfo.name}</p>
-        <p className={css.vDescText}>{verticalInfo.desc}</p>
-      </HeaderCard>
-
-      {allCourses.length > 0 ? (
-        <CardGrid>
-          {allCourses.map((course) => (
-            <div
-              className="col-lg-4 col-md-6 col-sm-12 cardOuterDiv"
-              key={course._id}
-            >
-              <Card data={course} type="course" onClick={handleViewUnits} />
-            </div>
-          ))}
-        </CardGrid>
-      ) : (
-        <h1 className="nothingText">Sorry, we found nothing</h1>
-      )}
-    </div>
-  );
-
-  return <>{isLoading ? loader : element}</>;
+    return <>{isLoading ? loader : element}</>;
 };
 
 export default CoursesPage;

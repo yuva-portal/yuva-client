@@ -17,15 +17,11 @@ const FileUpload = () => {
         setExcelData(e.target.files?.[0]);
     }
 
-    console.log(fileUploaded);
-    console.log(excelData);
-
     function handleFileUpload() {
         const file = excelData;
 
         const formData = new FormData();
         formData.append("file", file);
-        // console.log("--------------",file);
 
         axios
             .post(`${SERVER_ORIGIN}/api/admin/auth/users/upload`, formData, {
@@ -34,21 +30,16 @@ const FileUpload = () => {
                 },
             })
             .then((response) => {
-                // console.log("*******" + response.data);
                 setCorrectFormat(true);
                 setLoader(true);
                 setFileUploaded(false);
             })
             .catch((error) => {
-                console.log(error);
                 alert(error.response.data.message || error.response.data);
                 setExcelData(null);
                 setFileUploaded(false);
-                console.log(error.response);
             });
-        console.log(fileUploaded);
-        console.log(excelData);
-
+            
         setTimeout(() => {
             window.location.reload();
         }, 2000);

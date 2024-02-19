@@ -16,7 +16,6 @@ import { SERVER_ORIGIN } from "../../utilities/constants";
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////
 const LoginPage = () => {
     const params = useLocation();
-    console.log(params);
     const [creds, setCreds] = useState({ userId: "", password: "" });
     const [isLoading, setIsLoading] = useState(false);
     const navigate = useNavigate();
@@ -42,7 +41,7 @@ const LoginPage = () => {
             );
 
             const result = await response.json();
-            // console.log(response);
+            // (response);
 
             setIsLoading(false);
 
@@ -62,14 +61,13 @@ const LoginPage = () => {
                 // for future
             }
         } catch (err) {
-            console.log(err.message);
         }
     };
 
     const updateCreds = (e) => {
         setCreds((prevCreds) => {
             const newCreds = { ...prevCreds, [e.target.name]: e.target.value };
-            // console.log(newCreds);
+            // (newCreds);
 
             return newCreds;
         });

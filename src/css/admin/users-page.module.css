@@ -66,6 +66,13 @@ input[type="file"] {
     color: white;
     font-family: var(--font-family-2);
     cursor: pointer;
+
+    transition: 200ms all;
+}
+
+.fileUploadBtn:hover {
+    background-color: var(--yuva-dark-blue);
+    background-color: #0d5e9cdc;
 }
 
 .addBtn {

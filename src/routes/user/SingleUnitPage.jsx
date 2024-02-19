@@ -61,7 +61,7 @@ const UserSingleUnit = () => {
                 );
 
                 const result = await response.json();
-                // console.log(result);
+                // (result);
 
                 setIsLoading(false);
 
@@ -93,7 +93,7 @@ const UserSingleUnit = () => {
                     // for future
                 }
             } catch (err) {
-                // console.log(err.message);
+                // (err.message);
                 setIsLoading(false);
             }
         }
@@ -117,7 +117,7 @@ const UserSingleUnit = () => {
         // const userMongoId = userInfo._id;
         // const { verticalId, courseId, unitId } = params;
 
-        // console.log(certId);
+        // (certId);
         navigate(`/user/certificate/${certId}`);
     }
 

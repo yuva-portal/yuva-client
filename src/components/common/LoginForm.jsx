@@ -11,6 +11,7 @@ import { validation } from "../../utilities/constants";
 export const LoginForm = (props) => {
     const [modal, setModalOpen] = useState(false);
     const [loader, setLoader] = useState(false);
+    const [emailSuccess, setEmailSuccess] = useState(false);
 
     const handleChange = (e) => {
         props.onChange(e); // Need to pass the whole event, passing updatedField just gives the last entered character of the input
@@ -20,10 +21,11 @@ export const LoginForm = (props) => {
         props.onClick();
     };
 
-    function handleForgotPass() {
+    function handleForgotPassClick() {
         setTimeout(() => {
             setModalOpen(true);
         }, 1000);
+
         setLoader(true);
         setTimeout(() => {
             setLoader(false);
@@ -32,6 +34,11 @@ export const LoginForm = (props) => {
 
     function handleModalClose() {
         setModalOpen(false);
+        setEmailSuccess(false);
+    }
+
+    function handleSubmitClick() {
+        if (Response.code === 200) setEmailSuccess(true);
     }
 
     // const modalStyles = {
@@ -60,6 +67,11 @@ export const LoginForm = (props) => {
                             placeholder="Recovery E-mail"
                             className={css.forgotPassInput}
                         />
+                        {emailSuccess && (
+                            <p className={css.EmailSuccessText}>
+                                A mail has been sent to your e-mail address.
+                            </p>
+                        )}
                         {/* </label> */}
                         <div className={css.forgotPassBtnWrapper}>
                             <button
@@ -68,7 +80,10 @@ export const LoginForm = (props) => {
                             >
                                 Cancel
                             </button>
-                            <button className={css.forgotPassBtn}>
+                            <button
+                                className={css.forgotPassBtn}
+                                onClick={handleSubmitClick}
+                            >
                                 Submit
                             </button>
                         </div>
@@ -107,7 +122,7 @@ export const LoginForm = (props) => {
                         />
 
                         <Link
-                            onClick={handleForgotPass}
+                            onClick={handleForgotPassClick}
                             className={css.forgotPassText}
                         >
                             Forgot Password
@@ -124,7 +139,7 @@ export const LoginForm = (props) => {
                             onClick={handleLogInClick}
                             disabled={props.isBtnDisabled}
                         >
-                            {props.isBtnDisabled ? "Logging in ..." : "Login"}
+                            {props.isBtnDisabled ? "Logging in..." : "Login"}
                         </button>
                         {props.role === "user" ? (
                             <>

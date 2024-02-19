@@ -18,7 +18,6 @@ function DownloadExcel() {
             document.body.removeChild(link);
         } catch (error) {
             alert("Not downloaded");
-            console.log("********", error);
         }
 
         setTimeout(() => {

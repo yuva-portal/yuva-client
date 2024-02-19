@@ -78,7 +78,6 @@ const AdminUsers = () => {
                     // for future
                 }
             } catch (err) {
-                console.log(err.message);
                 setIsLoading(false);
             }
         }
@@ -125,7 +124,6 @@ const AdminUsers = () => {
                     // for future
                 }
             } catch (err) {
-                console.log(err.message);
                 setIsLoading(false);
             }
         }
