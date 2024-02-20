@@ -161,7 +161,8 @@ function App() {
                             </>
                         }
                     />
-                    <Route
+                    
+                    {/* <Route
                         exact
                         path="/user/register"
                         element={
@@ -170,7 +171,8 @@ function App() {
                                 <UserRegis />
                             </>
                         }
-                    />
+                    /> */}
+                    
                     <Route
                         exact
                         path="/user/certificate/:certId"
